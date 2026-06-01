@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khaja SV-ELearn · SystemVerilog Mastery</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#020c14;--bg2:#041020;--bg3:#061828;
+  --cyan:#00FFD1;--cyan2:#00C9A7;--cyan3:#00E5BC;
+  --green:#00FF88;--green2:#00CC6A;
+  --orange:#FF6B35;--orange2:#FF9500;
+  --purple:#A855F7;--purple2:#7C3AED;
+  --pink:#FF3D9A;--blue:#3B82F6;
+  --gold:#FFD700;--gold2:#FFA500;
+  --text:#E0F7F4;--text2:#9ECFC7;--text3:#5A8A85;
+  --border:rgba(0,255,209,0.15);--border2:rgba(0,255,209,0.3);
+  --card:rgba(0,255,209,0.04);--card2:rgba(0,255,209,0.08);
+  --glow:0 0 30px rgba(0,255,209,0.2);
+  --glow2:0 0 60px rgba(0,255,209,0.15);
+  --font-head:'Exo 2',sans-serif;
+  --font-body:'Rajdhani',sans-serif;
+  --font-code:'Fira Code','Share Tech Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:1.05rem;overflow-x:hidden;}
+
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--cyan2);border-radius:3px;}
+
+/* ═══ GRID BG ═══ */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,255,209,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,209,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+/* ═══ NAV ═══ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(2,12,20,0.95);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border2);
+  padding:0.7rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;
+}
+.nav-brand{
+  font-family:var(--font-head);font-weight:900;font-size:1.35rem;
+  color:var(--cyan);letter-spacing:0.05em;
+  text-shadow:0 0 20px rgba(0,255,209,0.6);
+}
+.nav-brand span{color:var(--orange);}
+.nav-links{display:flex;gap:0.25rem;flex-wrap:wrap;}
+.nav-link{
+  font-family:var(--font-head);font-size:0.72rem;font-weight:600;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text2);padding:0.3rem 0.7rem;border-radius:4px;
+  cursor:pointer;transition:all 0.2s;border:1px solid transparent;text-decoration:none;
+}
+.nav-link:hover,.nav-link.active{color:var(--cyan);border-color:var(--border2);background:var(--card2);}
+
+/* ═══ HERO ═══ */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:6rem 2rem 4rem;text-align:center;position:relative;z-index:1;
+}
+.hero-eyebrow{
+  font-family:var(--font-code);font-size:0.8rem;color:var(--cyan2);
+  letter-spacing:0.25em;text-transform:uppercase;
+  border:1px solid var(--border2);border-radius:20px;
+  padding:0.3rem 1rem;display:inline-block;margin-bottom:2rem;
+  background:var(--card);
+}
+.hero-title{
+  font-family:var(--font-head);font-weight:900;
+  font-size:clamp(3rem,9vw,7.5rem);line-height:0.95;
+  margin-bottom:1.5rem;
+}
+.hero-title .t1{color:#fff;display:block;}
+.hero-title .t2{
+  background:linear-gradient(135deg,var(--cyan) 0%,var(--green) 50%,var(--cyan) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 30px rgba(0,255,209,0.4));
+  display:block;
+}
+.hero-title .t3{color:var(--orange);display:block;font-size:0.55em;}
+.hero-sub{
+  max-width:680px;font-size:1.15rem;color:var(--text2);line-height:1.8;
+  margin:0 auto 3rem;font-weight:400;
+}
+.hero-chars{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;
+  max-width:900px;
+}
+.hc{
+  background:var(--card2);border:1px solid var(--border2);border-radius:12px;
+  padding:0.9rem 0.7rem;min-width:90px;text-align:center;
+  transition:all 0.3s;cursor:pointer;
+}
+.hc:hover{border-color:var(--cyan);transform:translateY(-5px);box-shadow:var(--glow);}
+.hc-avatar{font-size:2rem;display:block;margin-bottom:0.35rem;}
+.hc-name{font-family:var(--font-head);font-size:0.58rem;color:var(--cyan);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;}
+.hc-role{font-family:var(--font-code);font-size:0.55rem;color:var(--text3);margin-top:0.15rem;}
+
+.cta-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn{
+  font-family:var(--font-head);font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;font-size:0.9rem;padding:0.9rem 2.2rem;
+  border-radius:6px;cursor:pointer;transition:all 0.25s;border:none;text-decoration:none;display:inline-block;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--cyan2),var(--green2));
+  color:#020c14;box-shadow:0 0 25px rgba(0,255,209,0.35);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 45px rgba(0,255,209,0.55);}
+.btn-ghost{
+  background:transparent;color:var(--cyan);
+  border:1px solid var(--border2);
+}
+.btn-ghost:hover{background:var(--card2);border-color:var(--cyan);}
+
+/* ═══ STATS BAR ═══ */
+.stats-bar{
+  display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;
+  padding:2rem;max-width:900px;margin:0 auto;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.stat{text-align:center;}
+.stat-num{font-family:var(--font-head);font-size:2.2rem;font-weight:900;color:var(--cyan);}
+.stat-lbl{font-size:0.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-code);}
+
+/* ═══ SECTIONS ═══ */
+section{position:relative;z-index:1;padding:5rem 2rem;}
+.sec-tag{font-family:var(--font-code);font-size:0.72rem;color:var(--cyan2);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:0.6rem;display:block;}
+.sec-title{font-family:var(--font-head);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;color:#fff;margin-bottom:0.6rem;}
+.sec-title span{color:var(--cyan);}
+.sec-line{width:60px;height:3px;background:linear-gradient(90deg,var(--cyan),transparent);margin-bottom:2.5rem;}
+.sec-center{text-align:center;}
+.sec-center .sec-line{margin:0 auto 2.5rem;}
+
+/* ═══ TOPIC CARDS ═══ */
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;max-width:1200px;margin:0 auto;}
+.topic-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;transition:all 0.35s;cursor:pointer;
+}
+.topic-card:hover{border-color:var(--border2);transform:translateY(-6px);box-shadow:var(--glow2);}
+.tc-header{
+  padding:1.5rem 1.5rem 1rem;
+  display:flex;align-items:flex-start;gap:1rem;
+  border-bottom:1px solid var(--border);
+}
+.tc-icon{font-size:2.5rem;flex-shrink:0;line-height:1;}
+.tc-meta{}
+.tc-num{font-family:var(--font-code);font-size:0.65rem;color:var(--cyan2);letter-spacing:0.2em;}
+.tc-name{font-family:var(--font-head);font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:0.2rem;}
+.tc-sub{font-size:0.82rem;color:var(--text3);}
+.tc-body{padding:1.2rem 1.5rem;}
+.tc-desc{font-size:0.9rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;}
+.tc-tags{display:flex;gap:0.4rem;flex-wrap:wrap;}
+.tc-tag{
+  font-family:var(--font-code);font-size:0.65rem;
+  background:rgba(0,255,209,0.08);border:1px solid var(--border);
+  border-radius:4px;padding:0.2rem 0.5rem;color:var(--text3);
+}
+.tc-footer{
+  padding:0.8rem 1.5rem;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.tc-lessons{font-family:var(--font-code);font-size:0.72rem;color:var(--text3);}
+.tc-arrow{color:var(--cyan);font-size:1.2rem;transition:transform 0.2s;}
+.topic-card:hover .tc-arrow{transform:translateX(5px);}
+
+/* color accents per topic */
+.topic-card[data-color="cyan"] .tc-header{background:linear-gradient(135deg,rgba(0,255,209,0.05),transparent);}
+.topic-card[data-color="green"] .tc-header{background:linear-gradient(135deg,rgba(0,255,136,0.05),transparent);}
+.topic-card[data-color="orange"] .tc-header{background:linear-gradient(135deg,rgba(255,107,53,0.05),transparent);}
+.topic-card[data-color="purple"] .tc-header{background:linear-gradient(135deg,rgba(168,85,247,0.05),transparent);}
+.topic-card[data-color="pink"] .tc-header{background:linear-gradient(135deg,rgba(255,61,154,0.05),transparent);}
+.topic-card[data-color="blue"] .tc-header{background:linear-gradient(135deg,rgba(59,130,246,0.05),transparent);}
+.topic-card[data-color="gold"] .tc-header{background:linear-gradient(135deg,rgba(255,215,0,0.05),transparent);}
+
+/* ═══ LESSON MODAL ═══ */
+#modal-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(2,12,20,0.95);backdrop-filter:blur(12px);
+  display:none;overflow-y:auto;padding:2rem 1rem;
+}
+#modal-overlay.open{display:block;}
+#modal-box{
+  max-width:1100px;margin:0 auto;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:20px;overflow:hidden;
+  animation:slideUp 0.35s cubic-bezier(0.34,1.4,0.64,1);
+}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-topbar{
+  background:var(--bg3);padding:1.2rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border2);
+}
+.modal-close{
+  background:rgba(255,61,154,0.15);border:1px solid rgba(255,61,154,0.4);
+  color:var(--pink);font-size:1.2rem;width:38px;height:38px;
+  border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.modal-close:hover{background:rgba(255,61,154,0.3);}
+.modal-content{padding:2.5rem 2.5rem 3rem;}
+
+/* ═══ LESSON LAYOUT ═══ */
+.lesson-intro{
+  display:grid;grid-template-columns:1fr auto;gap:2rem;
+  margin-bottom:3rem;align-items:start;
+}
+@media(max-width:700px){.lesson-intro{grid-template-columns:1fr;}}
+.lesson-chapter{font-family:var(--font-code);font-size:0.72rem;color:var(--cyan2);letter-spacing:0.25em;text-transform:uppercase;margin-bottom:0.4rem;}
+.lesson-title{font-family:var(--font-head);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:#fff;margin-bottom:0.8rem;}
+.lesson-lore{font-size:1rem;color:var(--text2);line-height:1.8;font-style:italic;max-width:580px;}
+
+.teacher-card{
+  background:var(--card2);border:1px solid var(--border2);
+  border-radius:16px;padding:1.5rem;text-align:center;min-width:160px;flex-shrink:0;
+}
+.teacher-avatar{font-size:4rem;display:block;margin-bottom:0.7rem;}
+.teacher-name{font-family:var(--font-head);font-weight:700;color:var(--cyan);font-size:1rem;margin-bottom:0.2rem;}
+.teacher-role{font-family:var(--font-code);font-size:0.68rem;color:var(--text3);}
+.teacher-speech{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:0.7rem 0.9rem;margin-top:0.8rem;font-size:0.8rem;color:var(--text2);
+  font-style:italic;line-height:1.5;position:relative;
+}
+.teacher-speech::before{
+  content:'💬';position:absolute;top:-0.6rem;left:0.6rem;font-size:0.8rem;
+}
+
+/* ═══ CHARACTER STRIP ═══ */
+.char-strip{
+  display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;margin:2rem 0;
+}
+.char-chip{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:0.8rem;text-align:center;min-width:100px;transition:all 0.25s;
+}
+.char-chip:hover{border-color:var(--border2);transform:translateY(-3px);}
+.char-chip .ce{font-size:1.8rem;display:block;margin-bottom:0.3rem;}
+.char-chip .cn{font-family:var(--font-head);font-size:0.6rem;color:var(--cyan);font-weight:700;text-transform:uppercase;}
+.char-chip .cd{font-family:var(--font-code);font-size:0.55rem;color:var(--text3);margin-top:0.1rem;}
+
+/* ═══ CONCEPT SECTIONS ═══ */
+.concept-block{margin-bottom:3rem;}
+.concept-head{
+  font-family:var(--font-head);font-size:1.2rem;font-weight:700;color:var(--cyan);
+  margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;padding-bottom:0.6rem;
+  border-bottom:1px solid var(--border);
+}
+.concept-head::before{content:'▶';font-size:0.7rem;}
+
+.info-box{
+  background:rgba(0,255,209,0.04);border:1px solid var(--border);
+  border-left:3px solid var(--cyan);border-radius:0 10px 10px 0;
+  padding:1.1rem 1.4rem;margin:0.8rem 0;
+  font-size:0.93rem;color:var(--text2);line-height:1.8;
+}
+.info-box.orange{border-left-color:var(--orange);}
+.info-box.green{border-left-color:var(--green);}
+.info-box.purple{border-left-color:var(--purple);}
+.info-box.pink{border-left-color:var(--pink);}
+.info-box code{font-family:var(--font-code);background:rgba(0,0,0,0.4);padding:0.1rem 0.35rem;border-radius:3px;color:var(--cyan);font-size:0.85em;}
+.info-box strong{color:#fff;}
+
+/* ═══ CODE BLOCK ═══ */
+.code-wrap{
+  background:#010a10;border:1px solid var(--border2);border-radius:12px;
+  overflow:hidden;margin:1rem 0;
+}
+.code-header{
+  background:var(--bg3);padding:0.55rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.code-lang{font-family:var(--font-code);font-size:0.68rem;color:var(--cyan2);letter-spacing:0.1em;}
+.code-dots{display:flex;gap:0.4rem;}
+.code-dot{width:10px;height:10px;border-radius:50%;}
+.cd-r{background:#FF5F57;}.cd-y{background:#FEBC2E;}.cd-g{background:#28C840;}
+.code-body{
+  padding:1.4rem 1.6rem;overflow-x:auto;
+  font-family:var(--font-code);font-size:0.84rem;
+  color:#c9d1d9;line-height:1.75;
+}
+/* syntax */
+.kw{color:#FF7B72;}.tp{color:#79C0FF;}.fn{color:#D2A8FF;}.st{color:#A5D6FF;}
+.cm{color:#6E7681;font-style:italic;}.nm{color:#FFA657;}.op{color:#E3B341;}
+.at{color:#FF79C6;}.va{color:#E0F7F4;}.bn{color:#00FF88;}
+
+/* ═══ TWO-COL ═══ */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1rem 0;}
+@media(max-width:700px){.two-col{grid-template-columns:1fr;}}
+
+/* ═══ DATA TYPE TABLE ═══ */
+.dt-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.88rem;}
+.dt-table th{background:var(--card2);font-family:var(--font-head);font-weight:700;color:var(--cyan);padding:0.7rem 1rem;text-align:left;border-bottom:2px solid var(--border2);font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;}
+.dt-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--border);color:var(--text2);font-family:var(--font-code);font-size:0.82rem;}
+.dt-table tr:hover td{background:var(--card);color:var(--text);}
+.dt-table td:first-child{color:var(--cyan);font-weight:500;}
+.dt-table td .badge{display:inline-block;padding:0.1rem 0.4rem;border-radius:4px;font-size:0.7rem;font-family:var(--font-head);}
+.badge-2{background:rgba(0,255,136,0.15);color:var(--green);border:1px solid rgba(0,255,136,0.3);}
+.badge-4{background:rgba(255,107,53,0.15);color:var(--orange);border:1px solid rgba(255,107,53,0.3);}
+
+/* ═══ FLOW DIAGRAM ═══ */
+.flow-row{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:1.5rem 0;}
+.fbox{
+  background:var(--card2);border:1px solid var(--border2);
+  border-radius:8px;padding:0.8rem 1rem;text-align:center;min-width:100px;
+}
+.fbox .fi{font-size:1.5rem;display:block;margin-bottom:0.2rem;}
+.fbox .fn2{font-family:var(--font-head);font-size:0.72rem;color:var(--cyan);font-weight:700;}
+.fbox .fs{font-family:var(--font-code);font-size:0.6rem;color:var(--text3);}
+.farr{color:var(--cyan);padding:0 0.3rem;font-size:1.4rem;}
+
+/* ═══ QUIZ MINI ═══ */
+.quiz-section{
+  background:rgba(0,255,209,0.03);border:1px solid var(--border2);
+  border-radius:16px;padding:2rem;margin-top:3rem;
+}
+.quiz-head{font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--cyan);margin-bottom:1.5rem;}
+.quiz-q{font-family:var(--font-head);font-size:1rem;color:#fff;margin-bottom:1rem;line-height:1.5;}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1rem;}
+@media(max-width:550px){.quiz-opts{grid-template-columns:1fr;}}
+.q-opt{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:0.75rem 1rem;color:var(--text2);font-family:var(--font-body);font-size:0.9rem;
+  cursor:pointer;transition:all 0.2s;text-align:left;
+}
+.q-opt:hover:not(:disabled){border-color:var(--cyan);color:#fff;background:var(--card2);}
+.q-opt.correct{border-color:var(--green)!important;background:rgba(0,255,136,0.1)!important;color:var(--green)!important;}
+.q-opt.wrong{border-color:var(--pink)!important;background:rgba(255,61,154,0.1)!important;color:var(--pink)!important;}
+.quiz-fb{font-size:0.9rem;color:var(--text2);font-style:italic;padding:0.8rem 1rem;background:var(--card);border-radius:8px;display:none;margin-top:0.5rem;line-height:1.6;}
+.quiz-fb.show{display:block;}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;}
+.quiz-progress{font-family:var(--font-code);font-size:0.78rem;color:var(--text3);}
+
+/* ═══ TAB SYSTEM ═══ */
+.tabs{display:flex;gap:0.4rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.tab{
+  font-family:var(--font-head);font-size:0.78rem;font-weight:600;letter-spacing:0.05em;
+  padding:0.45rem 1.1rem;border-radius:6px;cursor:pointer;
+  border:1px solid var(--border);color:var(--text3);background:var(--card);
+  transition:all 0.2s;text-transform:uppercase;
+}
+.tab.active,.tab:hover{color:var(--cyan);border-color:var(--border2);background:var(--card2);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ═══ PERSON CALLOUT ═══ */
+.person-callout{
+  display:flex;gap:1.5rem;align-items:flex-start;
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:1.5rem;margin:1.5rem 0;
+}
+@media(max-width:600px){.person-callout{flex-direction:column;}}
+.pc-avatar{font-size:3.5rem;flex-shrink:0;}
+.pc-content{}
+.pc-name{font-family:var(--font-head);font-weight:700;color:var(--cyan);font-size:1rem;margin-bottom:0.15rem;}
+.pc-title{font-family:var(--font-code);font-size:0.7rem;color:var(--text3);margin-bottom:0.6rem;}
+.pc-says{font-size:0.93rem;color:var(--text2);line-height:1.75;}
+.pc-says code{font-family:var(--font-code);background:rgba(0,0,0,0.4);padding:0.1rem 0.3rem;border-radius:3px;color:var(--cyan);font-size:0.85em;}
+
+/* ═══ VISUAL MEMORY AIDS ═══ */
+.memory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.5rem 0;}
+.mem-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.2rem;text-align:center;transition:all 0.3s;
+}
+.mem-card:hover{border-color:var(--border2);transform:translateY(-3px);}
+.mc-icon{font-size:2.2rem;display:block;margin-bottom:0.6rem;}
+.mc-name{font-family:var(--font-head);font-size:0.88rem;font-weight:700;color:#fff;margin-bottom:0.2rem;}
+.mc-type{font-family:var(--font-code);font-size:0.65rem;color:var(--cyan);}
+.mc-desc{font-size:0.75rem;color:var(--text3);margin-top:0.4rem;line-height:1.5;}
+
+/* ═══ COMPARISON CARD ═══ */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+@media(max-width:600px){.compare{grid-template-columns:1fr;}}
+.cmp-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem;}
+.cmp-title{font-family:var(--font-head);font-size:0.9rem;font-weight:700;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;}
+.cmp-list{list-style:none;}
+.cmp-list li{font-size:0.85rem;color:var(--text2);padding:0.3rem 0;border-bottom:1px solid var(--border);display:flex;gap:0.5rem;align-items:flex-start;line-height:1.5;}
+.cmp-list li::before{content:'→';color:var(--cyan);flex-shrink:0;font-size:0.8rem;margin-top:0.1rem;}
+
+/* ═══ PROGRESS TRACKER ═══ */
+#progress-bar{
+  position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--green));
+  z-index:2001;transition:width 0.2s;
+}
+
+/* ═══ FOOTER ═══ */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:3rem 2rem;text-align:center;position:relative;z-index:1;
+}
+.footer-brand{font-family:var(--font-head);font-size:1.5rem;font-weight:900;color:var(--cyan);margin-bottom:0.5rem;}
+.footer-brand span{color:var(--orange);}
+.footer-sub{font-size:0.85rem;color:var(--text3);margin-bottom:1.5rem;}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;}
+.footer-link{font-family:var(--font-code);font-size:0.75rem;color:var(--text3);text-decoration:none;transition:color 0.2s;}
+.footer-link:hover{color:var(--cyan);}
+
+/* ═══ ANIMATIONS ═══ */
+.fade-in{animation:fadeUp 0.4s ease-out;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.blink{animation:blink 1.2s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.glow-pulse{animation:glowPulse 2.5s ease-in-out infinite;}
+@keyframes glowPulse{0%,100%{text-shadow:0 0 20px rgba(0,255,209,0.4);}50%{text-shadow:0 0 40px rgba(0,255,209,0.8);}}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:768px){
+  .modal-content{padding:1.5rem;}
+  .lesson-intro{grid-template-columns:1fr;}
+  .teacher-card{display:flex;align-items:center;gap:1rem;text-align:left;min-width:unset;}
+  .teacher-avatar{font-size:2.5rem;margin-bottom:0;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand">DV_HUB · <span>Khaja</span> SV‑ELearn</div>
+  <div class="nav-links">
+    <a class="nav-link" href="#topics">Topics</a>
+    <a class="nav-link" href="#characters">Characters</a>
+    <a class="nav-link" href="#testbench">Testbench</a>
+    <a class="nav-link" href="#quiz">Quiz</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">// DESIGN VERIFICATION · SYSTEM VERILOG MASTERY</div>
+  <h1 class="hero-title">
+    <span class="t1">KHAJA</span>
+    <span class="t2">SV-ELearn</span>
+    <span class="t3">SystemVerilog · The Complete Verification Language</span>
+  </h1>
+  <p class="hero-sub">7 real characters. 7 core concept domains. Hundreds of code examples. Learn SystemVerilog the way a DV engineer actually thinks — through stories, code, and quizzes.</p>
+
+  <div class="hero-chars">
+    <div class="hc" onclick="openLesson('types')"><span class="hc-avatar">👨‍🔬</span><div class="hc-name">Dr. Byte</div><div class="hc-role">Data Types</div></div>
+    <div class="hc" onclick="openLesson('arrays')"><span class="hc-avatar">📦</span><div class="hc-name">Array Anna</div><div class="hc-role">Arrays</div></div>
+    <div class="hc" onclick="openLesson('oop')"><span class="hc-avatar">🧑‍💻</span><div class="hc-name">OOP Omar</div><div class="hc-role">OOP / Classes</div></div>
+    <div class="hc" onclick="openLesson('crv')"><span class="hc-avatar">🎲</span><div class="hc-name">Randon Rex</div><div class="hc-role">CRV</div></div>
+    <div class="hc" onclick="openLesson('concurrency')"><span class="hc-avatar">⚡</span><div class="hc-name">Forky Fiona</div><div class="hc-role">Concurrency</div></div>
+    <div class="hc" onclick="openLesson('interface')"><span class="hc-avatar">🔌</span><div class="hc-name">Interface Iris</div><div class="hc-role">Interfaces</div></div>
+    <div class="hc" onclick="openLesson('dpi')"><span class="hc-avatar">🌐</span><div class="hc-name">DPI Dan</div><div class="hc-role">DPI / C++</div></div>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#topics">🚀 Start Learning</a>
+    <a class="btn btn-ghost" href="#testbench">📋 Full Testbench</a>
+  </div>
+
+  <div class="stats-bar" style="margin-top:4rem">
+    <div class="stat"><div class="stat-num glow-pulse">7</div><div class="stat-lbl">Concept Domains</div></div>
+    <div class="stat"><div class="stat-num glow-pulse">50+</div><div class="stat-lbl">Code Examples</div></div>
+    <div class="stat"><div class="stat-num glow-pulse">7</div><div class="stat-lbl">Human Teachers</div></div>
+    <div class="stat"><div class="stat-num glow-pulse">∞</div><div class="stat-lbl">Quiz Questions</div></div>
+  </div>
+</section>
+
+<!-- TOPICS GRID -->
+<section id="topics">
+  <div style="max-width:1200px;margin:0 auto">
+    <span class="sec-tag">// 01 · Curriculum</span>
+    <div class="sec-title">Master <span>7 Core Domains</span></div>
+    <div class="sec-line"></div>
+    <div class="topic-grid">
+
+      <div class="topic-card" data-color="cyan" onclick="openLesson('types')">
+        <div class="tc-header">
+          <div class="tc-icon">👨‍🔬</div>
+          <div class="tc-meta">
+            <div class="tc-num">// DOMAIN 01</div>
+            <div class="tc-name">Enhanced Data Types</div>
+            <div class="tc-sub">Dr. Byte's Laboratory</div>
+          </div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-desc">Master two-state types, strings, structs, and unions. Dr. Byte shows you why bit is faster than logic and when to use each.</div>
+          <div class="tc-tags"><span class="tc-tag">bit/byte/int</span><span class="tc-tag">string</span><span class="tc-tag">struct</span><span class="tc-tag">union</span><span class="tc-tag">enum</span></div>
+        </div>
+        <div class="tc-footer"><div class="tc-lessons">8 concepts · 12 examples</div><div class="tc-arrow">→</div></div>
+      </div>
+
+      <div class="topic-card" data-color="green" onclick="openLesson('arrays')">
+        <div class="tc-header">
+          <div class="tc-icon">📦</div>
+          <div class="tc-meta">
+            <div class="tc-num">// DOMAIN 02</div>
+            <div class="tc-name">Advanced Arrays</div>
+            <div class="tc-sub">Array Anna's Warehouse</div>
+          </div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-desc">From fixed to dynamic, sparse to ordered. Anna explains packed arrays, queues, associative arrays and their built-in superpowers.</div>
+          <div class="tc-tags"><span class="tc-tag">dynamic[]</span><span class="tc-tag">assoc[key]</span><span class="tc-tag">queue[$]</span><span class="tc-tag">array methods</span></div>
+        </div>
+        <div class="tc-footer"><div class="tc-lessons">6 concepts · 10 examples</div><div class="tc-arrow">→</div></div>
+      </div>
+
+      <div class="topic-card" data-color="orange" onclick="openLesson('oop')">
+        <div class="tc-header">
+          <div class="tc-icon">🧑‍💻</div>
+          <div class="tc-meta">
+            <div class="tc-num">// DOMAIN 03</div>
+            <div class="tc-name">Object-Oriented Programming</div>
+            <div class="tc-sub">OOP Omar's Workshop</div>
+          </div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-desc">Classes, inheritance, polymorphism, and encapsulation. Omar builds a complete testbench hierarchy from scratch using OOP principles.</div>
+          <div class="tc-tags"><span class="tc-tag">class</span><span class="tc-tag">extends</span><span class="tc-tag">virtual</span><span class="tc-tag">local/protected</span></div>
+        </div>
+        <div class="tc-footer"><div class="tc-lessons">7 concepts · 14 examples</div><div class="tc-arrow">→</div></div>
+      </div>
+
+      <div class="topic-card" data-color="purple" onclick="openLesson('crv')">
+        <div class="tc-header">
+          <div class="tc-icon">🎲</div>
+          <div class="tc-meta">
+            <div class="tc-num">// DOMAIN 04</div>
+            <div class="tc-name">Verification & Randomization</div>
+            <div class="tc-sub">Randon Rex's Casino</div>
+          </div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-desc">CRV, SVA, and functional coverage. Rex teaches constrained-random generation, assertion writing, and coverage closure strategies.</div>
+          <div class="tc-tags"><span class="tc-tag">rand/randc</span><span class="tc-tag">constraint</span><span class="tc-tag">covergroup</span><span class="tc-tag">SVA</span></div>
+        </div>
+        <div class="tc-footer"><div class="tc-lessons">8 concepts · 15 examples</div><div class="tc-arrow">→</div></div>
+      </div>
+
+      <div class="topic-card" data-color="pink" onclick="openLesson('concurrency')">
+        <div class="tc-header">
+          <div class="tc-icon">⚡</div>
+          <div class="tc-meta">
+            <div class="tc-num">// DOMAIN 05</div>
+            <div class="tc-name">Concurrency & IPC</div>
+            <div class="tc-sub">Forky Fiona's Parallel Universe</div>
+          </div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-desc">fork-join variants, semaphores, mailboxes, and events. Fiona shows how to build race-free, synchronized verification environments.</div>
+          <div class="tc-tags"><span class="tc-tag">fork/join</span><span class="tc-tag">semaphore</span><span class="tc-tag">mailbox</span><span class="tc-tag">event</span></div>
+        </div>
+        <div class="tc-footer"><div class="tc-lessons">6 concepts · 11 examples</div><div class="tc-arrow">→</div></div>
+      </div>
+
+      <div class="topic-card" data-color="blue" onclick="openLesson('interface')">
+        <div class="tc-header">
+          <div class="tc-icon">🔌</div>
+          <div class="tc-meta">
+            <div class="tc-num">// DOMAIN 06</div>
+            <div class="tc-name">Design & Interfaces</div>
+            <div class="tc-sub">Interface Iris's Switchboard</div>
+          </div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-desc">Interfaces, clocking blocks, and modports. Iris shows how to bundle DUT signals elegantly and eliminate race conditions forever.</div>
+          <div class="tc-tags"><span class="tc-tag">interface</span><span class="tc-tag">clocking block</span><span class="tc-tag">modport</span><span class="tc-tag">virtual if</span></div>
+        </div>
+        <div class="tc-footer"><div class="tc-lessons">5 concepts · 9 examples</div><div class="tc-arrow">→</div></div>
+      </div>
+
+      <div class="topic-card" data-color="gold" onclick="openLesson('dpi')">
+        <div class="tc-header">
+          <div class="tc-icon">🌐</div>
+          <div class="tc-meta">
+            <div class="tc-num">// DOMAIN 07</div>
+            <div class="tc-name">Language Interoperability</div>
+            <div class="tc-sub">DPI Dan's Bridge</div>
+          </div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-desc">DPI-C, import/export tasks, and C/C++ integration. Dan explains how to call C models, reference implementations, and co-simulation.</div>
+          <div class="tc-tags"><span class="tc-tag">DPI-C</span><span class="tc-tag">import</span><span class="tc-tag">export</span><span class="tc-tag">chandle</span></div>
+        </div>
+        <div class="tc-footer"><div class="tc-lessons">4 concepts · 7 examples</div><div class="tc-arrow">→</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CHARACTERS SECTION -->
+<section id="characters" style="background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%);">
+  <div style="max-width:1100px;margin:0 auto;text-align:center">
+    <span class="sec-tag">// 02 · Your Teachers</span>
+    <div class="sec-title" style="text-align:center">Meet the <span>Expert Characters</span></div>
+    <div class="sec-line" style="margin:0 auto 2.5rem"></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem">
+      <div class="mem-card" onclick="openLesson('types')" style="cursor:pointer"><span class="mc-icon">👨‍🔬</span><div class="mc-name">Dr. Byte</div><div class="mc-type">data_types_expert</div><div class="mc-desc">A simulation performance scientist obsessed with two-state types. He carries a stopwatch to measure simulation speedup.</div></div>
+      <div class="mem-card" onclick="openLesson('arrays')" style="cursor:pointer"><span class="mc-icon">📦</span><div class="mc-name">Array Anna</div><div class="mc-type">memory_architect</div><div class="mc-desc">Warehouse manager who organizes millions of data items. She knows exactly when to use a queue vs associative array.</div></div>
+      <div class="mem-card" onclick="openLesson('oop')" style="cursor:pointer"><span class="mc-icon">🧑‍💻</span><div class="mc-name">OOP Omar</div><div class="mc-type">class_designer</div><div class="mc-desc">Software architect who brought OOP discipline to hardware verification. Obsessed with clean inheritance hierarchies.</div></div>
+      <div class="mem-card" onclick="openLesson('crv')" style="cursor:pointer"><span class="mc-icon">🎲</span><div class="mc-name">Randon Rex</div><div class="mc-type">crv_specialist</div><div class="mc-desc">Professional gambler turned DV engineer. Knows that controlled randomness beats directed tests 10 to 1.</div></div>
+      <div class="mem-card" onclick="openLesson('concurrency')" style="cursor:pointer"><span class="mc-icon">⚡</span><div class="mc-name">Forky Fiona</div><div class="mc-type">thread_maestro</div><div class="mc-desc">Traffic controller for parallel threads. She's seen every deadlock and race condition — and knows how to prevent them.</div></div>
+      <div class="mem-card" onclick="openLesson('interface')" style="cursor:pointer"><span class="mc-icon">🔌</span><div class="mc-name">Interface Iris</div><div class="mc-type">bus_engineer</div><div class="mc-desc">Switchboard operator connecting design and testbench. She bundles every wire into elegant interface packages.</div></div>
+      <div class="mem-card" onclick="openLesson('dpi')" style="cursor:pointer"><span class="mc-icon">🌐</span><div class="mc-name">DPI Dan</div><div class="mc-type">c_sv_bridge</div><div class="mc-desc">Bilingual programmer fluent in both C and SystemVerilog. He builds the bridge so your C model talks to your SV testbench.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL TESTBENCH SECTION -->
+<section id="testbench">
+  <div style="max-width:1100px;margin:0 auto">
+    <span class="sec-tag">// 03 · Complete Example</span>
+    <div class="sec-title">Full SV <span>Testbench Architecture</span></div>
+    <div class="sec-line"></div>
+
+    <div class="person-callout">
+      <div class="pc-avatar">🧑‍💻</div>
+      <div class="pc-content">
+        <div class="pc-name">OOP Omar</div>
+        <div class="pc-title">class_designer · testbench_architect</div>
+        <div class="pc-says">"A complete SystemVerilog testbench uses ALL the features you've learned — classes for components, interfaces to connect to the DUT, constraints for stimulus, assertions for checks, and covergroups to measure completeness. Let me walk you through the full picture."</div>
+      </div>
+    </div>
+
+    <div class="flow-row" style="margin:2rem 0">
+      <div class="fbox"><span class="fi">🎲</span><div class="fn2">Sequence</div><div class="fs">stimulus gen</div></div>
+      <div class="farr">→</div>
+      <div class="fbox"><span class="fi">⚔️</span><div class="fn2">Driver</div><div class="fs">pin wiggler</div></div>
+      <div class="farr">→</div>
+      <div class="fbox"><span class="fi">🔲</span><div class="fn2">DUT</div><div class="fs">device under test</div></div>
+      <div class="farr">→</div>
+      <div class="fbox"><span class="fi">👁</span><div class="fn2">Monitor</div><div class="fs">observer</div></div>
+      <div class="farr">→</div>
+      <div class="fbox"><span class="fi">⚖️</span><div class="fn2">Scoreboard</div><div class="fs">checker</div></div>
+    </div>
+
+    <div class="tabs" id="tb-tabs">
+      <div class="tab active" onclick="switchTab('tb','tb-item')">Transaction Item</div>
+      <div class="tab" onclick="switchTab('tb','tb-seq')">Sequence</div>
+      <div class="tab" onclick="switchTab('tb','tb-driver')">Driver</div>
+      <div class="tab" onclick="switchTab('tb','tb-monitor')">Monitor</div>
+      <div class="tab" onclick="switchTab('tb','tb-sb')">Scoreboard</div>
+      <div class="tab" onclick="switchTab('tb','tb-cov')">Coverage</div>
+      <div class="tab" onclick="switchTab('tb','tb-top')">Top Level</div>
+    </div>
+
+    <div id="tb-item" class="tab-panel active">
+      <div class="code-wrap">
+        <div class="code-header"><div class="code-lang">SV · transaction_item.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+        <div class="code-body"><span class="cm">// ═══ TRANSACTION ITEM — the data object passed through the testbench ═══</span>
+<span class="cm">// Dr. Byte designed the fields; Randon Rex added the constraints</span>
+
+<span class="kw">class</span> <span class="tp">apb_transaction</span> <span class="kw">extends</span> <span class="tp">uvm_sequence_item</span>;
+  <span class="at">`uvm_object_utils_begin</span>(<span class="tp">apb_transaction</span>)
+    <span class="at">`uvm_field_int</span>(addr,   <span class="tp">UVM_ALL_ON</span>)
+    <span class="at">`uvm_field_int</span>(data,   <span class="tp">UVM_ALL_ON</span>)
+    <span class="at">`uvm_field_int</span>(write,  <span class="tp">UVM_ALL_ON</span>)
+    <span class="at">`uvm_field_int</span>(strb,   <span class="tp">UVM_ALL_ON</span>)
+  <span class="at">`uvm_object_utils_end</span>
+
+  <span class="cm">// ── Two-state rand fields (Dr. Byte: "bit is 2x faster than logic!")</span>
+  <span class="kw">rand</span> <span class="tp">bit</span> [11:0]  addr;   <span class="cm">// 12-bit APB address</span>
+  <span class="kw">rand</span> <span class="tp">bit</span> [31:0]  data;   <span class="cm">// 32-bit data</span>
+  <span class="kw">rand</span> <span class="tp">bit</span>         write;  <span class="cm">// 0=read, 1=write</span>
+  <span class="kw">rand</span> <span class="tp">bit</span> [3:0]   strb;   <span class="cm">// byte strobe</span>
+
+  <span class="cm">// ── Constraints (Randon Rex: "guided randomness wins every time!")</span>
+  <span class="kw">constraint</span> c_addr_align {
+    addr[1:0] == <span class="nm">2'b00</span>;           <span class="cm">// word-aligned</span>
+    addr inside {[<span class="nm">12'h000</span>:<span class="nm">12'hFFF</span>]};
+  }
+  <span class="kw">constraint</span> c_strb_write {
+    write == <span class="nm">1</span> -> strb != <span class="nm">4'h0</span>;   <span class="cm">// writes need valid strobes</span>
+    write == <span class="nm">0</span> -> strb == <span class="nm">4'hF</span>;   <span class="cm">// reads: full strobe</span>
+  }
+  <span class="kw">constraint</span> c_wr_bias {
+    write dist { <span class="nm">1</span> := <span class="nm">70</span>, <span class="nm">0</span> := <span class="nm">30</span> }; <span class="cm">// 70% writes, 30% reads</span>
+  }
+
+  <span class="kw">function new</span>(<span class="tp">string</span> name = <span class="st">"apb_transaction"</span>);
+    <span class="kw">super</span>.new(name);
+  <span class="kw">endfunction</span>
+<span class="kw">endclass</span></div>
+      </div>
+    </div>
+
+    <div id="tb-seq" class="tab-panel">
+      <div class="code-wrap">
+        <div class="code-header"><div class="code-lang">SV · apb_sequence.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+        <div class="code-body"><span class="cm">// ═══ SEQUENCE — Randon Rex orchestrates stimulus scenarios ═══</span>
+
+<span class="cm">// Base sequence (OOP Omar: "always have a base class!")</span>
+<span class="kw">virtual class</span> <span class="tp">apb_seq_base</span> <span class="kw">extends</span> <span class="tp">uvm_sequence</span>#(<span class="tp">apb_transaction</span>);
+  <span class="at">`uvm_object_utils</span>(<span class="tp">apb_seq_base</span>)
+  <span class="kw">function new</span>(<span class="tp">string</span> name=<span class="st">"apb_seq_base"</span>); <span class="kw">super</span>.new(name); <span class="kw">endfunction</span>
+<span class="kw">endclass</span>
+
+<span class="cm">// Write burst sequence</span>
+<span class="kw">class</span> <span class="tp">apb_write_seq</span> <span class="kw">extends</span> <span class="tp">apb_seq_base</span>;
+  <span class="at">`uvm_object_utils</span>(<span class="tp">apb_write_seq</span>)
+
+  <span class="kw">rand int unsigned</span> burst_len = <span class="nm">10</span>;
+  <span class="kw">constraint</span> c_len { burst_len inside {[<span class="nm">5</span>:<span class="nm">32</span>]}; }
+
+  <span class="kw">task</span> <span class="fn">body</span>();
+    <span class="tp">apb_transaction</span> tr;
+    <span class="at">`uvm_info</span>(<span class="st">"SEQ"</span>, <span class="at">$sformatf</span>(<span class="st">"Write burst: %0d transactions"</span>, burst_len), <span class="tp">UVM_LOW</span>)
+
+    <span class="kw">repeat</span>(burst_len) <span class="kw">begin</span>
+      tr = <span class="tp">apb_transaction</span>::type_id::create(<span class="st">"tr"</span>);
+      start_item(tr);
+      <span class="kw">if</span>(!tr.randomize() <span class="kw">with</span> { write == <span class="nm">1</span>; })
+        <span class="at">`uvm_fatal</span>(<span class="st">"SEQ"</span>, <span class="st">"Randomization failed!"</span>)
+      finish_item(tr);
+    <span class="kw">end</span>
+  <span class="kw">endtask</span>
+<span class="kw">endclass</span>
+
+<span class="cm">// Mixed read-write sequence</span>
+<span class="kw">class</span> <span class="tp">apb_mixed_seq</span> <span class="kw">extends</span> <span class="tp">apb_seq_base</span>;
+  <span class="at">`uvm_object_utils</span>(<span class="tp">apb_mixed_seq</span>)
+  <span class="kw">task</span> <span class="fn">body</span>();
+    <span class="tp">apb_write_seq</span> wr_seq;
+    <span class="tp">apb_transaction</span> rd_tr;
+
+    <span class="cm">// First: write phase</span>
+    wr_seq = <span class="tp">apb_write_seq</span>::type_id::create(<span class="st">"wr_seq"</span>);
+    wr_seq.start(m_sequencer);
+
+    <span class="cm">// Then: read back (Forky Fiona: "no fork here — sequential is safer!") </span>
+    <span class="kw">repeat</span>(<span class="nm">5</span>) <span class="kw">begin</span>
+      rd_tr = <span class="tp">apb_transaction</span>::type_id::create(<span class="st">"rd"</span>);
+      start_item(rd_tr);
+      rd_tr.randomize() <span class="kw">with</span> { write == <span class="nm">0</span>; };
+      finish_item(rd_tr);
+    <span class="kw">end</span>
+  <span class="kw">endtask</span>
+<span class="kw">endclass</span></div>
+      </div>
+    </div>
+
+    <div id="tb-driver" class="tab-panel">
+      <div class="code-wrap">
+        <div class="code-header"><div class="code-lang">SV · apb_driver.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+        <div class="code-body"><span class="cm">// ═══ DRIVER — Interface Iris's bus-driving engine ═══</span>
+<span class="cm">// Uses clocking block to avoid races; virtual interface for DUT access</span>
+
+<span class="kw">class</span> <span class="tp">apb_driver</span> <span class="kw">extends</span> <span class="tp">uvm_driver</span>#(<span class="tp">apb_transaction</span>);
+  <span class="at">`uvm_component_utils</span>(<span class="tp">apb_driver</span>)
+
+  <span class="kw">virtual</span> <span class="tp">apb_if</span> vif;   <span class="cm">// Interface Iris: "virtual interface is the gateway!"</span>
+
+  <span class="kw">function void</span> <span class="fn">build_phase</span>(<span class="tp">uvm_phase</span> phase);
+    <span class="kw">super</span>.build_phase(phase);
+    <span class="kw">if</span>(!<span class="tp">uvm_config_db</span>#(<span class="kw">virtual</span> <span class="tp">apb_if</span>)::get(<span class="kw">this</span>,<span class="st">""</span>,<span class="st">"vif"</span>,vif))
+      <span class="at">`uvm_fatal</span>(<span class="st">"DRV"</span>,<span class="st">"No virtual interface!"</span>)
+  <span class="kw">endfunction</span>
+
+  <span class="kw">task</span> <span class="fn">run_phase</span>(<span class="tp">uvm_phase</span> phase);
+    <span class="tp">apb_transaction</span> req;
+    vif.cb.psel   <= <span class="nm">0</span>;   <span class="cm">// initialize bus to idle</span>
+    vif.cb.penable <= <span class="nm">0</span>;
+
+    <span class="kw">forever begin</span>
+      seq_item_port.get_next_item(req);  <span class="cm">// blocks until item ready</span>
+      drive_transaction(req);
+      seq_item_port.item_done();         <span class="cm">// release Wizard's finish_item()</span>
+    <span class="kw">end</span>
+  <span class="kw">endtask</span>
+
+  <span class="kw">task</span> <span class="fn">drive_transaction</span>(<span class="tp">apb_transaction</span> tr);
+    <span class="cm">// APB 3-phase protocol: SETUP → ACCESS → complete</span>
+    @(vif.cb);                    <span class="cm">// sync to clocking block edge</span>
+    vif.cb.paddr   <= tr.addr;
+    vif.cb.pwdata  <= tr.data;
+    vif.cb.pwrite  <= tr.write;
+    vif.cb.pstrb   <= tr.strb;
+    vif.cb.psel    <= <span class="nm">1</span>;         <span class="cm">// SETUP phase</span>
+    @(vif.cb);
+    vif.cb.penable <= <span class="nm">1</span>;         <span class="cm">// ACCESS phase</span>
+    @(vif.cb iff vif.pready);     <span class="cm">// wait for DUT ready</span>
+    vif.cb.psel    <= <span class="nm">0</span>;
+    vif.cb.penable <= <span class="nm">0</span>;
+  <span class="kw">endtask</span>
+<span class="kw">endclass</span></div>
+      </div>
+    </div>
+
+    <div id="tb-monitor" class="tab-panel">
+      <div class="code-wrap">
+        <div class="code-header"><div class="code-lang">SV · apb_monitor.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+        <div class="code-body"><span class="cm">// ═══ MONITOR — Silent observer, never drives a single wire ═══</span>
+
+<span class="kw">class</span> <span class="tp">apb_monitor</span> <span class="kw">extends</span> <span class="tp">uvm_monitor</span>;
+  <span class="at">`uvm_component_utils</span>(<span class="tp">apb_monitor</span>)
+
+  <span class="tp">uvm_analysis_port</span>#(<span class="tp">apb_transaction</span>) ap;  <span class="cm">// broadcast to all subscribers</span>
+  <span class="kw">virtual</span> <span class="tp">apb_if</span> vif;
+
+  <span class="kw">function void</span> <span class="fn">build_phase</span>(<span class="tp">uvm_phase</span> phase);
+    ap = <span class="kw">new</span>(<span class="st">"ap"</span>, <span class="kw">this</span>);
+    <span class="kw">if</span>(!<span class="tp">uvm_config_db</span>#(<span class="kw">virtual</span> <span class="tp">apb_if</span>)::get(<span class="kw">this</span>,<span class="st">""</span>,<span class="st">"vif"</span>,vif))
+      <span class="at">`uvm_fatal</span>(<span class="st">"MON"</span>,<span class="st">"No virtual interface!"</span>)
+  <span class="kw">endfunction</span>
+
+  <span class="kw">task</span> <span class="fn">run_phase</span>(<span class="tp">uvm_phase</span> phase);
+    <span class="tp">apb_transaction</span> tr;
+    <span class="kw">forever begin</span>
+      <span class="cm">// Watch for APB transfer: sel && enable && ready</span>
+      @(vif.cb iff (vif.psel && vif.penable && vif.pready));
+
+      tr = <span class="tp">apb_transaction</span>::type_id::create(<span class="st">"tr"</span>);
+      tr.addr  = vif.paddr;
+      tr.write = vif.pwrite;
+      tr.data  = vif.pwrite ? vif.pwdata : vif.prdata;
+      tr.strb  = vif.pstrb;
+
+      ap.write(tr);  <span class="cm">// one write → scoreboard + coverage both get it!</span>
+      <span class="at">`uvm_info</span>(<span class="st">"MON"</span>, tr.sprint(), <span class="tp">UVM_HIGH</span>)
+    <span class="kw">end</span>
+  <span class="kw">endtask</span>
+<span class="kw">endclass</span></div>
+      </div>
+    </div>
+
+    <div id="tb-sb" class="tab-panel">
+      <div class="code-wrap">
+        <div class="code-header"><div class="code-lang">SV · apb_scoreboard.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+        <div class="code-body"><span class="cm">// ═══ SCOREBOARD — OOP Omar's reference model + checker ═══</span>
+
+<span class="kw">class</span> <span class="tp">apb_scoreboard</span> <span class="kw">extends</span> <span class="tp">uvm_scoreboard</span>;
+  <span class="at">`uvm_component_utils</span>(<span class="tp">apb_scoreboard</span>)
+
+  <span class="cm">// Array Anna: "associative array = perfect register model!"</span>
+  <span class="kw">local bit</span> [31:0] reg_model[<span class="tp">bit</span>[11:0]];  <span class="cm">// addr → expected data</span>
+
+  <span class="tp">uvm_tlm_analysis_fifo</span>#(<span class="tp">apb_transaction</span>) fifo;
+
+  <span class="kw">int unsigned</span> pass_count = <span class="nm">0</span>;
+  <span class="kw">int unsigned</span> fail_count = <span class="nm">0</span>;
+
+  <span class="kw">function void</span> <span class="fn">build_phase</span>(<span class="tp">uvm_phase</span> phase);
+    fifo = <span class="tp">uvm_tlm_analysis_fifo</span>#(<span class="tp">apb_transaction</span>)::type_id
+           ::create(<span class="st">"fifo"</span>, <span class="kw">this</span>);
+  <span class="kw">endfunction</span>
+
+  <span class="kw">task</span> <span class="fn">run_phase</span>(<span class="tp">uvm_phase</span> phase);
+    <span class="tp">apb_transaction</span> tr;
+    <span class="kw">forever begin</span>
+      fifo.get(tr);
+
+      <span class="kw">if</span>(tr.write) <span class="kw">begin</span>
+        reg_model[tr.addr] = tr.data;  <span class="cm">// update reference model</span>
+        <span class="at">`uvm_info</span>(<span class="st">"SB"</span>,<span class="at">$sformatf</span>(<span class="st">"WRITE addr=%0h data=%0h"</span>,tr.addr,tr.data),<span class="tp">UVM_HIGH</span>)
+
+      <span class="kw">end else begin</span>
+        <span class="kw">if</span>(reg_model.exists(tr.addr)) <span class="kw">begin</span>
+          <span class="kw">if</span>(tr.data === reg_model[tr.addr]) begin
+            pass_count++;
+            <span class="at">`uvm_info</span>(<span class="st">"SB"</span>,<span class="at">$sformatf</span>(<span class="st">"PASS read addr=%0h"</span>,tr.addr),<span class="tp">UVM_HIGH</span>)
+          <span class="kw">end else begin</span>
+            fail_count++;
+            <span class="at">`uvm_error</span>(<span class="st">"SB"</span>,<span class="at">$sformatf</span>(<span class="st">"MISMATCH addr=%0h exp=%0h got=%0h"</span>,
+                        tr.addr, reg_model[tr.addr], tr.data))
+          <span class="kw">end</span>
+        <span class="kw">end</span>
+      <span class="kw">end</span>
+    <span class="kw">end</span>
+  <span class="kw">endtask</span>
+
+  <span class="kw">function void</span> <span class="fn">report_phase</span>(<span class="tp">uvm_phase</span> phase);
+    <span class="at">`uvm_info</span>(<span class="st">"SB"</span>,<span class="at">$sformatf</span>(<span class="st">"RESULTS: PASS=%0d FAIL=%0d"</span>,pass_count,fail_count),<span class="tp">UVM_NONE</span>)
+  <span class="kw">endfunction</span>
+<span class="kw">endclass</span></div>
+      </div>
+    </div>
+
+    <div id="tb-cov" class="tab-panel">
+      <div class="code-wrap">
+        <div class="code-header"><div class="code-lang">SV · apb_coverage.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+        <div class="code-body"><span class="cm">// ═══ COVERAGE — Randon Rex tracks what's been tested ═══</span>
+
+<span class="kw">class</span> <span class="tp">apb_coverage</span> <span class="kw">extends</span> <span class="tp">uvm_subscriber</span>#(<span class="tp">apb_transaction</span>);
+  <span class="at">`uvm_component_utils</span>(<span class="tp">apb_coverage</span>)
+
+  <span class="tp">apb_transaction</span> tr;
+
+  <span class="cm">// Randon Rex: "your covergroup is your verification contract!"</span>
+  <span class="kw">covergroup</span> <span class="tp">apb_cg</span>;
+    <span class="cm">// Address space coverage</span>
+    cp_addr: <span class="kw">coverpoint</span> tr.addr {
+      bins low_regs  = {[<span class="nm">12'h000</span>:<span class="nm">12'h0FF</span>]};
+      bins mid_regs  = {[<span class="nm">12'h100</span>:<span class="nm">12'h7FF</span>]};
+      bins high_regs = {[<span class="nm">12'h800</span>:<span class="nm">12'hFFF</span>]};
+    }
+    <span class="cm">// Transaction type</span>
+    cp_rw: <span class="kw">coverpoint</span> tr.write {
+      bins read_op  = {<span class="nm">0</span>};
+      bins write_op = {<span class="nm">1</span>};
+    }
+    <span class="cm">// Byte strobes (all combinations tested?)</span>
+    cp_strb: <span class="kw">coverpoint</span> tr.strb {
+      bins full_word  = {<span class="nm">4'hF</span>};
+      bins upper_half = {<span class="nm">4'hC</span>};
+      bins lower_half = {<span class="nm">4'h3</span>};
+      bins byte_lane  = {<span class="nm">4'h1</span>,<span class="nm">4'h2</span>,<span class="nm">4'h4</span>,<span class="nm">4'h8</span>};
+    }
+    <span class="cm">// CROSS: addr-range × read/write = 6 bins</span>
+    cx_addr_rw: <span class="kw">cross</span> cp_addr, cp_rw;
+  <span class="kw">endgroup</span>
+
+  <span class="kw">function new</span>(<span class="tp">string</span> n, <span class="tp">uvm_component</span> p);
+    <span class="kw">super</span>.new(n,p);
+    apb_cg = <span class="kw">new</span>();
+  <span class="kw">endfunction</span>
+
+  <span class="kw">function void</span> <span class="fn">write</span>(<span class="tp">apb_transaction</span> t);
+    tr = t;
+    apb_cg.sample();
+  <span class="kw">endfunction</span>
+<span class="kw">endclass</span></div>
+      </div>
+    </div>
+
+    <div id="tb-top" class="tab-panel">
+      <div class="code-wrap">
+        <div class="code-header"><div class="code-lang">SV · apb_top.sv — The complete picture</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+        <div class="code-body"><span class="cm">// ═══ TOP-LEVEL TESTBENCH — everything wired together ═══</span>
+
+<span class="kw">module</span> <span class="tp">tb_top</span>;
+  <span class="kw">import</span> <span class="tp">uvm_pkg</span>::*;
+  <span class="at">`include</span> <span class="st">"uvm_macros.svh"</span>
+  <span class="at">`include</span> <span class="st">"apb_pkg.sv"</span>
+
+  <span class="cm">// Interface Iris: "one interface handles all DUT connections!"</span>
+  <span class="tp">apb_if</span> dut_if(.clk(clk), .rst_n(rst_n));
+
+  <span class="cm">// Clock generation</span>
+  <span class="kw">logic</span> clk = <span class="nm">0</span>;
+  <span class="kw">always</span> #5 clk = ~clk;   <span class="cm">// 100 MHz</span>
+
+  <span class="cm">// Reset</span>
+  <span class="kw">logic</span> rst_n;
+  <span class="kw">initial begin</span>
+    rst_n = <span class="nm">0</span>;
+    ##10;              <span class="cm">// clocking block delay syntax</span>
+    rst_n = <span class="nm">1</span>;
+  <span class="kw">end</span>
+
+  <span class="cm">// DUT instance</span>
+  <span class="tp">apb_slave_dut</span> dut(
+    .clk    (clk),
+    .rst_n  (rst_n),
+    .paddr  (dut_if.paddr),
+    .pwdata (dut_if.pwdata),
+    .pwrite (dut_if.pwrite),
+    .psel   (dut_if.psel),
+    .penable(dut_if.penable),
+    .pready (dut_if.pready),
+    .prdata (dut_if.prdata)
+  );
+
+  <span class="kw">initial begin</span>
+    <span class="cm">// Pass virtual interface to UVM config DB</span>
+    <span class="tp">uvm_config_db</span>#(<span class="kw">virtual</span> <span class="tp">apb_if</span>)::set(<span class="kw">null</span>,<span class="st">"uvm_test_top.*"</span>,<span class="st">"vif"</span>,dut_if);
+
+    <span class="cm">// Start the test!</span>
+    run_test(<span class="st">"apb_mixed_test"</span>);
+  <span class="kw">end</span>
+
+  <span class="cm">// Assertions (Randon Rex: "SVA guards never sleep!")</span>
+  <span class="tp">apb_if</span> <span class="kw">bind</span> <span class="tp">apb_slave_dut</span> apb_assertions sva_inst(.*);</span>
+<span class="kw">endmodule</span>
+
+<span class="cm">// ── APB Interface definition ──</span>
+<span class="kw">interface</span> <span class="tp">apb_if</span>(<span class="kw">input logic</span> clk, rst_n);
+  <span class="kw">logic</span> [11:0] paddr;
+  <span class="kw">logic</span> [31:0] pwdata, prdata;
+  <span class="kw">logic</span>        pwrite, psel, penable, pready;
+  <span class="kw">logic</span> [3:0]  pstrb;
+
+  <span class="cm">// Interface Iris: "clocking block = zero race conditions!"</span>
+  <span class="kw">clocking</span> cb @(posedge clk);
+    default <span class="kw">input</span> #1step <span class="kw">output</span> #1;
+    <span class="kw">output</span> paddr, pwdata, pwrite, psel, penable, pstrb;
+    <span class="kw">input</span>  pready, prdata;
+  <span class="kw">endclocking</span>
+
+  <span class="kw">modport</span> drv_mp (<span class="kw">clocking</span> cb, <span class="kw">input</span> rst_n);
+  <span class="kw">modport</span> mon_mp (<span class="kw">input</span>    paddr, pwdata, pwrite, psel, penable, pready, prdata, clk, rst_n);
+<span class="kw">endinterface</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ SECTION -->
+<section id="quiz" style="background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)">
+  <div style="max-width:800px;margin:0 auto">
+    <span class="sec-tag">// 04 · Test Your Knowledge</span>
+    <div class="sec-title">Quick <span>Quiz Challenge</span></div>
+    <div class="sec-line"></div>
+
+    <div class="person-callout">
+      <div class="pc-avatar">🎲</div>
+      <div class="pc-content">
+        <div class="pc-name">Randon Rex</div>
+        <div class="pc-title">crv_specialist · quiz_master</div>
+        <div class="pc-says">"Time to test that brain of yours! These questions cover all 7 domains. Every correct answer builds your SV muscle memory. Let's go!"</div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <div class="quiz-head">⚡ SV Knowledge Check</div>
+      <div id="q-progress" class="quiz-progress" style="margin-bottom:1rem">Question 1 of 10</div>
+      <div class="quiz-q" id="q-text">Loading question...</div>
+      <div class="quiz-opts" id="q-opts"></div>
+      <div class="quiz-fb" id="q-fb"></div>
+      <div class="quiz-nav">
+        <div class="quiz-progress" id="q-score">Score: 0/0</div>
+        <button class="btn btn-ghost" id="q-next" onclick="nextQuizQ()" style="display:none;font-size:0.82rem;padding:0.5rem 1.2rem">Next →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div id="modal-box">
+    <div class="modal-topbar">
+      <div style="font-family:var(--font-head);color:var(--cyan);font-weight:700" id="modal-title">Lesson</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">DV_HUB · <span>Khaja</span> SV-ELearn</div>
+  <div class="footer-sub">SystemVerilog mastery for the modern design verification engineer</div>
+  <div class="footer-links">
+    <a class="footer-link" href="#topics">Topics</a>
+    <a class="footer-link" href="#characters">Characters</a>
+    <a class="footer-link" href="#testbench">Testbench</a>
+    <a class="footer-link" href="#quiz">Quiz</a>
+  </div>
+  <div style="margin-top:1.5rem;font-family:var(--font-code);font-size:0.72rem;color:var(--text3)">// Shaik Khaja Mohiddeen · The DV Hub · SV-ELearn v1.0</div>
+</footer>
+
+<script>
+/* ═══ PROGRESS BAR ═══ */
+window.addEventListener('scroll',()=>{
+  const pct=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
+  document.getElementById('progress-bar').style.width=pct+'%';
+});
+
+/* ═══ TAB SWITCHER ═══ */
+function switchTab(group, panelId){
+  const tabs=document.querySelectorAll(`#${group}-tabs .tab`);
+  const panels=document.querySelectorAll(`#${group}-tabs ~ .tab-panel, .tab-panel`);
+  // find all siblings
+  const allPanels=[];
+  let el=document.getElementById(`${group}-tabs`).nextElementSibling;
+  while(el && el.classList.contains('tab-panel')){allPanels.push(el);el=el.nextElementSibling;}
+  allPanels.forEach(p=>p.classList.remove('active'));
+  tabs.forEach(t=>t.classList.remove('active'));
+  document.getElementById(panelId).classList.add('active');
+  // activate clicked tab
+  event.currentTarget.classList.add('active');
+}
+
+/* ═══ LESSONS DATA ═══ */
+const LESSONS = {
+  types:{
+    title:'👨‍🔬 Enhanced Data Types & Structures',
+    teacher:{avatar:'👨‍🔬',name:'Dr. Byte',role:'Simulation Performance Scientist',speech:'"Two-state types run 2× faster. Every bit you save in simulation time is silicon insight gained earlier. Let me show you the full toolkit."'},
+    content:`
+<div class="concept-block">
+  <div class="concept-head">Two-State vs Four-State Types</div>
+  <div class="two-col">
+    <div class="cmp-box">
+      <div class="cmp-title" style="color:var(--orange)">🐢 Four-State (Verilog)</div>
+      <ul class="cmp-list">
+        <li>Values: 0, 1, X, Z</li>
+        <li>logic, wire, reg</li>
+        <li>Slower simulation</li>
+        <li>Needed for RTL/gate-level</li>
+      </ul>
+    </div>
+    <div class="cmp-box">
+      <div class="cmp-title" style="color:var(--green)">🚀 Two-State (SV)</div>
+      <ul class="cmp-list">
+        <li>Values: 0 and 1 only</li>
+        <li>bit, byte, int, shortint</li>
+        <li>2× faster in TB code</li>
+        <li>Perfect for testbench variables</li>
+      </ul>
+    </div>
+  </div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · data_types.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">// ── Two-State Types (Dr. Byte's favorites!) ──</span>
+<span class="tp">bit</span>                 single_bit;    <span class="cm">// 1-bit two-state</span>
+<span class="tp">byte</span>                b = <span class="nm">8'hFF</span>;    <span class="cm">// 8-bit signed (–128 to 127)</span>
+<span class="tp">shortint</span>            si = <span class="nm">100</span>;    <span class="cm">// 16-bit signed</span>
+<span class="tp">int</span>                 i  = <span class="nm">1000</span>;   <span class="cm">// 32-bit signed (like C int)</span>
+<span class="tp">longint</span>             li = <span class="nm">64'd0</span>;  <span class="cm">// 64-bit signed</span>
+<span class="tp">bit</span> [7:0]           byte_vec;     <span class="cm">// 8-bit two-state vector</span>
+
+<span class="cm">// ── Four-State Types (use in RTL interfaces!) ──</span>
+<span class="tp">logic</span>               l;            <span class="cm">// 1-bit four-state (replaces wire/reg)</span>
+<span class="tp">logic</span> [31:0]        bus;          <span class="cm">// 32-bit four-state bus</span>
+<span class="tp">reg</span>                 old_style;    <span class="cm">// legacy Verilog (avoid in new SV code)</span>
+
+<span class="cm">// ── String Type ──</span>
+<span class="tp">string</span> msg = <span class="st">"Hello DV World!"</span>;
+msg = {msg, <span class="st">" SV is awesome"</span>};     <span class="cm">// concatenation</span>
+<span class="kw">$display</span>(<span class="st">"len=%0d"</span>, msg.len());    <span class="cm">// built-in len()</span>
+<span class="kw">$display</span>(<span class="st">"%s"</span>,       msg.toupper());<span class="cm">// HELLO DV WORLD! SV IS AWESOME</span></div>
+  </div>
+</div>
+<div class="concept-block">
+  <div class="concept-head">Structures — C-like Data Grouping</div>
+  <div class="person-callout">
+    <div class="pc-avatar">👨‍🔬</div>
+    <div class="pc-content">
+      <div class="pc-name">Dr. Byte</div><div class="pc-title">data_types_expert</div>
+      <div class="pc-says">Structs group related data into one type. A <code>packet_t</code> struct bundles header, payload, and CRC so you pass one variable instead of three — cleaner, faster, and reusable.</div>
+    </div>
+  </div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · structs_and_unions.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">// ── Struct: group related fields ──</span>
+<span class="kw">typedef struct</span> {
+  <span class="tp">bit</span> [7:0]  addr;
+  <span class="tp">bit</span> [31:0] data;
+  <span class="tp">bit</span>        write;
+} <span class="tp">apb_pkt_t</span>;
+
+<span class="tp">apb_pkt_t</span> pkt;
+pkt.addr  = <span class="nm">8'hA0</span>;
+pkt.data  = <span class="nm">32'hDEAD_BEEF</span>;
+pkt.write = <span class="nm">1</span>;
+
+<span class="cm">// ── Packed struct: laid out contiguously in memory ──</span>
+<span class="kw">typedef struct packed</span> {
+  <span class="tp">bit</span> [7:0]  hdr;     <span class="cm">// bits [39:32]</span>
+  <span class="tp">bit</span> [31:0] payload; <span class="cm">// bits [31:0]</span>
+} <span class="tp">frame_t</span>;            <span class="cm">// total = 40 bits, can cast to bit[39:0]</span>
+
+<span class="cm">// ── Enum: named constants ──</span>
+<span class="kw">typedef enum bit</span> [1:0] {
+  IDLE  = <span class="nm">2'b00</span>,
+  SETUP = <span class="nm">2'b01</span>,
+  WAIT  = <span class="nm">2'b10</span>,
+  DONE  = <span class="nm">2'b11</span>
+} <span class="tp">fsm_state_e</span>;
+
+<span class="tp">fsm_state_e</span> state = <span class="tp">IDLE</span>;
+<span class="kw">$display</span>(<span class="st">"State: %s"</span>, state.name()); <span class="cm">// prints "IDLE" — not 0!</span>
+
+<span class="cm">// ── Union: same memory, different views ──</span>
+<span class="kw">typedef union packed</span> {
+  <span class="tp">bit</span> [31:0] raw;
+  <span class="kw">struct packed</span> {
+    <span class="tp">bit</span> [15:0] hi;
+    <span class="tp">bit</span> [15:0] lo;
+  } words;
+} <span class="tp">data_view_t</span>;
+
+<span class="tp">data_view_t</span> d;
+d.raw = <span class="nm">32'hABCD_1234</span>;
+<span class="kw">$display</span>(<span class="st">"hi=%0h lo=%0h"</span>, d.words.hi, d.words.lo); <span class="cm">// ABCD, 1234</span></div>
+  </div>
+</div>
+<div class="quiz-section">
+  <div class="quiz-head">🎯 Quick Check — Dr. Byte's Lab Test</div>
+  <div class="quiz-q">Which data type should you use for a 32-bit testbench counter variable to maximize simulation speed?</div>
+  <div class="quiz-opts" style="grid-template-columns:1fr 1fr">
+    <button class="q-opt" onclick="inlineQ(this,false,'logic is four-state — slower for TB variables')">logic [31:0]</button>
+    <button class="q-opt" onclick="inlineQ(this,true,'Correct! int is two-state (0/1 only) — 2× faster than logic in testbench code!')">int</button>
+    <button class="q-opt" onclick="inlineQ(this,false,'reg is Verilog legacy. Use int or bit in SV testbenches')">reg [31:0]</button>
+    <button class="q-opt" onclick="inlineQ(this,false,'byte is only 8 bits — too small for a 32-bit counter')">byte</button>
+  </div>
+  <div class="quiz-fb" id="iq-types" style="display:none"></div>
+</div>
+`},
+
+  arrays:{
+    title:'📦 Advanced Arrays',
+    teacher:{avatar:'📦',name:'Array Anna',role:'Memory Architect & Warehouse Manager',speech:'"Every array type has its perfect use case. I\'ve organized millions of records — let me show you which container to reach for in every situation."'},
+    content:`
+<div class="concept-block">
+  <div class="concept-head">The Four Array Types</div>
+  <div class="memory-grid">
+    <div class="mem-card"><span class="mc-icon">📐</span><div class="mc-name">Fixed-Size</div><div class="mc-type">T arr[N]</div><div class="mc-desc">Size known at compile-time. Fastest access. Use for protocol-fixed structures.</div></div>
+    <div class="mem-card"><span class="mc-icon">🔄</span><div class="mc-name">Dynamic</div><div class="mc-type">T arr[]</div><div class="mc-desc">Size set at runtime with new[]. Resize with delete. Perfect for variable-length payloads.</div></div>
+    <div class="mem-card"><span class="mc-icon">🗂️</span><div class="mc-name">Associative</div><div class="mc-type">T arr[KEY]</div><div class="mc-desc">Sparse hash-map. Any index type. Ideal for register models and scoreboards.</div></div>
+    <div class="mem-card"><span class="mc-icon">📋</span><div class="mc-name">Queue</div><div class="mc-type">T arr[$]</div><div class="mc-desc">Variable-size ordered collection. push/pop at both ends. Natural FIFO/LIFO model.</div></div>
+  </div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · all_arrays.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">// ── DYNAMIC ARRAY ──</span>
+<span class="tp">int</span> dyn_arr[];                     <span class="cm">// declared but unallocated</span>
+dyn_arr = <span class="kw">new</span>[<span class="nm">10</span>];               <span class="cm">// allocate 10 elements</span>
+dyn_arr[<span class="nm">0</span>] = <span class="nm">42</span>;
+dyn_arr = <span class="kw">new</span>[<span class="nm">20</span>](dyn_arr);      <span class="cm">// resize to 20, copy old data</span>
+dyn_arr.delete();                  <span class="cm">// free memory</span>
+
+<span class="cm">// ── ASSOCIATIVE ARRAY ──</span>
+<span class="tp">bit</span>[31:0] reg_map[<span class="tp">bit</span>[11:0]];    <span class="cm">// address → value map</span>
+reg_map[<span class="nm">12'hA00</span>] = <span class="nm">32'hDEAD</span>;
+<span class="kw">if</span>(reg_map.exists(<span class="nm">12'hA00</span>))      <span class="cm">// check before access!</span>
+  <span class="kw">$display</span>(<span class="st">"%h"</span>, reg_map[<span class="nm">12'hA00</span>]);
+reg_map.delete(<span class="nm">12'hA00</span>);          <span class="cm">// remove one entry</span>
+<span class="kw">$display</span>(<span class="st">"size=%0d"</span>, reg_map.num()); <span class="cm">// number of entries</span>
+
+<span class="cm">// String key associative array — very common in scoreboards!</span>
+<span class="tp">int</span> error_count[<span class="tp">string</span>];
+error_count[<span class="st">"timeout"</span>]++;
+error_count[<span class="st">"mismatch"</span>] += <span class="nm">3</span>;
+
+<span class="cm">// ── QUEUE ──</span>
+<span class="tp">int</span> fifo_q[$];                     <span class="cm">// unbounded queue</span>
+<span class="tp">int</span> bounded_q[$:<span class="nm">15</span>];             <span class="cm">// max 16 elements</span>
+
+fifo_q.push_back(<span class="nm">10</span>);            <span class="cm">// enqueue</span>
+fifo_q.push_back(<span class="nm">20</span>);
+fifo_q.push_front(<span class="nm">5</span>);            <span class="cm">// prepend: [5,10,20]</span>
+<span class="kw">automatic int</span> val = fifo_q.pop_front(); <span class="cm">// val=5, q=[10,20]</span>
+<span class="kw">$display</span>(<span class="st">"size=%0d"</span>, fifo_q.size());</div>
+  </div>
+</div>
+<div class="concept-block">
+  <div class="concept-head">Built-in Array Methods</div>
+  <div class="info-box green">Array Anna: <strong>Array methods are your superpowers!</strong> Never write manual loops when a built-in method exists. They're synthesizable in some contexts and always more readable.</div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · array_methods.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="tp">int</span> data[] = {5, 2, 8, 1, 9, 3};
+
+<span class="cm">// ── Ordering ──</span>
+data.sort();           <span class="cm">// [1,2,3,5,8,9]</span>
+data.rsort();          <span class="cm">// [9,8,5,3,2,1]</span>
+data.reverse();        <span class="cm">// [1,2,3,5,8,9]</span>
+data.shuffle();        <span class="cm">// random order (non-deterministic)</span>
+
+<span class="cm">// ── Reduction ──</span>
+<span class="tp">int</span> total   = data.sum();       <span class="cm">// 28</span>
+<span class="tp">int</span> product = data.product();   <span class="cm">// 1×2×3×5×8×9 = 2160</span>
+<span class="tp">int</span> all_or  = data.or();        <span class="cm">// bitwise OR reduction</span>
+
+<span class="cm">// ── Searching ──</span>
+<span class="tp">int</span> found[] = data.find() <span class="kw">with</span> (item > <span class="nm">4</span>);   <span class="cm">// [5,8,9]</span>
+<span class="tp">int</span> idx[]   = data.find_index() <span class="kw">with</span> (item > <span class="nm">4</span>); <span class="cm">// indexes</span>
+<span class="tp">int</span> minv[]  = data.min();  <span class="tp">int</span> maxv[] = data.max();
+
+<span class="cm">// ── Unique ──</span>
+<span class="tp">int</span> dups[] = {1,2,2,3,3,3};
+<span class="tp">int</span> uniq[] = dups.unique();       <span class="cm">// [1,2,3]</span>
+
+<span class="cm">// ── Sort with custom expression ──</span>
+<span class="tp">apb_transaction</span> pkts[];
+pkts.sort() <span class="kw">with</span> (item.addr);    <span class="cm">// sort transactions by address!</span></div>
+  </div>
+</div>
+`},
+
+  oop:{
+    title:'🧑‍💻 Object-Oriented Programming',
+    teacher:{avatar:'🧑‍💻',name:'OOP Omar',role:'Class Designer & Testbench Architect',speech:'"Every scalable testbench I\'ve ever built started with clean class hierarchy. Inheritance, polymorphism, encapsulation — these aren\'t just buzzwords, they\'re the architecture of robust verification."'},
+    content:`
+<div class="concept-block">
+  <div class="concept-head">Classes: The Foundation</div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · classes_basics.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">// ── Base class definition ──</span>
+<span class="kw">class</span> <span class="tp">transaction</span>;
+  <span class="cm">// Properties (data members)</span>
+  <span class="kw">protected</span> <span class="tp">int</span> id;             <span class="cm">// accessible by subclasses</span>
+  <span class="kw">local</span>     <span class="tp">bit</span> valid;           <span class="cm">// only accessible in this class</span>
+  <span class="kw">rand</span>      <span class="tp">bit</span>[31:0] data;
+
+  <span class="cm">// Constructor</span>
+  <span class="kw">function new</span>(<span class="tp">int</span> id_val = <span class="nm">0</span>);
+    id    = id_val;
+    valid = <span class="nm">1</span>;
+  <span class="kw">endfunction</span>
+
+  <span class="cm">// Method (virtual = overrideable!)</span>
+  <span class="kw">virtual function string</span> <span class="fn">describe</span>();
+    <span class="kw">return</span> <span class="at">$sformatf</span>(<span class="st">"TXN[%0d] data=%0h"</span>, id, data);
+  <span class="kw">endfunction</span>
+
+  <span class="kw">function int</span> <span class="fn">get_id</span>(); <span class="kw">return</span> id; <span class="kw">endfunction</span>
+<span class="kw">endclass</span>
+
+<span class="cm">// ── Derived class: INHERITANCE ──</span>
+<span class="kw">class</span> <span class="tp">apb_txn</span> <span class="kw">extends</span> <span class="tp">transaction</span>;
+  <span class="tp">bit</span>[11:0] addr;
+  <span class="tp">bit</span>       write;
+
+  <span class="kw">function new</span>(<span class="tp">int</span> id_val);
+    <span class="kw">super</span>.new(id_val);  <span class="cm">// call parent constructor!</span>
+  <span class="kw">endfunction</span>
+
+  <span class="cm">// POLYMORPHISM: override parent's describe()</span>
+  <span class="kw">virtual function string</span> <span class="fn">describe</span>();
+    <span class="kw">return</span> <span class="at">$sformatf</span>(<span class="st">"APB[%0d] addr=%0h data=%0h %s"</span>,
+                     id, addr, data, write ? <span class="st">"WR"</span> : <span class="st">"RD"</span>);
+  <span class="kw">endfunction</span>
+<span class="kw">endclass</span>
+
+<span class="cm">// ── Using polymorphism ──</span>
+<span class="tp">transaction</span> base_handle;
+<span class="tp">apb_txn</span>     apb_obj = <span class="kw">new</span>(<span class="nm">1</span>);
+
+base_handle = apb_obj;   <span class="cm">// upcasting — legal!</span>
+<span class="kw">$display</span>(base_handle.describe()); <span class="cm">// calls APB version! (virtual dispatch)</span></div>
+  </div>
+</div>
+<div class="concept-block">
+  <div class="concept-head">Handles, Copying, and Memory</div>
+  <div class="info-box orange">OOP Omar: <strong>Critical!</strong> In SV, class variables are <code>handles</code> (like pointers). Assignment copies the handle, NOT the object. Always use <code>copy()</code> or deep-copy manually when you need independent objects!</div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · handles_and_copy.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="tp">apb_txn</span> a = <span class="kw">new</span>(<span class="nm">1</span>);
+<span class="tp">apb_txn</span> b;
+
+b = a;            <span class="cm">// SHALLOW: b and a point to SAME object!</span>
+b.addr = <span class="nm">12'hFFF</span>; <span class="cm">// This ALSO changes a.addr — BUG!</span>
+
+<span class="cm">// ── Deep copy ──</span>
+<span class="tp">apb_txn</span> c = <span class="kw">new</span>(a);   <span class="cm">// SV copy constructor — independent copy</span>
+<span class="cm">// Or implement your own:</span>
+<span class="kw">function</span> <span class="tp">apb_txn</span> <span class="fn">clone</span>();
+  <span class="tp">apb_txn</span> copy = <span class="kw">new</span>(<span class="kw">this</span>);  <span class="cm">// field-by-field copy</span>
+  <span class="kw">return</span> copy;
+<span class="kw">endfunction</span>
+
+<span class="cm">// ── Null handle check ──</span>
+<span class="tp">apb_txn</span> maybe_null;  <span class="cm">// = null by default</span>
+<span class="kw">if</span>(maybe_null == <span class="kw">null</span>)
+  <span class="kw">$display</span>(<span class="st">"Handle not initialized!"</span>);
+
+<span class="cm">// ── $cast for downcasting ──</span>
+<span class="tp">transaction</span> base = <span class="kw">new</span>(<span class="nm">1</span>);
+<span class="tp">apb_txn</span>     derived;
+<span class="kw">if</span>(!<span class="at">$cast</span>(derived, base))        <span class="cm">// safe downcast — returns 0 if wrong type</span>
+  <span class="kw">$display</span>(<span class="st">"Type mismatch!"</span>);</div>
+  </div>
+</div>
+`},
+
+  crv:{
+    title:'🎲 Verification & Randomization',
+    teacher:{avatar:'🎲',name:'Randon Rex',role:'CRV Specialist & Casino Owner',speech:'"I turned gambling instincts into verification superpowers. Constrained-random finds bugs that directed tests miss every time. Assertions never sleep. Coverage tells you when you\'re done."'},
+    content:`
+<div class="concept-block">
+  <div class="concept-head">Constrained-Random Verification (CRV)</div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · crv.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="kw">class</span> <span class="tp">packet</span>;
+  <span class="kw">rand</span>  <span class="tp">bit</span>[7:0]  addr;   <span class="cm">// randomized each .randomize() call</span>
+  <span class="kw">randc</span> <span class="tp">bit</span>[3:0]  prio;   <span class="cm">// CYCLIC: visits all values before repeating</span>
+  <span class="kw">rand</span>  <span class="tp">bit</span>[31:0] data;
+
+  <span class="cm">// Hard constraint — solver MUST satisfy</span>
+  <span class="kw">constraint</span> c_addr {
+    addr inside {[<span class="nm">8'h10</span>:<span class="nm">8'hEF</span>]};
+    addr[0] == <span class="nm">0</span>;  <span class="cm">// even addresses only</span>
+  }
+
+  <span class="cm">// Soft constraint — hint, can be overridden</span>
+  <span class="kw">constraint</span> c_data_soft {
+    <span class="kw">soft</span> data inside {[<span class="nm">0</span>:<span class="nm">16'hFFFF</span>]};  <span class="cm">// prefer small values</span>
+  }
+
+  <span class="cm">// Implication constraint</span>
+  <span class="kw">constraint</span> c_high_prio {
+    prio > <span class="nm">8</span> -> data == <span class="nm">32'hDEAD_BEEF</span>;  <span class="cm">// high priority? use magic data</span>
+  }
+<span class="kw">endclass</span>
+
+<span class="cm">// ── Using randomization ──</span>
+<span class="tp">packet</span> pkt = <span class="kw">new</span>();
+
+<span class="cm">// Standard call</span>
+<span class="kw">assert</span>(pkt.randomize()) <span class="kw">else</span> <span class="at">`uvm_fatal</span>(<span class="st">"RND"</span>,<span class="st">"Rand failed!"</span>)
+
+<span class="cm">// Inline constraint override</span>
+pkt.randomize() <span class="kw">with</span> { addr == <span class="nm">8'hA0</span>; data[31] == <span class="nm">1</span>; };
+
+<span class="cm">// Disable a specific constraint</span>
+pkt.c_addr.constraint_mode(<span class="nm">0</span>);   <span class="cm">// disable c_addr</span>
+pkt.randomize();                   <span class="cm">// any address now</span>
+pkt.c_addr.constraint_mode(<span class="nm">1</span>);   <span class="cm">// re-enable</span>
+
+<span class="cm">// Fix one field, randomize rest</span>
+pkt.addr.rand_mode(<span class="nm">0</span>);           <span class="cm">// freeze addr</span>
+pkt.randomize();                   <span class="cm">// only data/prio randomized</span></div>
+  </div>
+</div>
+<div class="concept-block">
+  <div class="concept-head">SystemVerilog Assertions (SVA)</div>
+  <div class="info-box purple">Randon Rex: <strong>Assertions never sleep!</strong> While your test runs, SVA properties check DUT behavior cycle-by-cycle. They catch bugs the scoreboard might miss — especially temporal/protocol violations.</div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · assertions.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">// ── Immediate assertion (like an if-error check) ──</span>
+<span class="kw">always @</span>(posedge clk) <span class="kw">begin</span>
+  <span class="at">assert</span>(fifo_count <= FIFO_DEPTH)
+    <span class="kw">else</span> <span class="at">`uvm_error</span>(<span class="st">"FIFO"</span>, <span class="st">"OVERFLOW!"</span>);
+<span class="kw">end</span>
+
+<span class="cm">// ── Concurrent assertion with sequence ──</span>
+<span class="cm">// "If psel goes high, penable must follow within 1 cycle"</span>
+<span class="tp">property</span> p_apb_setup;
+  @(posedge clk) <span class="kw">disable iff</span>(!rst_n)
+  psel |=> penable;  <span class="cm">// |=> means "next cycle"</span>
+<span class="kw">endproperty</span>
+<span class="at">assert property</span>(p_apb_setup) <span class="kw">else</span>
+  <span class="at">`uvm_error</span>(<span class="st">"APB"</span>, <span class="st">"penable didn't follow psel!"</span>);
+
+<span class="cm">// Cover the property (functional coverage)</span>
+<span class="at">cover property</span>(p_apb_setup);
+
+<span class="cm">// ── Sequence operators ──</span>
+<span class="cm">// ##N = exactly N cycles</span>
+<span class="cm">// ##[1:3] = 1 to 3 cycles</span>
+<span class="cm">// |-> = this cycle</span>
+<span class="cm">// |=> = next cycle</span>
+<span class="tp">property</span> p_req_ack;
+  @(posedge clk)
+  req |-> ##[1:5] ack;   <span class="cm">// ack must arrive within 1–5 cycles of req</span>
+<span class="kw">endproperty</span>
+<span class="at">assert property</span>(p_req_ack);
+
+<span class="cm">// ── Assume property (for formal verification) ──</span>
+<span class="at">assume property</span>(@(posedge clk) !(psel && !rst_n));  <span class="cm">// constrain stimulus</span></div>
+  </div>
+</div>
+`},
+
+  concurrency:{
+    title:'⚡ Concurrency & IPC',
+    teacher:{avatar:'⚡',name:'Forky Fiona',role:'Thread Maestro & Deadlock Hunter',speech:'"Parallel threads are powerful — and dangerous. I\'ve hunted every deadlock pattern that exists. Let me teach you fork-join properly so you never get stuck."'},
+    content:`
+<div class="concept-block">
+  <div class="concept-head">fork-join Variants</div>
+  <div class="three-types" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0">
+    <div class="cmp-box"><div class="cmp-title" style="color:var(--pink)">fork...join</div><ul class="cmp-list"><li>Wait for ALL threads to finish</li><li>Parent blocks until last child done</li><li>Use for truly parallel operations</li></ul></div>
+    <div class="cmp-box"><div class="cmp-title" style="color:var(--orange)">fork...join_any</div><ul class="cmp-list"><li>Wait for ANY ONE thread to finish</li><li>Other threads keep running</li><li>Use for timeout patterns</li></ul></div>
+    <div class="cmp-box"><div class="cmp-title" style="color:var(--cyan)">fork...join_none</div><ul class="cmp-list"><li>Spawn and continue immediately</li><li>Background threads</li><li>Use for monitors/watchdogs</li></ul></div>
+  </div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · fork_join.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">// ── fork...join: wait for ALL ──</span>
+<span class="kw">fork</span>
+  begin write_burst(10); end
+  begin read_burst(5);  end
+  begin check_timeout(); end
+<span class="kw">join</span>  <span class="cm">// all 3 complete before proceeding</span>
+
+<span class="cm">// ── fork...join_any: timeout pattern ──</span>
+<span class="kw">fork</span>
+  begin : wait_for_ack
+    @(posedge ack_signal);
+    <span class="kw">$display</span>(<span class="st">"ACK received!"</span>);
+  <span class="kw">end</span>
+  begin : timeout_watchdog
+    #<span class="nm">1000ns</span>;
+    <span class="at">`uvm_fatal</span>(<span class="st">"TIMEOUT"</span>, <span class="st">"ACK never arrived!"</span>)
+  <span class="kw">end</span>
+<span class="kw">join_any</span>
+<span class="kw">disable fork</span>;   <span class="cm">// CRITICAL: kill whichever thread is still running!</span>
+
+<span class="cm">// ── fork...join_none: background watchdog ──</span>
+<span class="kw">fork</span>
+  <span class="kw">forever</span> @(negedge rst_n) <span class="kw">begin</span>
+    <span class="at">`uvm_info</span>(<span class="st">"WDG"</span>, <span class="st">"Reset detected!"</span>, <span class="tp">UVM_LOW</span>)
+  <span class="kw">end</span>
+<span class="kw">join_none</span>  <span class="cm">// spawns and parent continues immediately</span>
+
+<span class="cm">// ── automatic variable: each iteration gets its OWN copy ──</span>
+<span class="kw">for</span>(<span class="kw">int</span> i=<span class="nm">0</span>; i<<span class="nm">4</span>; i++) <span class="kw">begin</span>
+  <span class="kw">automatic int</span> idx = i;  <span class="cm">// crucial! without this all see i=4</span>
+  <span class="kw">fork</span>
+    <span class="kw">$display</span>(<span class="st">"Thread %0d"</span>, idx);  <span class="cm">// 0,1,2,3 correctly</span>
+  <span class="kw">join_none</span>
+<span class="kw">end</span></div>
+  </div>
+</div>
+<div class="concept-block">
+  <div class="concept-head">IPC: Semaphores, Mailboxes & Events</div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · ipc.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">// ── SEMAPHORE: shared resource protection ──</span>
+<span class="tp">semaphore</span> bus_mutex = <span class="kw">new</span>(<span class="nm">1</span>);   <span class="cm">// 1 key = exclusive access</span>
+
+<span class="kw">task</span> <span class="fn">drive_bus</span>(<span class="tp">int</span> agent_id);
+  bus_mutex.get(<span class="nm">1</span>);              <span class="cm">// WAIT for key (blocks if taken)</span>
+  <span class="kw">$display</span>(<span class="st">"Agent %0d driving bus"</span>, agent_id);
+  drive_signals();
+  bus_mutex.put(<span class="nm">1</span>);              <span class="cm">// RELEASE key</span>
+<span class="kw">endtask</span>
+
+<span class="cm">// ── MAILBOX: typed message passing ──</span>
+<span class="tp">mailbox</span>#(<span class="tp">apb_transaction</span>) mb = <span class="kw">new</span>();   <span class="cm">// unbounded</span>
+<span class="tp">mailbox</span>#(<span class="tp">int</span>)             int_mb = <span class="kw">new</span>(<span class="nm">4</span>); <span class="cm">// bounded: max 4</span>
+
+<span class="cm">// Producer thread</span>
+<span class="kw">fork</span>
+  <span class="kw">begin</span>
+    <span class="tp">apb_transaction</span> tr = <span class="kw">new</span>();
+    tr.randomize();
+    mb.put(tr);   <span class="cm">// blocks if bounded+full</span>
+  <span class="kw">end</span>
+<span class="kw">join_none</span>
+
+<span class="cm">// Consumer thread</span>
+<span class="kw">fork</span>
+  <span class="kw">begin</span>
+    <span class="tp">apb_transaction</span> rcv;
+    mb.get(rcv);  <span class="cm">// blocks until message available</span>
+    process_transaction(rcv);
+  <span class="kw">end</span>
+<span class="kw">join_none</span>
+
+<span class="cm">// Non-blocking: try_put / try_get</span>
+<span class="kw">if</span>(!mb.try_get(tr)) <span class="kw">$display</span>(<span class="st">"No message yet"</span>);
+
+<span class="cm">// ── EVENT: trigger & synchronize ──</span>
+<span class="tp">event</span> config_done;
+
+<span class="cm">// Thread 1: trigger</span>
+<span class="kw">fork</span>
+  <span class="kw">begin</span>
+    configure_dut();
+    ->config_done;        <span class="cm">// trigger event</span>
+  <span class="kw">end</span>
+<span class="kw">join_none</span>
+
+<span class="cm">// Thread 2: wait</span>
+@(config_done);           <span class="cm">// blocks until triggered</span>
+<span class="kw">$display</span>(<span class="st">"Config complete, starting test"</span>);</div>
+  </div>
+</div>
+`},
+
+  interface:{
+    title:'🔌 Design & Interfaces',
+    teacher:{avatar:'🔌',name:'Interface Iris',role:'Bus Engineer & Switchboard Operator',speech:'"Before interfaces, you had 50 ports on every module. Now? One interface handle. No missed connections, no direction errors, no race conditions with clocking blocks. Let me show you the clean way."'},
+    content:`
+<div class="concept-block">
+  <div class="concept-head">Interface: Bundle Signals Elegantly</div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">SystemVerilog · interface_full.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">// ── Define the interface ──</span>
+<span class="kw">interface</span> <span class="tp">apb_if</span>(<span class="kw">input logic</span> clk, rst_n);
+
+  <span class="cm">// Signals shared between DUT and testbench</span>
+  <span class="tp">logic</span> [11:0] paddr;
+  <span class="tp">logic</span> [31:0] pwdata, prdata;
+  <span class="tp">logic</span>        pwrite, psel, penable;
+  <span class="tp">logic</span>        pready, pslverr;
+  <span class="tp">logic</span> [3:0]  pstrb;
+
+  <span class="cm">// CLOCKING BLOCK: eliminates all setup/hold race conditions!</span>
+  <span class="kw">clocking</span> driver_cb @(posedge clk);
+    default <span class="kw">input</span> #1step <span class="kw">output</span> #1;   <span class="cm">// sample 1step before clk, drive 1ns after</span>
+    <span class="kw">output</span> paddr, pwdata, pwrite, psel, penable, pstrb;
+    <span class="kw">input</span>  pready, prdata, pslverr;
+  <span class="kw">endclocking</span>
+
+  <span class="kw">clocking</span> monitor_cb @(posedge clk);
+    default <span class="kw">input</span> #1step;
+    <span class="kw">input</span>  paddr, pwdata, pwrite, psel, penable, pready, prdata;
+  <span class="kw">endclocking</span>
+
+  <span class="cm">// MODPORTS: define which signals each module sees and their directions</span>
+  <span class="kw">modport</span> drv_mp  (<span class="kw">clocking</span> driver_cb,  <span class="kw">input</span> rst_n);
+  <span class="kw">modport</span> mon_mp  (<span class="kw">clocking</span> monitor_cb, <span class="kw">input</span> rst_n);
+  <span class="kw">modport</span> dut_mp  (<span class="kw">input</span>  paddr, pwdata, pwrite, psel, penable, pstrb, clk, rst_n,
+                   <span class="kw">output</span> pready, prdata, pslverr);
+
+  <span class="cm">// Inline assertions INSIDE the interface!</span>
+  <span class="tp">property</span> p_no_x_on_addr;
+    @(posedge clk) psel |-> !$isunknown(paddr);
+  <span class="kw">endproperty</span>
+  <span class="at">assert property</span>(p_no_x_on_addr);
+<span class="kw">endinterface</span>
+
+<span class="cm">// ── Connect in top-level ──</span>
+<span class="tp">apb_if</span>        apb(.clk(clk), .rst_n(rst_n));
+<span class="tp">apb_slave_dut</span> dut(.apb(apb.dut_mp));   <span class="cm">// DUT gets dut modport</span>
+
+<span class="cm">// ── Pass to testbench via config_db ──</span>
+<span class="tp">uvm_config_db</span>#(<span class="kw">virtual</span> <span class="tp">apb_if</span>)::set(<span class="kw">null</span>, <span class="st">"*"</span>, <span class="st">"vif"</span>, apb);
+
+<span class="cm">// ── Retrieve in driver ──</span>
+<span class="kw">virtual</span> <span class="tp">apb_if</span> vif;
+<span class="tp">uvm_config_db</span>#(<span class="kw">virtual</span> <span class="tp">apb_if</span>)::get(<span class="kw">this</span>,<span class="st">""</span>,<span class="st">"vif"</span>,vif);
+@(vif.driver_cb);              <span class="cm">// sync to clocking block</span>
+vif.driver_cb.psel <= <span class="nm">1</span>;     <span class="cm">// drive through CB — race-free!</span></div>
+  </div>
+</div>
+`},
+
+  dpi:{
+    title:'🌐 Language Interoperability (DPI)',
+    teacher:{avatar:'🌐',name:'DPI Dan',role:'C/SV Bridge Builder',speech:'"Your C reference model has 10,000 lines. Don\'t rewrite it in SV — import it! DPI-C lets your SystemVerilog testbench call C functions directly. I\'ll show you how."'},
+    content:`
+<div class="concept-block">
+  <div class="concept-head">DPI-C: Calling C from SystemVerilog</div>
+  <div class="info-box">DPI Dan: <strong>DPI = Direct Programming Interface.</strong> Two directions: <code>import</code> (SV calls C function) and <code>export</code> (C calls SV task). Most common use: import a C reference model or math function into your testbench.</div>
+  <div class="code-wrap">
+    <div class="code-header"><div class="code-lang">C · reference_model.c</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">/* C-side: reference model functions */</span>
+<span class="at">#include</span> <span class="st">"svdpi.h"</span>
+<span class="at">#include</span> <span class="st">&lt;stdio.h&gt;</span>
+
+<span class="cm">/* Simple function: add two 32-bit numbers */</span>
+<span class="tp">DPI_DLLESPEC int</span> <span class="fn">c_add</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">return</span> a + b;
+}
+
+<span class="cm">/* Complex model: APB slave prediction */</span>
+<span class="kw">static unsigned int</span> reg_mem[<span class="nm">256</span>] = {<span class="nm">0</span>};
+
+<span class="tp">DPI_DLLESPEC void</span> <span class="fn">c_apb_write</span>(<span class="tp">unsigned int</span> addr, <span class="tp">unsigned int</span> data) {
+    reg_mem[addr & <span class="nm">0xFF</span>] = data;
+}
+
+<span class="tp">DPI_DLLESPEC unsigned int</span> <span class="fn">c_apb_read</span>(<span class="tp">unsigned int</span> addr) {
+    <span class="kw">return</span> reg_mem[addr & <span class="nm">0xFF</span>];
+}</div>
+  </div>
+  <div class="code-wrap" style="margin-top:1rem">
+    <div class="code-header"><div class="code-lang">SystemVerilog · dpi_usage.sv</div><div class="code-dots"><span class="code-dot cd-r"></span><span class="code-dot cd-y"></span><span class="code-dot cd-g"></span></div></div>
+    <div class="code-body"><span class="cm">// ── IMPORT: declare C functions as SV tasks/functions ──</span>
+<span class="kw">import</span> <span class="st">"DPI-C"</span> <span class="kw">function</span> <span class="tp">int</span>          <span class="fn">c_add</span>(<span class="tp">int</span> a, <span class="tp">int</span> b);
+<span class="kw">import</span> <span class="st">"DPI-C"</span> <span class="kw">function</span> <span class="kw">void</span>         <span class="fn">c_apb_write</span>(<span class="tp">int unsigned</span> addr, <span class="tp">int unsigned</span> data);
+<span class="kw">import</span> <span class="st">"DPI-C"</span> <span class="kw">function int unsigned</span> <span class="fn">c_apb_read</span>(<span class="tp">int unsigned</span> addr);
+
+<span class="cm">// ── Use them like native SV functions! ──</span>
+<span class="kw">class</span> <span class="tp">apb_ref_model</span>;
+  <span class="kw">function int unsigned</span> <span class="fn">predict_read</span>(<span class="tp">int unsigned</span> addr);
+    c_apb_write(addr, <span class="nm">32'hDEAD_BEEF</span>);  <span class="cm">// call C!</span>
+    <span class="kw">return</span> c_apb_read(addr);             <span class="cm">// call C!</span>
+  <span class="kw">endfunction</span>
+<span class="kw">endclass</span>
+
+<span class="cm">// ── EXPORT: let C call back into SV ──</span>
+<span class="kw">export</span> <span class="st">"DPI-C"</span> <span class="kw">task</span> sv_callback;
+
+<span class="kw">task</span> <span class="fn">sv_callback</span>(<span class="tp">int</span> event_id);
+  <span class="at">`uvm_info</span>(<span class="st">"DPI"</span>, <span class="at">$sformatf</span>(<span class="st">"C called back with event=%0d"</span>, event_id), <span class="tp">UVM_LOW</span>)
+<span class="kw">endtask</span>
+
+<span class="cm">// ── chandle: opaque C pointer in SV ──</span>
+<span class="kw">import</span> <span class="st">"DPI-C"</span> <span class="kw">function chandle</span> <span class="fn">c_model_create</span>();
+<span class="kw">import</span> <span class="st">"DPI-C"</span> <span class="kw">function void</span>    <span class="fn">c_model_run</span>(<span class="tp">chandle</span> model, <span class="tp">int</span> cycles);
+
+<span class="tp">chandle</span> my_model;
+<span class="kw">initial begin</span>
+  my_model = c_model_create();   <span class="cm">// get C object handle</span>
+  c_model_run(my_model, <span class="nm">1000</span>);  <span class="cm">// pass it back to C</span>
+<span class="kw">end</span></div>
+  </div>
+</div>
+`}
+};
+
+/* ═══ OPEN LESSON ═══ */
+function openLesson(key){
+  const L=LESSONS[key];if(!L)return;
+  const T=L.teacher;
+  document.getElementById('modal-title').textContent=L.title;
+  document.getElementById('modal-content').innerHTML=`
+    <div class="lesson-intro">
+      <div>
+        <div class="lesson-chapter">// SystemVerilog · ${L.title.split(' ').slice(1).join(' ')}</div>
+        <div class="lesson-title">${L.title}</div>
+        <div class="lesson-lore">${T.speech}</div>
+      </div>
+      <div class="teacher-card">
+        <span class="teacher-avatar">${T.avatar}</span>
+        <div class="teacher-name">${T.name}</div>
+        <div class="teacher-role">${T.role}</div>
+      </div>
+    </div>
+    ${L.content}
+  `;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-overlay').scrollTop=0;
+}
+
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+document.getElementById('modal-overlay').addEventListener('click',function(e){
+  if(e.target===this)closeModal();
+});
+
+/* ═══ INLINE QUIZ ═══ */
+function inlineQ(btn,correct,fb){
+  const parent=btn.closest('.quiz-opts');
+  parent.querySelectorAll('.q-opt').forEach(b=>{b.disabled=true;});
+  btn.classList.add(correct?'correct':'wrong');
+  const fbEl=btn.closest('.quiz-section').querySelector('.quiz-fb');
+  fbEl.innerHTML=(correct?'✅ ':'❌ ')+fb;
+  fbEl.style.display='block';
+}
+
+/* ═══ MAIN QUIZ ═══ */
+const QUIZ_Q=[
+  {q:'Which SV keyword makes a variable randomize to all values before repeating?',opts:['rand','randc','random','constraint'],ans:1,fb:'randc = cyclic random. It ensures every value in the range is hit before any value repeats — like shuffling a deck of cards.'},
+  {q:'An associative array in SystemVerilog uses what syntax for the index?',opts:['T arr[N]','T arr[]','T arr[KEY_TYPE]','T arr[$]'],ans:2,fb:'T arr[KEY_TYPE] — e.g. int mem[bit[11:0]] creates a sparse map from 12-bit addresses to int values.'},
+  {q:'Which fork variant continues execution immediately while spawned threads run in background?',opts:['fork...join','fork...join_any','fork...join_none','fork...join_all'],ans:2,fb:'fork...join_none spawns threads and returns immediately. Perfect for background watchdogs and monitors.'},
+  {q:'What mechanism do you use to prevent two drivers from accessing the same bus simultaneously?',opts:['event','mailbox','semaphore','fork'],ans:2,fb:'Semaphore! semaphore.get(1) acquires the key; semaphore.put(1) releases it. Guarantees exclusive access.'},
+  {q:'In OOP, which access modifier makes a property visible to subclasses but not external code?',opts:['local','private','protected','internal'],ans:2,fb:'protected: visible within the class AND all derived classes. local: only in that exact class. SV has no private keyword.'},
+  {q:'What does a clocking block in an interface prevent?',opts:['Deadlocks','Race conditions between TB and DUT','Memory leaks','Simulation timeouts'],ans:1,fb:'Clocking blocks define input sampling (#1step before edge) and output drive (#1 after edge), eliminating setup/hold violations between TB drivers and DUT.'},
+  {q:'Which DPI keyword declares a C function to be callable from SystemVerilog?',opts:['export "DPI-C"','import "DPI-C"','link "C"','extern "C"'],ans:1,fb:'import "DPI-C" function declares C functions as native SV functions. export makes SV tasks callable from C.'},
+  {q:'When does a dynamic array actually allocate memory?',opts:['At declaration','At compile time','When new[N] is called','When first element is written'],ans:2,fb:'new[N] allocates N elements at runtime. Before this call, the array handle is null and any access would fail.'},
+  {q:'Which assertion temporal operator means "in the NEXT cycle"?',opts:['##1','|->','|=>','##[1]'],ans:2,fb:'|=> is the non-overlapping implication: "in the NEXT cycle after the antecedent". |-> means "in the SAME cycle".'},
+  {q:'A covergroup is used for:',opts:['Generating random stimulus','Measuring which scenarios have been tested','Checking DUT output correctness','Controlling thread execution'],ans:1,fb:'Covergroups measure functional coverage — which scenarios your testbench has exercised. They answer "are we done testing?" not "is the DUT correct?"'},
+];
+
+let qIdx=0,qScore=0;
+function renderMainQ(){
+  const q=QUIZ_Q[qIdx];
+  document.getElementById('q-progress').textContent=`Question ${qIdx+1} of ${QUIZ_Q.length}`;
+  document.getElementById('q-score').textContent=`Score: ${qScore}/${qIdx}`;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('q-fb').className='quiz-fb';
+  document.getElementById('q-fb').textContent='';
+  document.getElementById('q-next').style.display='none';
+  const opts=document.getElementById('q-opts');
+  opts.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='q-opt';b.textContent=`${['A','B','C','D'][i]}. ${o}`;
+    b.onclick=()=>{
+      opts.querySelectorAll('.q-opt').forEach(x=>x.disabled=true);
+      const correct=i===q.ans;
+      b.classList.add(correct?'correct':'wrong');
+      opts.querySelectorAll('.q-opt')[q.ans].classList.add('correct');
+      if(correct)qScore++;
+      const fb=document.getElementById('q-fb');
+      fb.innerHTML=(correct?'✅ ':'❌ ')+q.fb;
+      fb.className='quiz-fb show';
+      document.getElementById('q-score').textContent=`Score: ${qScore}/${qIdx+1}`;
+      document.getElementById('q-next').style.display=qIdx<QUIZ_Q.length-1?'inline-block':'none';
+      if(qIdx>=QUIZ_Q.length-1){
+        setTimeout(()=>{
+          document.getElementById('q-fb').innerHTML+=`<br><br>🎉 <strong>Final Score: ${qScore}/${QUIZ_Q.length}</strong> — ${qScore>=8?'SV Master! 🏆':qScore>=5?'Good progress! 📈':'Keep studying! 📖'}`;
+        },500);
+      }
+    };
+    opts.appendChild(b);
+  });
+}
+function nextQuizQ(){
+  qIdx++;
+  if(qIdx<QUIZ_Q.length)renderMainQ();
+}
+renderMainQ();
+
+/* ═══ NAV HIGHLIGHT ═══ */
+const navLinks=document.querySelectorAll('.nav-link');
+const sections=document.querySelectorAll('section[id]');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const a=document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(a)a.classList.add('active');
+    }
+  });
+},{threshold:0.3});
+sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
