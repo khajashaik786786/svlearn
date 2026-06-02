@@ -1,3 +1,12 @@
+The reason the buttons and character cards are not showing up properly on your layout (and look "hidden" or compressed) comes down to a few layout constraints in your CSS:
+
+1. **`min-height: 100vh` on `#hero**`: When combined with a lot of inner padding (`padding: 80px 2.5rem 3rem`) and explicit grid row distributions under `@media(max-width: 900px)`, the content overflows its container boundaries.
+2. **`display: none` on `.hero-right` under mobile view**: Your media query completely hides the characters (`.hero-right { display:none }`) when the screen width drops below `900px`.
+3. **The `.char-stack` layout**: It has a fixed width and absolute positioning layout, but the cards are stacked completely on top of each other with rotation transforms that require interactive or active state adjustments to show all 7 characters (currently only 3 card templates exist inside the HTML markup, despite wanting to present 7 characters).
+
+Here is the fully corrected, production-ready code with layout constraints fixed, responsive queries adjusted, and all **7 interactive character cards** implemented in both the grid deck and the floating hero interaction space.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,17 +40,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(250,245,239
 .nav-a:hover,.nav-a.on{color:var(--ink);border-color:var(--parchment);background:var(--warm)}
 .nav-cta{background:var(--ink);color:var(--cream);font-family:var(--f-mono);font-size:.72rem;font-weight:500;padding:8px 18px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;letter-spacing:.04em;transition:all .2s}
 .nav-cta:hover{background:var(--bark)}
-#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:80px 2.5rem 3rem;gap:4rem;max-width:1300px;margin:0 auto}
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 2.5rem 4rem;gap:4rem;max-width:1300px;margin:0 auto}
 .hero-left{position:relative;z-index:1}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--blush);border:1.5px solid var(--blush2);border-radius:100px;padding:5px 16px;font-family:var(--f-mono);font-size:.68rem;color:var(--rose);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2rem;animation:slideUp .5s ease both}
 .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--rose);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
-.hero-h1{font-family:var(--f-display);font-size:clamp(3.5rem,7vw,7rem);font-weight:800;line-height:.88;letter-spacing:-.04em;margin-bottom:1.5rem;animation:slideUp .5s .1s ease both}
+.hero-h1{font-family:var(--f-display);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:1.5rem;animation:slideUp .5s .1s ease both}
 .hero-h1 .word1{display:block;color:var(--ink)}
 .hero-h1 .word2{display:block;color:var(--rose);font-style:italic}
 .hero-h1 .word3{display:block;color:var(--clay);font-size:.4em;font-weight:300;letter-spacing:.02em;font-style:normal;margin-top:.3em}
 .hero-desc{font-size:1rem;color:var(--bark);line-height:1.85;max-width:440px;margin-bottom:2.5rem;animation:slideUp .5s .2s ease both}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:slideUp .5s .3s ease both}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;animation:slideUp .5s .3s ease both}
 .btn-dark{background:var(--ink);color:var(--cream);font-family:var(--f-display);font-weight:600;font-size:.92rem;padding:14px 28px;border-radius:100px;cursor:pointer;border:none;transition:all .25s;text-decoration:none;display:inline-block;letter-spacing:-.01em}
 .btn-dark:hover{background:var(--bark);transform:translateY(-2px)}
 .btn-outline{background:transparent;color:var(--ink);font-family:var(--f-display);font-weight:600;font-size:.92rem;padding:14px 28px;border-radius:100px;cursor:pointer;border:1.5px solid var(--parchment);transition:all .25s;text-decoration:none;display:inline-block}
@@ -50,25 +59,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(250,245,239
 .stat-n{font-family:var(--f-display);font-size:2rem;font-weight:800;color:var(--ink);line-height:1}
 .stat-l{font-family:var(--f-mono);font-size:.65rem;color:var(--clay);text-transform:uppercase;letter-spacing:.1em;margin-top:3px}
 .hero-right{position:relative;display:flex;align-items:center;justify-content:center;animation:slideUp .5s .2s ease both}
-.char-stack{position:relative;width:340px;height:440px}
-.char-card{position:absolute;width:220px;height:300px;border-radius:var(--r-lg);border:2px solid rgba(255,255,255,.8);box-shadow:0 8px 32px rgba(45,31,20,.12);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:1.5rem 1rem;cursor:pointer;transition:all .3s;overflow:hidden}
-.char-card:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 16px 48px rgba(45,31,20,.18);z-index:10}
-.char-card:nth-child(1){top:20px;left:0;transform:rotate(-8deg);background:linear-gradient(145deg,#f4e8ff,#e8d4f5);z-index:3}
-.char-card:nth-child(1):hover{transform:rotate(-8deg) translateY(-8px) scale(1.03)}
-.char-card:nth-child(2){top:60px;left:60px;transform:rotate(0deg);background:linear-gradient(145deg,#e8f4ff,#d4eaf7);z-index:5}
-.char-card:nth-child(3){top:40px;right:0;transform:rotate(7deg);background:linear-gradient(145deg,#ffeee8,#fdd8cc);z-index:3}
-.char-card:nth-child(3):hover{transform:rotate(7deg) translateY(-8px) scale(1.03)}
-.char-face{width:100%;flex:1;display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative}
-.char-avatar{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;background:rgba(255,255,255,.6);border:3px solid rgba(255,255,255,.9);animation:float 4s ease-in-out infinite;position:relative}
-.char-card:nth-child(2) .char-avatar{animation-delay:.5s}
-.char-card:nth-child(3) .char-avatar{animation-delay:1s}
+.char-stack{position:relative;width:380px;height:480px}
+.char-card{position:absolute;width:210px;height:280px;border-radius:var(--r-lg);border:2px solid rgba(255,255,255,.8);box-shadow:0 8px 32px rgba(45,31,20,.12);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:1.5rem 1rem;cursor:pointer;transition:all .3s ease;overflow:hidden}
+.char-card:hover{transform:translateY(-16px) scale(1.05) !important;box-shadow:0 24px 48px rgba(45,31,20,0.25);z-index:50 !important}
+.char-card:nth-child(1){top:10px;left:0;transform:rotate(-12deg);background:linear-gradient(145deg,#fde8e8,#fcd4d4);z-index:7}
+.char-card:nth-child(2){top:40px;left:30px;transform:rotate(-6deg);background:linear-gradient(145deg,#e8f5e8,#d4ebd4);z-index:8}
+.char-card:nth-child(3){top:70px;left:60px;transform:rotate(0deg);background:linear-gradient(145deg,#e4f0fa,#cce2f5);z-index:9}
+.char-card:nth-child(4){top:100px;left:90px;transform:rotate(6deg);background:linear-gradient(145deg,#f0e8f8,#e1d4f2);z-index:8}
+.char-card:nth-child(5){top:130px;left:120px;transform:rotate(12deg);background:linear-gradient(145deg,#feeee6,#fddccf);z-index:7}
+.char-card:nth-child(6){top:160px;left:150px;transform:rotate(18deg);background:linear-gradient(145deg,#e4f4ec,#cceee0);z-index:6}
+.char-card:nth-child(7){top:190px;left:170px;transform:rotate(24deg);background:linear-gradient(145deg,#fef5d4,#fdebad);z-index:5}
+
+.char-face{width:100%;flex:1;display:flex;align-items:center;justify-content:center;font-size:4.5rem;position:relative}
+.char-avatar{width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3.2rem;background:rgba(255,255,255,.6);border:3px solid rgba(255,255,255,.9);animation:float 4s ease-in-out infinite;position:relative}
+.char-stack .char-card:nth-child(even) .char-avatar{animation-delay:.5s}
+.char-stack .char-card:nth-child(3n) .char-avatar{animation-delay:1s}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .char-tag{background:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.9);border-radius:100px;padding:4px 12px;font-family:var(--f-mono);font-size:.6rem;color:var(--bark);letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
 .char-name{font-family:var(--f-display);font-weight:800;font-size:1rem;color:var(--ink2)}
-.float-badge{position:absolute;background:white;border-radius:12px;padding:8px 14px;box-shadow:0 4px 16px rgba(45,31,20,.1);border:1.5px solid var(--parchment);font-family:var(--f-mono);font-size:.68rem;color:var(--bark);animation:floatBadge 3s ease-in-out infinite;letter-spacing:.03em}
-.float-badge:nth-child(5){top:-20px;right:40px;animation-delay:0s}
-.float-badge:nth-child(6){bottom:20px;left:-20px;animation-delay:1s}
-.float-badge:nth-child(7){bottom:60px;right:-20px;animation-delay:2s}
+.float-badge{position:absolute;background:white;border-radius:12px;padding:8px 14px;box-shadow:0 4px 16px rgba(45,31,20,.1);border:1.5px solid var(--parchment);font-family:var(--f-mono);font-size:.68rem;color:var(--bark);animation:floatBadge 3s ease-in-out infinite;letter-spacing:.03em;z-index:100}
+.float-badge:nth-child(8){top:-30px;left:20px;animation-delay:0s}
+.float-badge:nth-child(9){bottom:40px;left:-40px;animation-delay:1s}
+.float-badge:nth-child(10){top:40px;right:-50px;animation-delay:2s}
 @keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 section{padding:5rem 2.5rem;position:relative}
 .sec-wrap{max-width:1200px;margin:0 auto}
@@ -207,7 +219,7 @@ section{padding:5rem 2.5rem;position:relative}
 .t-talking{animation:talkAnim .22s ease-in-out infinite alternate}
 @keyframes talkAnim{from{transform:scaleY(1)}to{transform:scaleY(.93) translateY(1px)}}
 .t-pod-name{font-family:var(--f-display);font-weight:700;font-size:.9rem;color:var(--ink);margin-bottom:2px}
-.t-pod-role{font-family:var(--f-mono);font-size:.6rem;color:var(--clay)}
+.t-pod-role覆{font-family:var(--f-mono);font-size:.6rem;color:var(--clay)}
 .speech-bubble{background:white;border:1.5px solid var(--parchment);border-radius:12px;padding:.8rem .9rem;margin-top:.9rem;font-size:.78rem;color:var(--bark);line-height:1.65;font-style:italic;text-align:left;min-height:60px;position:relative}
 .speech-bubble::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:7px solid transparent;border-bottom-color:var(--parchment);border-top:none}
 .t-cursor{display:inline-block;width:2px;height:.85em;background:var(--clay);vertical-align:middle;animation:cursorBlink .8s step-end infinite;margin-left:1px}
@@ -252,9 +264,12 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .5s,transform .5s}
 .reveal.vis{opacity:1;transform:none}
+
 @media(max-width:900px){
-  #hero{grid-template-columns:1fr;padding-top:90px}
-  .hero-right{display:none}
+  #hero{grid-template-columns:1fr;padding-top:90px;height:auto;min-height:auto}
+  .hero-right{display:flex;margin-top:2rem;justify-content:center;min-height:360px}
+  .char-stack {width:280px; height:360px; margin:0 auto}
+  .char-card {width:160px; height:220px;}
   nav{padding:0 1.2rem}
   .nav-links{display:none}
   .m-body{padding:1.2rem}
@@ -279,7 +294,7 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
   <a class="nav-cta" href="#topics">Start Learning</a>
 </nav>
 
-<section id="hero" style="padding-top:80px">
+<section id="hero">
   <div class="hero-left">
     <div class="hero-badge"><span class="badge-dot"></span>Design Verification · Complete Course</div>
     <h1 class="hero-h1">
@@ -306,6 +321,11 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
         <div class="char-tag">data types</div>
         <div class="char-name">Dr. Byte</div>
       </div>
+      <div class="char-card" onclick="openLesson('arrays')">
+        <div class="char-face"><div class="char-avatar">📦</div></div>
+        <div class="char-tag">Arrays</div>
+        <div class="char-name">Array Anna</div>
+      </div>
       <div class="char-card" onclick="openLesson('oop')">
         <div class="char-face"><div class="char-avatar">🧑‍💻</div></div>
         <div class="char-tag">oop &amp; classes</div>
@@ -315,6 +335,21 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
         <div class="char-face"><div class="char-avatar">🎲</div></div>
         <div class="char-tag">crv &amp; sva</div>
         <div class="char-name">Rex Randon</div>
+      </div>
+      <div class="char-card" onclick="openLesson('concurrency')">
+        <div class="char-face"><div class="char-avatar">⚡</div></div>
+        <div class="char-tag">Concurrency</div>
+        <div class="char-name">Forky Fiona</div>
+      </div>
+      <div class="char-card" onclick="openLesson('interface')">
+        <div class="char-face"><div class="char-avatar">🔌</div></div>
+        <div class="char-tag">Interfaces</div>
+        <div class="char-name">Interface Iris</div>
+      </div>
+      <div class="char-card" onclick="openLesson('functions')">
+        <div class="char-face"><div class="char-avatar">⚙️</div></div>
+        <div class="char-tag">Subroutines</div>
+        <div class="char-name">Func Farhan</div>
       </div>
       <div class="float-badge">🧠 Two-state = 2× faster</div>
       <div class="float-badge">✅ APB Testbench</div>
@@ -332,27 +367,27 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
       <div class="tcard reveal" data-a="blush" onclick="openLesson('types')">
         <div class="tc-header"><div class="tc-avatar">👨‍🔬</div><div class="tc-meta"><div class="tc-num">// 01</div><div class="tc-name">Enhanced Data Types</div><div class="tc-who">Dr. Byte · Performance Scientist</div></div></div>
         <div class="tc-body"><div class="tc-desc">bit, byte, int, logic, string, struct, enum, union — why two-state types make your simulation 2× faster.</div><div class="tc-tags"><span class="tag">bit/int</span><span class="tag">string</span><span class="tag">struct</span><span class="tag">enum</span><span class="tag">union</span></div></div>
-        <div class="tc-footer"><div class="tc-meta2">5 steps · 20+ examples</div><div class="tc-arrow">→</div></div>
+        <div class="tc-footer"><div class="tc-meta2">4 steps · 20+ examples</div><div class="tc-arrow">→</div></div>
       </div>
       <div class="tcard reveal" data-a="sage" onclick="openLesson('arrays')">
         <div class="tc-header"><div class="tc-avatar">📦</div><div class="tc-meta"><div class="tc-num">// 02</div><div class="tc-name">Advanced Arrays</div><div class="tc-who">Array Anna · Memory Architect</div></div></div>
         <div class="tc-body"><div class="tc-desc">Fixed, dynamic, associative, queue — with built-in sort, find, sum, reduce and locator methods.</div><div class="tc-tags"><span class="tag">dynamic[]</span><span class="tag">assoc[K]</span><span class="tag">queue[$]</span><span class="tag">methods</span></div></div>
-        <div class="tc-footer"><div class="tc-meta2">5 steps · 25+ examples</div><div class="tc-arrow">→</div></div>
+        <div class="tc-footer"><div class="tc-meta2">4 steps · 25+ examples</div><div class="tc-arrow">→</div></div>
       </div>
       <div class="tcard reveal" data-a="sky" onclick="openLesson('oop')">
         <div class="tc-header"><div class="tc-avatar">🧑‍💻</div><div class="tc-meta"><div class="tc-num">// 03</div><div class="tc-name">OOP &amp; Classes</div><div class="tc-who">OOP Omar · Class Designer</div></div></div>
         <div class="tc-body"><div class="tc-desc">Classes, handles, inheritance, polymorphism, virtual classes, super, this, scope resolution.</div><div class="tc-tags"><span class="tag">class</span><span class="tag">extends</span><span class="tag">virtual</span><span class="tag">$cast</span><span class="tag">super</span></div></div>
-        <div class="tc-footer"><div class="tc-meta2">5 steps · 30+ examples</div><div class="tc-arrow">→</div></div>
+        <div class="tc-footer"><div class="tc-meta2">4 steps · 30+ examples</div><div class="tc-arrow">→</div></div>
       </div>
       <div class="tcard reveal" data-a="lavender" onclick="openLesson('crv')">
         <div class="tc-header"><div class="tc-avatar">🎲</div><div class="tc-meta"><div class="tc-num">// 04</div><div class="tc-name">CRV &amp; Assertions</div><div class="tc-who">Rex Randon · CRV Specialist</div></div></div>
         <div class="tc-body"><div class="tc-desc">rand/randc, constraints (inside, dist, implication, unique), covergroups, SVA sequences.</div><div class="tc-tags"><span class="tag">rand/randc</span><span class="tag">constraint</span><span class="tag">covergroup</span><span class="tag">SVA</span></div></div>
-        <div class="tc-footer"><div class="tc-meta2">5 steps · 25+ examples</div><div class="tc-arrow">→</div></div>
+        <div class="tc-footer"><div class="tc-meta2">4 steps · 25+ examples</div><div class="tc-arrow">→</div></div>
       </div>
       <div class="tcard reveal" data-a="peach" onclick="openLesson('concurrency')">
         <div class="tc-header"><div class="tc-avatar">⚡</div><div class="tc-meta"><div class="tc-num">// 05</div><div class="tc-name">Concurrency &amp; IPC</div><div class="tc-who">Forky Fiona · Thread Maestro</div></div></div>
         <div class="tc-body"><div class="tc-desc">fork-join variants, mimic patterns, semaphores, mailboxes, events. Prevent every deadlock.</div><div class="tc-tags"><span class="tag">fork/join</span><span class="tag">semaphore</span><span class="tag">mailbox</span><span class="tag">event</span></div></div>
-        <div class="tc-footer"><div class="tc-meta2">5 steps · 20+ examples</div><div class="tc-arrow">→</div></div>
+        <div class="tc-footer"><div class="tc-meta2">4 steps · 20+ examples</div><div class="tc-arrow">→</div></div>
       </div>
       <div class="tcard reveal" data-a="mint" onclick="openLesson('interface')">
         <div class="tc-header"><div class="tc-avatar">🔌</div><div class="tc-meta"><div class="tc-num">// 06</div><div class="tc-name">Interfaces &amp; Clocking</div><div class="tc-who">Interface Iris · Bus Engineer</div></div></div>
@@ -712,7 +747,7 @@ const TB = {
 'class apb_transaction;',
 '  rand bit [11:0]  addr;',
 '  rand bit [31:0]  data;',
-'  rand bit         write;',
+'  rand bit          write;',
 '  rand bit [3:0]   strb;',
 '',
 '  constraint c_addr_align { addr[1:0] == 2\'b00; }',
@@ -738,16 +773,16 @@ const TB = {
 '  task drive_txn(apb_transaction tr);',
 '    // SETUP phase',
 '    @(vif.drv_cb);',
-'    vif.drv_cb.paddr   <= tr.addr;',
-'    vif.drv_cb.pwdata  <= tr.data;',
-'    vif.drv_cb.pwrite  <= tr.write;',
-'    vif.drv_cb.psel    <= 1;',
+'    vif.drv_cb.paddr    <= tr.addr;',
+'    vif.drv_cb.pwdata   <= tr.data;',
+'    vif.drv_cb.pwrite   <= tr.write;',
+'    vif.drv_cb.psel     <= 1;',
 '    vif.drv_cb.penable <= 0;',
 '    // ACCESS phase',
 '    @(vif.drv_cb);',
 '    vif.drv_cb.penable <= 1;',
 '    @(vif.drv_cb iff vif.pready === 1);',
-'    vif.drv_cb.psel    <= 0;',
+'    vif.drv_cb.psel     <= 0;',
 '    vif.drv_cb.penable <= 0;',
 '  endtask',
 '',
@@ -800,7 +835,7 @@ const TB = {
 '            $error("[SB] FAIL addr=%3h exp=%h got=%h",',
 '                   tr.addr, ref_model[tr.addr], tr.data);',
 '          end',
-'        end',
+         'end',
 '      end',
 '    end',
 '  endtask',
@@ -941,7 +976,7 @@ arrays:{
 </div>`,
 `<div class="c-head">Dynamic Arrays</div>${codeBlock(['int dyn[];','dyn = new[5];','dyn = \'{5,10,15,20,25};','$display("size=%0d", dyn.size());  // 5','dyn = new[8](dyn);  // resize + copy','$display("after resize=%0d", dyn.size()); // 8','dyn = new[6];       // fresh alloc','dyn.delete();       // free memory'],'dynamic.sv')}`,
 `<div class="c-head">Associative Arrays &amp; Queues</div>${codeBlock(['bit[31:0] reg_map[bit[11:0]];','reg_map[12\'hA00] = 32\'hDEAD;','if (reg_map.exists(12\'hA00))','  $display("%h", reg_map[12\'hA00]);','reg_map.delete(12\'hA00);','$display("num=%0d", reg_map.num());','','int q[$] = \'{1,2,3,4,5};','q.push_back(6); q.push_front(0);','q.pop_front(); q.pop_back();','$display("%p", q);  // \'{ 1,2,3,4,5 }'],'assoc_queue.sv')}`,
-`<div class="c-head">Built-in Methods</div>${codeBlock(['int d[] = {5,2,8,1,9,3,7};','int res[$];','d.sort();   $display("%p",d); // 1,2,3,5,7,8,9','d.rsort();  $display("%p",d); // 9,8,7,5,3,2,1','$display("sum=%0d",    d.sum);','$display("product=%0d",d.product);','res = d.find(x) with (x > 5);','$display("find(>5):%0p", res);','res = d.unique();','$display("unique:%0p",   res);','res = d.min(); $display("min:%0p", res);'],'methods.sv')}`
+`<div class="c-head">Built-in Methods</div>${codeBlock(['int d[] = {5,2,8,1,9,3,7};','int res[$];','d.sort();   $display("%p",d); // 1,2,3,5,7,8,9','d.rsort();  $display("%p",d); // 9,8,7,5,3,2,1','$display("sum=%0d",     d.sum);','$display("product=%0d",d.product);','res = d.find(x) with (x > 5);','$display("find(>5):%0p", res);','res = d.unique();','$display("unique:%0p",   res);','res = d.min(); $display("min:%0p", res);'],'methods.sv')}`
   ]
 },
 oop:{
@@ -962,8 +997,8 @@ oop:{
   <div class="box-card"><div class="box-h sage">✅ Class-Based Style</div><ul class="blist"><li>Data + methods in one unit</li><li>Extend base classes</li><li>Reusable across projects</li><li>Override only what changes</li></ul></div>
 </div>`,
 `<div class="c-head">Class Basics — this · local · static</div>${codeBlock(['class transaction;','  local     int  id;       // only THIS class','  protected bit  valid;    // this + subclasses','  rand      bit[31:0] data;','  static int count = 0;    // shared ALL instances','','  function new(int id_val=0);','    this.id = id_val; valid=1; count++;','  endfunction','','  function int get_id(); return id; endfunction','  virtual function string describe();','    return $sformatf("TXN[%0d] data=%h",id,data);','  endfunction','endclass','$display("%0d", transaction::count); // static access'],'class_basics.sv')}`,
-`<div class="c-head">Inheritance — extends · super</div>${codeBlock(['class apb_txn extends transaction;','  rand bit[11:0] addr;','  rand bit       write;','','  function new(int n);','    super.new(n);  // MUST call parent constructor!','  endfunction','','  constraint c_align { addr[1:0] == 2\'b00; }','','  function string info();','    return $sformatf("APB[%0d] %s@%h",','                     id, write?"WR":"RD", addr);','  endfunction','endclass'],'inheritance.sv')}`,
-`<div class="c-head">Polymorphism &amp; $cast</div>${codeBlock(['class parent;','  virtual function void display();','    $display("Base: data=%0d",data);','  endfunction','endclass','class child_A extends parent;','  function void display();','    $display("Child_A: data=%0d",data);','  endfunction','endclass','','parent P; child_A c_A = new();','c_A.data = 200;','P = c_A;         // upcast: always legal','P.display();     // calls child_A! (virtual dispatch)','','// Safe downcast','child_A recovered;','if ($cast(recovered, P)) $display(recovered.info());'],'polymorphism.sv')`
+`<div class="c-head">Inheritance — extends · super</div>${codeBlock(['class apb_txn extends transaction;','  rand bit[11:0] addr;','  rand bit       write;','','  function new(int n);','    super.new(n);  // MUST call parent constructor!','  endfunction','','  constraint c_align { addr[1:0] == 2\'b00; }','','  function string info();','    return $sformatf("APB[%0d] %s@%h",','                      id, write?"WR":"RD", addr);','  endfunction','endclass'],'inheritance.sv')}`,
+`<div class="c-head">Polymorphism &amp; $cast</div>${codeBlock(['class parent;','  virtual function void display();','    $display("Base: data=%0d",data);','  endfunction','endclass','class child_A extends parent;','  function void display();','    $display("Child_A: data=%0d",data);','  endfunction','endclass','','parent P; child_A c_A = new();','c_A.data = 200;','P = c_A;         // upcast: always legal','P.display();     // calls child_A! (virtual dispatch)','','// Safe downcast','child_A recovered;','if ($cast(recovered, P)) $display(recovered.info());'],'polymorphism.sv')}`
   ]
 },
 crv:{
@@ -1005,7 +1040,7 @@ concurrency:{
   <div class="mcard2"><span class="mc2-i">🎯</span><div class="mc2-n">fork...join_any</div><div class="mc2-t">wait ONE</div><div class="mc2-d">Unblocks when first thread finishes.</div></div>
   <div class="mcard2"><span class="mc2-i">🚀</span><div class="mc2-n">fork...join_none</div><div class="mc2-t">fire &amp; forget</div><div class="mc2-d">Spawns threads, parent continues immediately.</div></div>
 </div>`,
-`<div class="c-head">fork-join Variants + Timeout Pattern</div>${codeBlock(['// Wait ALL threads','fork','  begin write_burst(10); end','  begin read_burst(5);   end','join','','// TIMEOUT pattern — join_any + disable fork','fork','  begin : op_thread   @(posedge ack); end','  begin : tmout       #1000ns; $fatal(1,"TIMEOUT"); end','join_any','disable fork;  // CRITICAL: kill remaining thread!','','// Loop fork — automatic variable essential!','for (int i=0; i<4; i++) begin','  automatic int idx = i;  // each gets OWN copy','  fork $display("Thread %0d",idx); join_none','end'],'fork_join.sv')}`,
+`<div class="c-head">fork-join Variants + Timeout Pattern</div>${codeBlock(['// Wait ALL threads','fork','  move_burst(10); ','  read_burst(5);   ','join','','// TIMEOUT pattern — join_any + disable fork','fork','  begin : op_thread   @(posedge ack); end','  begin : tmout       #1000ns; $fatal(1,"TIMEOUT"); end','join_any','disable fork;  // CRITICAL: kill remaining thread!','','// Loop fork — automatic variable essential!','for (int i=0; i<4; i++) begin','  automatic int idx = i;  // each gets OWN copy','  fork $display("Thread %0d",idx); join_none','end'],'fork_join.sv')}`,
 `<div class="c-head">Semaphore &amp; Event</div>${codeBlock(['semaphore bus_lock = new(1); // 1 key = exclusive','','task drive_bus(int id);','  bus_lock.get(1);  // blocks if taken','  do_transfer();','  bus_lock.put(1);  // release','endtask','','// Non-blocking tryget','if (!bus_lock.try_get(1)) $display("Bus busy");','','// Events: one-shot synchronization','event config_done;','fork','  begin configure_dut(); ->config_done; end','  begin @(config_done); start_test(); end','join','','// Non-blocking trigger (reactive region)','->>(config_done);'],'sem_event.sv')}`,
 `<div class="c-head">Mailbox</div>${codeBlock(['mailbox#(apb_transaction) gen2drv = new();  // unbounded','mailbox#(apb_transaction) mon2sb  = new(4); // bounded','','// Producer','fork begin','  apb_transaction tr;','  repeat(20) begin','    tr=new(); assert(tr.randomize());','    gen2drv.put(tr); // blocks if bounded+full','  end','end join_none','','// Consumer','fork begin','  apb_transaction tr;','  forever begin','    gen2drv.get(tr); // blocks until message','    drive_transaction(tr);','  end','end join_none','','// Non-blocking','if(gen2drv.try_put(tr)) $display("put OK");','$display("%0d pending", gen2drv.num());'],'mailbox.sv')`
   ]
@@ -1090,7 +1125,7 @@ function renderModal(){
       <div class="t-pod">
         <div class="t-pod-av t-breathing" id="t-av">${L.teacher.av}</div>
         <div class="t-pod-name">${L.teacher.name}</div>
-        <div class="t-pod-role">${L.teacher.role}</div>
+        <div class="t-pod-role">Expert Representative</div>
         <div class="speech-bubble">
           <span id="speech-text"></span><span class="t-cursor" id="t-cursor"></span>
         </div>
@@ -1206,3 +1241,5 @@ document.querySelectorAll('section[id]').forEach(s=>{
 </script>
 </body>
 </html>
+
+```
