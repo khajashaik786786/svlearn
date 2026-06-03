@@ -4,263 +4,276 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SV·Learn — SystemVerilog Mastery by Khaja</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --cream:#faf5ef;--warm:#f2e8d9;--parchment:#e8ddd0;--clay:#c4a882;
-  --bark:#8b6c4f;--ink:#2d1f14;--ink2:#3d2e20;
-  --blush:#f4c9c9;--blush2:#e8a8a8;--rose:#d4736a;
-  --sage2:#8ab889;--moss:#4a7c50;--cornflower:#4a8cbd;--violet:#8a6bb5;
-  --buttercup:#f5d87a;--amber:#e8a840;--caramel:#c47c28;
-  --f-display:'Fraunces',serif;--f-body:'DM Sans',sans-serif;--f-mono:'DM Mono',monospace;
-  --r:16px;--r-lg:24px
+  --bg:#0a0b0f;--bg2:#0f1117;--bg3:#141720;--bg4:#1a1e2a;
+  --surface:#1e2330;--surface2:#242a38;--surface3:#2a3040;
+  --border:#2a3040;--border2:#323a4e;--border3:#3d4660;
+  --text:#e8eaf0;--text2:#9aa0b8;--text3:#5e6580;
+  --accent:#4f8ef7;--accent2:#6ba3ff;--accent3:#3d74e8;
+  --rose:#e8607a;--rose2:#f07a92;
+  --amber:#f0a840;--amber2:#f5bc60;
+  --teal:#40c8a0;--teal2:#60d8b8;
+  --violet:#8f70e8;--violet2:#a888f5;
+  --clay:#c89060;
+  --f-display:'Syne',sans-serif;
+  --f-body:'Space Grotesk',sans-serif;
+  --f-mono:'JetBrains Mono',monospace;
+  --r:10px;--r-lg:16px;--r-xl:24px
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--cream);color:var(--ink);font-family:var(--f-body);font-size:15px;overflow-x:hidden}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--warm)}
-::-webkit-scrollbar-thumb{background:var(--clay);border-radius:3px}
-#prog{position:fixed;top:0;left:0;height:3px;z-index:9999;background:linear-gradient(90deg,var(--rose),var(--amber),var(--sage2));transition:width .15s}
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(250,245,239,.93);backdrop-filter:blur(20px);border-bottom:1.5px solid var(--parchment);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem}
-.nav-brand{font-family:var(--f-display);font-size:1.25rem;font-weight:800;color:var(--ink);letter-spacing:-.02em;cursor:pointer}
-.nav-brand span{color:var(--rose)}
+body{background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:14px;overflow-x:hidden;line-height:1.6}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border3);border-radius:3px}
+#prog{position:fixed;top:0;left:0;height:2px;z-index:9999;background:linear-gradient(90deg,var(--accent),var(--violet),var(--rose));transition:width .15s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(10,11,15,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--f-display);font-size:1.1rem;font-weight:800;color:var(--text);letter-spacing:-.02em;cursor:pointer;display:flex;align-items:center;gap:6px}
+.nav-brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
 .nav-links{display:flex;gap:2px}
-.nav-a{font-family:var(--f-mono);font-size:.72rem;font-weight:500;color:var(--bark);padding:6px 14px;border-radius:100px;cursor:pointer;border:1.5px solid transparent;transition:all .2s;text-decoration:none;letter-spacing:.04em}
-.nav-a:hover,.nav-a.on{color:var(--ink);border-color:var(--parchment);background:var(--warm)}
-.nav-cta{background:var(--ink);color:var(--cream);font-family:var(--f-mono);font-size:.72rem;padding:8px 18px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;letter-spacing:.04em;transition:all .2s}
-.nav-cta:hover{background:var(--bark)}
-#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:80px 2.5rem 3rem;gap:4rem;max-width:1300px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--blush);border:1.5px solid var(--blush2);border-radius:100px;padding:5px 16px;font-family:var(--f-mono);font-size:.68rem;color:var(--rose);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2rem;animation:slideUp .5s ease both}
-.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--rose);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
-.hero-h1{font-family:var(--f-display);font-size:clamp(3rem,6vw,6.5rem);font-weight:800;line-height:.9;letter-spacing:-.04em;margin-bottom:1.5rem;animation:slideUp .5s .1s ease both}
-.hero-h1 .w1{display:block;color:var(--ink)}
-.hero-h1 .w2{display:block;color:var(--rose);font-style:italic}
-.hero-h1 .w3{display:block;color:var(--clay);font-size:.38em;font-weight:300;letter-spacing:.02em;font-style:normal;margin-top:.3em}
-.hero-desc{font-size:.97rem;color:var(--bark);line-height:1.85;max-width:440px;margin-bottom:2.5rem;animation:slideUp .5s .2s ease both}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:slideUp .5s .3s ease both}
-.btn-dark{background:var(--ink);color:var(--cream);font-family:var(--f-display);font-weight:600;font-size:.92rem;padding:14px 28px;border-radius:100px;cursor:pointer;border:none;transition:all .25s;text-decoration:none;display:inline-block}
-.btn-dark:hover{background:var(--bark);transform:translateY(-2px)}
-.btn-outline{background:transparent;color:var(--ink);font-family:var(--f-display);font-weight:600;font-size:.92rem;padding:14px 28px;border-radius:100px;cursor:pointer;border:1.5px solid var(--parchment);transition:all .25s;text-decoration:none;display:inline-block}
-.btn-outline:hover{border-color:var(--clay);background:var(--warm)}
-.hero-stats{display:flex;gap:2rem;margin-top:3rem;padding-top:2rem;border-top:1.5px solid var(--parchment);animation:slideUp .5s .4s ease both}
-.stat-n{font-family:var(--f-display);font-size:2rem;font-weight:800;color:var(--ink);line-height:1}
-.stat-l{font-family:var(--f-mono);font-size:.65rem;color:var(--clay);text-transform:uppercase;letter-spacing:.1em;margin-top:3px}
-.hero-right{position:relative;display:flex;align-items:center;justify-content:center;animation:slideUp .5s .2s ease both}
-.char-stack{position:relative;width:340px;height:440px}
-.char-card{position:absolute;width:220px;height:300px;border-radius:var(--r-lg);border:2px solid rgba(255,255,255,.8);box-shadow:0 8px 32px rgba(45,31,20,.12);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:1.5rem 1rem;cursor:pointer;transition:all .3s;overflow:hidden}
-.char-card:hover{transform:translateY(-8px) scale(1.03)!important;box-shadow:0 16px 48px rgba(45,31,20,.18);z-index:10}
-.char-card:nth-child(1){top:20px;left:0;transform:rotate(-8deg);background:linear-gradient(145deg,#f4e8ff,#e8d4f5);z-index:3}
-.char-card:nth-child(2){top:60px;left:60px;background:linear-gradient(145deg,#e8f4ff,#d4eaf7);z-index:5}
-.char-card:nth-child(3){top:40px;right:0;transform:rotate(7deg);background:linear-gradient(145deg,#ffeee8,#fdd8cc);z-index:3}
-.char-avatar{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:3.5rem;background:rgba(255,255,255,.6);border:3px solid rgba(255,255,255,.9);animation:float 4s ease-in-out infinite;flex:1;align-self:center}
-.char-card:nth-child(2) .char-avatar{animation-delay:.5s}
-.char-card:nth-child(3) .char-avatar{animation-delay:1s}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.char-tag{background:rgba(255,255,255,.8);border-radius:100px;padding:4px 12px;font-family:var(--f-mono);font-size:.6rem;color:var(--bark);letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
-.char-name{font-family:var(--f-display);font-weight:800;font-size:1rem;color:var(--ink2)}
-.float-badge{position:absolute;background:white;border-radius:12px;padding:8px 14px;box-shadow:0 4px 16px rgba(45,31,20,.1);border:1.5px solid var(--parchment);font-family:var(--f-mono);font-size:.68rem;color:var(--bark);animation:floatBadge 3s ease-in-out infinite;letter-spacing:.03em}
-.float-badge:nth-child(5){top:-20px;right:40px}
-.float-badge:nth-child(6){bottom:20px;left:-20px;animation-delay:1s}
-.float-badge:nth-child(7){bottom:60px;right:-20px;animation-delay:2s}
-@keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-section{padding:5rem 2.5rem;position:relative}
-.sec-wrap{max-width:1200px;margin:0 auto}
-.sec-label{font-family:var(--f-mono);font-size:.7rem;color:var(--clay);letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:10px}
-.sec-h{font-family:var(--f-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;color:var(--ink);line-height:1.05;letter-spacing:-.03em;margin-bottom:1rem}
-.sec-h em{color:var(--rose);font-style:italic}
-.sec-rule{width:48px;height:2px;background:var(--clay);margin-bottom:3rem;border-radius:1px}
-#topics{background:var(--warm)}
-.topics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
-.tcard{background:var(--cream);border:1.5px solid var(--parchment);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:all .35s}
-.tcard:hover{border-color:var(--clay);transform:translateY(-4px);box-shadow:0 12px 40px rgba(45,31,20,.1)}
-.tc-header{padding:1.4rem 1.6rem 1rem;display:flex;gap:1.2rem;align-items:flex-start}
-.tc-avatar{width:56px;height:56px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:1.5px solid rgba(255,255,255,.7)}
-.tc-num{font-family:var(--f-mono);font-size:.6rem;color:var(--clay);letter-spacing:.15em;margin-bottom:3px}
-.tc-name{font-family:var(--f-display);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:2px}
-.tc-who{font-family:var(--f-mono);font-size:.62rem;color:var(--bark)}
-.tc-body{padding:0 1.6rem 1rem}
-.tc-desc{font-size:.87rem;color:var(--bark);line-height:1.8;margin-bottom:1rem}
-.tc-tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{font-family:var(--f-mono);font-size:.62rem;background:var(--warm);border:1px solid var(--parchment);border-radius:6px;padding:3px 9px;color:var(--bark)}
-.tc-footer{padding:.85rem 1.6rem;border-top:1.5px solid var(--parchment);display:flex;justify-content:space-between;align-items:center}
-.tc-meta2{font-family:var(--f-mono);font-size:.65rem;color:var(--clay)}
-.tc-arrow{color:var(--bark);font-size:1.1rem;transition:transform .2s}
+.nav-a{font-family:var(--f-mono);font-size:.65rem;color:var(--text3);padding:5px 12px;border-radius:6px;cursor:pointer;border:1px solid transparent;transition:all .2s;text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
+.nav-a:hover,.nav-a.on{color:var(--text);border-color:var(--border2);background:var(--surface)}
+.nav-cta{background:var(--accent);color:#fff;font-family:var(--f-mono);font-size:.65rem;padding:7px 16px;border-radius:8px;border:none;cursor:pointer;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:all .2s}
+.nav-cta:hover{background:var(--accent2);transform:translateY(-1px)}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 480px;align-items:center;padding:80px 2.5rem 3rem;gap:5rem;max-width:1400px;margin:0 auto}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(79,142,247,.12);border:1px solid rgba(79,142,247,.25);border-radius:100px;padding:5px 14px;font-family:var(--f-mono);font-size:.6rem;color:var(--accent2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;animation:fadeUp .5s ease both}
+.hero-h1{font-family:var(--f-display);font-size:clamp(2.8rem,5.5vw,5.5rem);font-weight:800;line-height:.95;letter-spacing:-.04em;margin-bottom:1.5rem;animation:fadeUp .5s .1s ease both}
+.hero-h1 .line1{display:block;color:var(--text)}
+.hero-h1 .line2{display:block;color:var(--accent);position:relative}
+.hero-h1 .line3{display:block;font-size:.28em;font-weight:300;color:var(--text3);letter-spacing:.03em;font-family:var(--f-body);margin-top:.4em}
+.hero-desc{font-size:.9rem;color:var(--text2);line-height:1.8;max-width:420px;margin-bottom:2rem;animation:fadeUp .5s .2s ease both}
+.hero-btns{display:flex;gap:.8rem;flex-wrap:wrap;animation:fadeUp .5s .3s ease both}
+.btn-primary{background:var(--accent);color:#fff;font-family:var(--f-body);font-weight:600;font-size:.87rem;padding:12px 24px;border-radius:10px;cursor:pointer;border:none;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(79,142,247,.3)}
+.btn-ghost{background:transparent;color:var(--text2);font-family:var(--f-body);font-weight:500;font-size:.87rem;padding:12px 24px;border-radius:10px;cursor:pointer;border:1px solid var(--border2);transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-ghost:hover{border-color:var(--border3);color:var(--text);background:var(--surface)}
+.hero-stats{display:flex;gap:2.5rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);animation:fadeUp .5s .4s ease both}
+.stat-n{font-family:var(--f-display);font-size:2rem;font-weight:800;color:var(--text);line-height:1}
+.stat-l{font-family:var(--f-mono);font-size:.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-top:2px}
+
+/* HERO RIGHT — TERMINAL */
+.hero-right{animation:fadeUp .5s .2s ease both}
+.terminal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r-xl);overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5)}
+.term-header{background:var(--bg3);padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.term-dots{display:flex;gap:5px}
+.term-dot{width:11px;height:11px;border-radius:50%}
+.td-r{background:#ff5f57}.td-y{background:#febc2e}.td-g{background:#28c840}
+.term-title{font-family:var(--f-mono);font-size:.62rem;color:var(--text3);margin-left:auto;letter-spacing:.05em}
+.term-body{padding:1.2rem;font-family:var(--f-mono);font-size:.72rem;line-height:1.9;color:#9aa0b8;max-height:480px;overflow-y:auto}
+.tl{display:flex;gap:10px}.ln{color:#3d4660;min-width:20px;text-align:right;flex-shrink:0;font-size:.65rem;padding-top:1px;user-select:none}
+.kw{color:#7eb8f5}.tp{color:#86ccb8}.fn{color:#c9a8f5}.st{color:#7ec89a}.cm{color:#4a5260;font-style:italic}.nm{color:#f0c070}.at{color:#f0a0c0}.op{color:#e8b060}
+
+/* SECTIONS */
+section{padding:5rem 2.5rem}
+.sec-wrap{max-width:1280px;margin:0 auto}
+.sec-label{font-family:var(--f-mono);font-size:.6rem;color:var(--accent);letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:8px}
+.sec-h{font-family:var(--f-display);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:var(--text);line-height:1.05;letter-spacing:-.03em;margin-bottom:.8rem}
+.sec-h em{color:var(--accent);font-style:normal}
+.sec-rule{width:40px;height:2px;background:var(--accent);margin-bottom:2.5rem;border-radius:1px;opacity:.6}
+.sec-sub{font-size:.88rem;color:var(--text2);max-width:600px;line-height:1.75;margin-bottom:2.5rem}
+
+/* TOPICS GRID */
+#topics{background:var(--bg2)}
+.topics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.2rem}
+.tcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:all .3s}
+.tcard:hover{border-color:var(--border3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.tc-top{padding:1.2rem 1.4rem .8rem;display:flex;gap:1rem;align-items:flex-start}
+.tc-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.15)}
+.tc-num{font-family:var(--f-mono);font-size:.55rem;color:var(--text3);letter-spacing:.15em;margin-bottom:2px}
+.tc-name{font-family:var(--f-display);font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:1px}
+.tc-who{font-family:var(--f-mono);font-size:.58rem;color:var(--text3)}
+.tc-body{padding:0 1.4rem .8rem}
+.tc-desc{font-size:.82rem;color:var(--text2);line-height:1.75;margin-bottom:.8rem}
+.tc-tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-family:var(--f-mono);font-size:.58rem;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:5px;padding:2px 8px;color:var(--text3)}
+.tc-footer{padding:.75rem 1.4rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.tc-meta2{font-family:var(--f-mono);font-size:.58rem;color:var(--text3)}
+.tc-arrow{color:var(--accent);font-size:.9rem;transition:transform .2s}
 .tcard:hover .tc-arrow{transform:translateX(4px)}
-.tcard[data-a="blush"] .tc-avatar{background:#fde8e8}
-.tcard[data-a="sage"] .tc-avatar{background:#e8f5e8}
-.tcard[data-a="sky"] .tc-avatar{background:#e4f0fa}
-.tcard[data-a="lavender"] .tc-avatar{background:#f0e8f8}
-.tcard[data-a="peach"] .tc-avatar{background:#feeee6}
-.tcard[data-a="mint"] .tc-avatar{background:#e4f4ec}
-.tcard[data-a="butter"] .tc-avatar{background:#fef5d4}
-#teachers{background:var(--cream)}
-.teachers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.2rem}
-.teacher-card{background:var(--warm);border:1.5px solid var(--parchment);border-radius:var(--r-lg);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
-.teacher-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--r-lg) var(--r-lg) 0 0}
-.teacher-card[data-c="rose"]::before{background:var(--rose)}
-.teacher-card[data-c="sage"]::before{background:var(--moss)}
-.teacher-card[data-c="sky"]::before{background:var(--cornflower)}
-.teacher-card[data-c="violet"]::before{background:var(--violet)}
-.teacher-card[data-c="amber"]::before{background:var(--caramel)}
-.teacher-card[data-c="blush"]::before{background:var(--blush2)}
-.teacher-card[data-c="butter"]::before{background:var(--amber)}
-.teacher-card:hover{border-color:var(--clay);transform:translateY(-6px);box-shadow:0 12px 32px rgba(45,31,20,.1)}
-.t-av-wrap{width:72px;height:72px;border-radius:50%;margin:0 auto .9rem;background:white;border:2px solid var(--parchment);display:flex;align-items:center;justify-content:center;font-size:2.2rem;animation:float 4s ease-in-out infinite}
-.t-name-big{font-family:var(--f-display);font-weight:700;font-size:.95rem;color:var(--ink);margin-bottom:3px}
-.t-spec{font-family:var(--f-mono);font-size:.6rem;color:var(--clay);letter-spacing:.06em;margin-bottom:8px}
-.t-bio{font-size:.78rem;color:var(--bark);line-height:1.6}
-#examples{background:var(--warm)}
-.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem}
-.filter-btn{font-family:var(--f-mono);font-size:.68rem;padding:7px 16px;border-radius:100px;border:1.5px solid var(--parchment);background:var(--cream);color:var(--bark);cursor:pointer;transition:all .2s;letter-spacing:.04em}
-.filter-btn.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
-.filter-btn:hover:not(.on){border-color:var(--clay);color:var(--ink)}
-.examples-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem}
-.ex-card{background:var(--cream);border:1.5px solid var(--parchment);border-radius:var(--r-lg);overflow:hidden;transition:all .3s}
-.ex-card:hover{border-color:var(--clay);box-shadow:0 8px 32px rgba(45,31,20,.1)}
-.ex-card-header{padding:1rem 1.4rem .8rem;display:flex;align-items:center;gap:.8rem;border-bottom:1.5px solid var(--parchment);background:var(--warm)}
-.ex-icon{font-size:1.4rem}
-.ex-title{font-family:var(--f-display);font-weight:700;font-size:.95rem;color:var(--ink)}
-.ex-sub{font-family:var(--f-mono);font-size:.6rem;color:var(--clay)}
-.cblock{background:#1a1008;border:1px solid rgba(255,255,255,.08);overflow:hidden}
-.cblock-head{background:rgba(255,255,255,.04);padding:10px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
-.c-filename{font-family:var(--f-mono);font-size:.65rem;color:var(--clay);letter-spacing:.08em}
-.c-dots{display:flex;gap:5px}
-.c-dot{width:11px;height:11px;border-radius:50%}
-.cr{background:#ff5f57}.cy{background:#febc2e}.cg{background:#28c840}
-.ccode{overflow-x:auto;font-family:var(--f-mono);font-size:.8rem;color:#c4b09a;line-height:1.8;max-height:320px}
-.code-line{display:flex;align-items:flex-start;padding:1px 1.6rem}
-.code-line:hover{background:rgba(255,255,255,.04)}
-.ln{min-width:32px;color:#4a3a2a;user-select:none;font-size:.7rem;padding-top:1px;flex-shrink:0;text-align:right;margin-right:14px}
+
+/* EXAMPLES */
+#examples{background:var(--bg)}
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{font-family:var(--f-mono);font-size:.6rem;padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .2s;letter-spacing:.05em;text-transform:uppercase}
+.filter-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.filter-btn:hover:not(.on){border-color:var(--border2);color:var(--text)}
+.examples-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1.2rem}
+.ex-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all .25s}
+.ex-card:hover{border-color:var(--border3);box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.ex-header{padding:.9rem 1.2rem .7rem;display:flex;align-items:center;gap:.8rem;border-bottom:1px solid var(--border);background:var(--surface2)}
+.ex-icon{font-size:1.2rem}
+.ex-title{font-family:var(--f-display);font-weight:700;font-size:.87rem;color:var(--text)}
+.ex-sub{font-family:var(--f-mono);font-size:.56rem;color:var(--text3);margin-top:1px}
+.cblock{background:#080b10;border-top:none;overflow:hidden}
+.cblock-head{background:rgba(255,255,255,.03);padding:8px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.04)}
+.c-fname{font-family:var(--f-mono);font-size:.58rem;color:var(--text3);letter-spacing:.07em}
+.c-dots2{display:flex;gap:4px}
+.c-dot2{width:9px;height:9px;border-radius:50%}
+.ccode{overflow-x:auto;font-family:var(--f-mono);font-size:.73rem;color:#8a92a8;line-height:1.8;max-height:300px}
+.code-ln{display:flex;padding:0 1.2rem}
+.code-ln:hover{background:rgba(255,255,255,.03)}
+.lno{min-width:26px;color:#2e3448;user-select:none;font-size:.64rem;padding-top:1px;text-align:right;margin-right:12px;flex-shrink:0}
 .lc{flex:1;white-space:pre}
-.kw{color:#e8a8a8}.tp{color:#a8c8e8}.fn{color:#d4c0f0}.st{color:#b0d8c0}.cm{color:#5a4a3a;font-style:italic}.nm{color:#f0c88a}.at{color:#f0a8c8}
-.ex-output{padding:.8rem 1.4rem;background:#0f0906;border-top:1px solid rgba(255,255,255,.06)}
-.out-label{font-family:var(--f-mono);font-size:.6rem;color:var(--clay);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
-.out-code{font-family:var(--f-mono);font-size:.78rem;color:#8ab889;line-height:1.7;white-space:pre-wrap}
-#bench{background:var(--ink)}
-#bench .sec-label{color:var(--clay)}
-#bench .sec-h{color:#faf5ef}
-#bench .sec-rule{background:var(--clay)}
-.bench-note{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-left:3px solid var(--amber);border-radius:0 12px 12px 0;padding:1rem 1.4rem;margin-bottom:2rem;font-size:.88rem;color:#c4a882;line-height:1.7}
-.bench-note strong{color:var(--buttercup)}
-.tb-flow{display:flex;align-items:center;gap:0;margin-bottom:2.5rem;flex-wrap:wrap;justify-content:center}
-.tb-node{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 16px;text-align:center;min-width:96px}
-.tb-node-ico{font-size:1.5rem;display:block;margin-bottom:5px}
-.tb-node-n{font-family:var(--f-display);font-size:.72rem;font-weight:700;color:#faf5ef}
-.tb-node-s{font-family:var(--f-mono);font-size:.58rem;color:#8b6c4f}
-.tb-arr{color:var(--clay);padding:0 6px;font-size:1.2rem}
-.bench-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem}
-.bench-tab{font-family:var(--f-mono);font-size:.7rem;padding:8px 16px;border-radius:100px;border:1px solid rgba(255,255,255,.12);background:transparent;color:#8b6c4f;cursor:pointer;transition:all .2s;letter-spacing:.04em}
-.bench-tab.on{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#faf5ef}
-.bench-tab:hover:not(.on){border-color:rgba(255,255,255,.2);color:#e8ddd0}
-.bench-panel{display:none}
-.bench-panel.on{display:block;animation:fadeIn .3s ease}
-.bench-cblock{background:#1a1008;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden}
-.bench-cblock-head{background:rgba(255,255,255,.04);padding:10px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
-#quiz{background:var(--warm)}
-.quiz-wrap{max-width:700px;margin:0 auto}
-.quiz-teacher{display:flex;gap:1.2rem;align-items:center;background:var(--cream);border:1.5px solid var(--parchment);border-radius:var(--r-lg);padding:1.4rem 1.6rem;margin-bottom:2rem}
-.qt-av{width:56px;height:56px;border-radius:50%;background:var(--warm);border:2px solid var(--parchment);display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0}
-.qt-name{font-family:var(--f-display);font-weight:700;color:var(--ink);font-size:1rem}
-.qt-role{font-family:var(--f-mono);font-size:.62rem;color:var(--clay);margin-bottom:5px}
-.qt-quote{font-size:.87rem;color:var(--bark);line-height:1.65;font-style:italic}
-.quiz-card{background:var(--cream);border:1.5px solid var(--parchment);border-radius:var(--r-lg);padding:2rem}
-.q-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.q-prog{font-family:var(--f-mono);font-size:.7rem;color:var(--clay)}
-.q-track{background:var(--parchment);border-radius:100px;height:4px;margin-bottom:1.5rem;overflow:hidden}
-.q-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--amber));border-radius:100px;transition:width .4s}
-.q-q{font-family:var(--f-display);font-size:1rem;font-weight:600;color:var(--ink);line-height:1.55;margin-bottom:1.2rem}
-.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.q-opt{background:var(--warm);border:1.5px solid var(--parchment);border-radius:12px;padding:11px 14px;color:var(--bark);font-family:var(--f-body);font-size:.87rem;cursor:pointer;transition:all .2s;text-align:left}
-.q-opt:hover:not(:disabled){border-color:var(--clay);color:var(--ink);background:var(--parchment)}
-.q-opt.ok{border-color:var(--moss)!important;background:#e8f5e8!important;color:var(--moss)!important}
-.q-opt.ng{border-color:var(--rose)!important;background:#fde8e8!important;color:var(--rose)!important}
-.q-fb{font-size:.87rem;color:var(--bark);font-style:italic;padding:12px 14px;background:var(--warm);border-radius:10px;margin-top:8px;line-height:1.65;display:none}
+.ex-out{padding:.6rem 1.2rem;background:#060810;border-top:1px solid rgba(255,255,255,.04)}
+.out-lbl{font-family:var(--f-mono);font-size:.55rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.out-code{font-family:var(--f-mono);font-size:.7rem;color:#60c890;line-height:1.65;white-space:pre-wrap}
+
+/* PROGRESS TRACKER (from wireframe) */
+#progress-section{background:var(--bg3)}
+.prog-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.prog-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.4rem}
+.prog-title{font-family:var(--f-display);font-weight:700;font-size:.95rem;color:var(--text);margin-bottom:1.2rem}
+.prog-item{margin-bottom:1rem}
+.prog-label{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:.65rem;margin-bottom:5px}
+.prog-lname{color:var(--text2)}
+.prog-lpct{color:var(--accent)}
+.prog-bar{background:var(--bg4);border-radius:100px;height:5px;overflow:hidden}
+.prog-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--violet));transition:width .8s ease}
+.mission-list{list-style:none}
+.mission-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.82rem}
+.mission-item:last-child{border-bottom:none}
+.m-check{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem}
+.m-check.done{background:rgba(64,200,160,.15);border-color:var(--teal);color:var(--teal)}
+.m-check.todo{color:transparent}
+.m-name{color:var(--text2)}
+.m-name.done{color:var(--text);text-decoration:none}
+
+/* TESTBENCH */
+#bench{background:var(--bg2)}
+.bench-note{background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.2);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:.9rem 1.2rem;margin-bottom:2rem;font-size:.83rem;color:var(--text2);line-height:1.7}
+.bench-note strong{color:var(--accent2)}
+.tb-flow{display:flex;align-items:center;gap:0;margin-bottom:2rem;flex-wrap:wrap;justify-content:center}
+.tb-node{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:12px 14px;text-align:center;min-width:88px}
+.tb-ico{font-size:1.3rem;display:block;margin-bottom:4px}
+.tb-nn{font-family:var(--f-display);font-size:.68rem;font-weight:700;color:var(--text)}
+.tb-ns{font-family:var(--f-mono);font-size:.54rem;color:var(--text3)}
+.tb-arr{color:var(--text3);padding:0 5px;font-size:1rem}
+.bench-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.2rem}
+.bench-tab{font-family:var(--f-mono);font-size:.62rem;padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .2s;letter-spacing:.04em}
+.bench-tab.on{background:var(--surface);border-color:var(--border3);color:var(--text)}
+.bench-tab:hover:not(.on){border-color:var(--border2);color:var(--text2)}
+.bench-panel{display:none}.bench-panel.on{display:block}
+.bench-cb{background:#060810;border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden}
+.bench-cb-head{background:rgba(255,255,255,.03);padding:9px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)}
+.bench-ccode{overflow-x:auto;font-family:var(--f-mono);font-size:.72rem;color:#8a92a8;line-height:1.8;max-height:420px}
+
+/* QUIZ */
+#quiz{background:var(--bg3)}
+.quiz-wrap{max-width:680px;margin:0 auto}
+.quiz-teacher{display:flex;gap:1rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.2rem 1.4rem;margin-bottom:1.5rem}
+.qt-av{width:48px;height:48px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0}
+.qt-name{font-family:var(--f-display);font-weight:700;color:var(--text);font-size:.9rem}
+.qt-role{font-family:var(--f-mono);font-size:.58rem;color:var(--text3);margin-bottom:4px}
+.qt-quote{font-size:.82rem;color:var(--text2);line-height:1.65;font-style:italic}
+.quiz-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.8rem}
+.q-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
+.q-prog{font-family:var(--f-mono);font-size:.63rem;color:var(--text3)}
+.q-track{background:var(--bg4);border-radius:100px;height:3px;margin-bottom:1.5rem;overflow:hidden}
+.q-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--violet));border-radius:100px;transition:width .4s}
+.q-q{font-family:var(--f-display);font-size:.95rem;font-weight:600;color:var(--text);line-height:1.55;margin-bottom:1.2rem}
+.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.q-opt{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:10px 13px;color:var(--text2);font-family:var(--f-body);font-size:.82rem;cursor:pointer;transition:all .2s;text-align:left;line-height:1.5}
+.q-opt:hover:not(:disabled){border-color:var(--border3);color:var(--text);background:var(--surface3)}
+.q-opt.ok{border-color:var(--teal)!important;background:rgba(64,200,160,.1)!important;color:var(--teal)!important}
+.q-opt.ng{border-color:var(--rose)!important;background:rgba(232,96,122,.1)!important;color:var(--rose)!important}
+.q-fb{font-size:.82rem;color:var(--text2);font-style:italic;padding:10px 12px;background:var(--surface2);border-radius:8px;margin-top:8px;line-height:1.65;display:none}
 .q-fb.show{display:block}
-.q-next-btn{display:none;margin-top:1.2rem;margin-left:auto;background:var(--ink);color:var(--cream);font-family:var(--f-display);font-weight:600;font-size:.87rem;padding:10px 24px;border-radius:100px;border:none;cursor:pointer}
-.q-next-btn:hover{background:var(--bark)}
-#overlay{position:fixed;inset:0;z-index:5000;background:rgba(45,31,20,.85);backdrop-filter:blur(20px);display:none;overflow-y:auto;padding:2rem 1rem}
+.q-next-btn{display:none;margin-top:1rem;margin-left:auto;background:var(--accent);color:#fff;font-family:var(--f-body);font-weight:600;font-size:.82rem;padding:9px 20px;border-radius:8px;border:none;cursor:pointer}
+.q-next-btn:hover{background:var(--accent2)}
+
+/* LESSON OVERLAY */
+#overlay{position:fixed;inset:0;z-index:5000;background:rgba(5,7,12,.9);backdrop-filter:blur(24px);display:none;overflow-y:auto;padding:2rem 1rem}
 #overlay.show{display:block}
-#mbox{max-width:1040px;margin:0 auto;background:var(--cream);border-radius:24px;border:1.5px solid var(--parchment);overflow:hidden;animation:popIn .4s cubic-bezier(.34,1.56,.64,1) both}
-@keyframes popIn{from{transform:scale(.9) translateY(30px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
-.m-header{background:var(--warm);padding:1rem 1.8rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1.5px solid var(--parchment);position:sticky;top:0;z-index:10}
-.m-title{font-family:var(--f-display);font-weight:700;font-size:1rem;color:var(--ink)}
-.m-close{width:36px;height:36px;border-radius:50%;background:var(--parchment);border:none;color:var(--bark);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.m-close:hover{background:var(--blush);color:var(--rose)}
-.m-body{padding:2rem 2.2rem 3rem}
-.lesson-scene{display:grid;grid-template-columns:1fr 200px;gap:2rem;margin-bottom:2.5rem}
-.l-steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
-.l-step-btn{font-family:var(--f-mono);font-size:.68rem;padding:7px 16px;border-radius:100px;border:1.5px solid var(--parchment);background:var(--warm);color:var(--bark);cursor:pointer;transition:all .2s;letter-spacing:.04em}
-.l-step-btn.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
-.l-step-btn:hover:not(.on){border-color:var(--clay);color:var(--ink)}
-.l-ttl{font-family:var(--f-display);font-size:1.5rem;font-weight:800;color:var(--ink);margin-bottom:.3rem;letter-spacing:-.02em}
-.l-domain{font-family:var(--f-mono);font-size:.68rem;color:var(--clay);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
-.t-pod{background:var(--warm);border:1.5px solid var(--parchment);border-radius:var(--r-lg);padding:1.4rem 1rem;text-align:center}
-.t-pod-av{width:72px;height:72px;border-radius:50%;margin:0 auto .7rem;background:white;border:2px solid var(--parchment);display:flex;align-items:center;justify-content:center;font-size:2.2rem}
-.t-breathing{animation:float 3s ease-in-out infinite}
-.t-pod-name{font-family:var(--f-display);font-weight:700;font-size:.9rem;color:var(--ink);margin-bottom:2px}
-.t-pod-role{font-family:var(--f-mono);font-size:.6rem;color:var(--clay)}
-.speech-bubble{background:white;border:1.5px solid var(--parchment);border-radius:12px;padding:.8rem .9rem;margin-top:.9rem;font-size:.78rem;color:var(--bark);line-height:1.65;font-style:italic;text-align:left;min-height:60px;position:relative}
-.speech-bubble::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:7px solid transparent;border-bottom-color:var(--parchment);border-top:none}
-.c-head{font-family:var(--f-display);font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:1rem;padding-bottom:8px;border-bottom:1.5px solid var(--parchment);display:flex;align-items:center;gap:8px}
-.c-head::before{content:'◆';font-size:.55rem;color:var(--rose)}
-.info-box{background:var(--warm);border:1.5px solid var(--parchment);border-left:3px solid var(--rose);border-radius:0 12px 12px 0;padding:1rem 1.2rem;margin:.8rem 0;font-size:.88rem;color:var(--bark);line-height:1.8}
-.info-box.sage{border-left-color:var(--moss)}
-.info-box.sky{border-left-color:var(--cornflower)}
-.info-box.amber{border-left-color:var(--caramel)}
-.info-box strong{color:var(--ink)}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
-.box-card{background:var(--warm);border:1.5px solid var(--parchment);border-radius:12px;padding:1.1rem}
-.box-h{font-family:var(--f-display);font-size:.88rem;font-weight:700;margin-bottom:.8rem;display:flex;gap:6px;align-items:center}
-.box-h.rose{color:var(--rose)}.box-h.sage{color:var(--moss)}.box-h.sky{color:var(--cornflower)}.box-h.amber{color:var(--caramel)}
+#mbox{max-width:1100px;margin:0 auto;background:var(--bg2);border-radius:20px;border:1px solid var(--border2);overflow:hidden;animation:popIn .35s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes popIn{from{transform:scale(.92) translateY(24px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.m-header{background:var(--bg3);padding:.9rem 1.6rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.m-title{font-family:var(--f-display);font-weight:700;font-size:.95rem;color:var(--text)}
+.m-close{width:32px;height:32px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text2);font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.m-close:hover{background:rgba(232,96,122,.15);color:var(--rose);border-color:var(--rose)}
+.m-body{padding:1.8rem 2rem 2.5rem}
+.l-steps{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.4rem}
+.l-step-btn{font-family:var(--f-mono);font-size:.6rem;padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .2s;letter-spacing:.04em}
+.l-step-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.l-step-btn:hover:not(.on){border-color:var(--border2);color:var(--text)}
+.lesson-scene{display:grid;grid-template-columns:1fr 190px;gap:1.8rem}
+.l-ttl{font-family:var(--f-display);font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:.3rem;letter-spacing:-.02em}
+.l-domain{font-family:var(--f-mono);font-size:.6rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+.t-pod{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.2rem .9rem;text-align:center}
+.t-pod-av{width:64px;height:64px;border-radius:50%;margin:0 auto .6rem;background:var(--surface2);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:2rem;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.t-pod-name{font-family:var(--f-display);font-weight:700;font-size:.85rem;color:var(--text);margin-bottom:1px}
+.t-pod-role{font-family:var(--f-mono);font-size:.56rem;color:var(--text3);margin-bottom:.8rem}
+.speech-bubble{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem .8rem;font-size:.73rem;color:var(--text2);line-height:1.6;font-style:italic;text-align:left;position:relative}
+.speech-bubble::before{content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:var(--border);border-top:none}
+.c-head{font-family:var(--f-display);font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.9rem;padding-bottom:7px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px}
+.c-head::before{content:'▶';font-size:.5rem;color:var(--accent)}
+.info-box{background:rgba(79,142,247,.06);border:1px solid rgba(79,142,247,.15);border-left:2px solid var(--accent);border-radius:0 9px 9px 0;padding:.8rem 1.1rem;margin:.7rem 0;font-size:.83rem;color:var(--text2);line-height:1.75}
+.info-box.teal{border-left-color:var(--teal);background:rgba(64,200,160,.06);border-color:rgba(64,200,160,.15)}
+.info-box.amber{border-left-color:var(--amber);background:rgba(240,168,64,.06);border-color:rgba(240,168,64,.15)}
+.info-box.rose{border-left-color:var(--rose);background:rgba(232,96,122,.06);border-color:rgba(232,96,122,.15)}
+.info-box strong{color:var(--text)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:.9rem 0}
+.box-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1rem}
+.box-h{font-family:var(--f-display);font-size:.83rem;font-weight:700;margin-bottom:.7rem;display:flex;gap:5px;align-items:center}
+.box-h.accent{color:var(--accent)}.box-h.teal{color:var(--teal)}.box-h.rose{color:var(--rose)}.box-h.amber{color:var(--amber)}.box-h.violet{color:var(--violet)}
 .blist{list-style:none}
-.blist li{font-size:.83rem;color:var(--bark);padding:4px 0;border-bottom:1px solid var(--parchment);display:flex;gap:6px;align-items:flex-start;line-height:1.55}
-.blist li::before{content:'→';color:var(--clay);flex-shrink:0;font-size:.73rem;margin-top:2px}
-.mgrid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.9rem;margin:1rem 0}
-.mcard2{background:var(--warm);border:1.5px solid var(--parchment);border-radius:12px;padding:1rem;text-align:center;transition:all .25s}
-.mcard2:hover{border-color:var(--clay);transform:translateY(-2px)}
-.mc2-i{font-size:1.8rem;display:block;margin-bottom:5px}
-.mc2-n{font-family:var(--f-display);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:2px}
-.mc2-t{font-family:var(--f-mono);font-size:.6rem;color:var(--clay)}
-.mc2-d{font-size:.73rem;color:var(--bark);margin-top:5px;line-height:1.5}
-.sv-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
-.sv-table th{background:var(--warm);font-family:var(--f-display);font-weight:700;color:var(--bark);padding:8px 14px;text-align:left;border-bottom:1.5px solid var(--parchment);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
-.sv-table td{padding:8px 14px;border-bottom:1px solid var(--parchment);color:var(--bark);font-family:var(--f-mono);font-size:.8rem}
-.sv-table tr:hover td{background:var(--warm)}
-.sv-table td:first-child{color:var(--cornflower)}
-.iq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.iq-opt{background:var(--cream);border:1.5px solid var(--parchment);border-radius:10px;padding:10px 13px;color:var(--bark);font-size:.87rem;cursor:pointer;transition:all .2s;text-align:left}
-.iq-opt:hover:not(:disabled){border-color:var(--clay);color:var(--ink)}
-.iq-opt.ok{border-color:var(--moss)!important;background:#e8f5e8!important;color:var(--moss)!important}
-.iq-opt.ng{border-color:var(--rose)!important;background:#fde8e8!important;color:var(--rose)!important}
-.iq-fb{font-size:.85rem;color:var(--bark);font-style:italic;padding:10px 12px;background:var(--cream);border-radius:8px;margin-top:8px;line-height:1.65;display:none}
-.iq-fb.show{display:block}
-.qblock{background:var(--warm);border:1.5px solid var(--parchment);border-radius:var(--r);padding:1.6rem;margin-top:2rem}
-.qblock-h{font-family:var(--f-display);font-size:1rem;font-weight:700;color:var(--moss);margin-bottom:1rem}
-.iq-q{font-family:var(--f-display);font-size:.95rem;font-weight:600;color:var(--ink);line-height:1.55;margin-bottom:1rem}
-.m-cblock{background:#1a1008;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;margin:.8rem 0}
-.m-cblock-head{background:rgba(255,255,255,.04);padding:8px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
-.m-ccode{overflow-x:auto;font-family:var(--f-mono);font-size:.8rem;color:#c4b09a;line-height:1.8;max-height:400px}
-footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
-.ft-brand{font-family:var(--f-display);font-size:1.3rem;font-weight:800;color:var(--cream);margin-bottom:5px}
-.ft-brand span{color:var(--rose)}
-.ft-sub{font-family:var(--f-mono);font-size:.7rem;color:var(--bark);margin-bottom:1.5rem}
+.blist li{font-size:.79rem;color:var(--text2);padding:3px 0;border-bottom:1px solid var(--border);display:flex;gap:5px;align-items:flex-start;line-height:1.5}
+.blist li:last-child{border-bottom:none}
+.blist li::before{content:'→';color:var(--text3);flex-shrink:0;font-size:.7rem;margin-top:1px}
+.mgrid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.7rem;margin:.9rem 0}
+.mcard2{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.9rem;text-align:center;transition:all .2s}
+.mcard2:hover{border-color:var(--border3);transform:translateY(-1px)}
+.mc2-i{font-size:1.5rem;display:block;margin-bottom:4px}
+.mc2-n{font-family:var(--f-display);font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:1px}
+.mc2-t{font-family:var(--f-mono);font-size:.56rem;color:var(--text3)}
+.mc2-d{font-size:.7rem;color:var(--text2);margin-top:4px;line-height:1.4}
+.sv-table{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.8rem}
+.sv-table th{background:var(--surface2);font-family:var(--f-display);font-weight:600;color:var(--text2);padding:7px 12px;text-align:left;border-bottom:1px solid var(--border);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase}
+.sv-table td{padding:7px 12px;border-bottom:1px solid var(--border);color:var(--text2);font-family:var(--f-mono);font-size:.73rem}
+.sv-table tr:hover td{background:rgba(255,255,255,.02)}
+.sv-table td:first-child{color:var(--accent2)}
+.m-cblock{background:#060810;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;margin:.7rem 0}
+.m-cblock-head{background:rgba(255,255,255,.03);padding:7px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.05)}
+.m-ccode{overflow-x:auto;font-family:var(--f-mono);font-size:.72rem;color:#8a92a8;line-height:1.8;max-height:380px}
+
+/* DAILY CHALLENGE */
+#challenge{background:var(--bg)}
+.challenge-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:2rem;max-width:800px}
+.challenge-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(240,168,64,.1);border:1px solid rgba(240,168,64,.25);border-radius:100px;padding:4px 12px;font-family:var(--f-mono);font-size:.58rem;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.challenge-q{font-family:var(--f-display);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:1.2rem;line-height:1.5}
+.challenge-reveal-btn{background:var(--accent);color:#fff;font-family:var(--f-body);font-weight:600;font-size:.82rem;padding:9px 20px;border-radius:8px;border:none;cursor:pointer;transition:all .2s}
+.challenge-reveal-btn:hover{background:var(--accent2)}
+.challenge-answer{display:none;margin-top:1rem}
+.challenge-answer.show{display:block}
+.challenge-answer .m-cblock{margin:0}
+
+/* FOOTER */
+footer{background:var(--bg3);padding:2.5rem 2.5rem;text-align:center;border-top:1px solid var(--border)}
+.ft-brand{font-family:var(--f-display);font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.ft-brand span{color:var(--accent)}
+.ft-sub{font-family:var(--f-mono);font-size:.6rem;color:var(--text3);margin-bottom:1.2rem}
 .ft-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
-.ft-link{font-family:var(--f-mono);font-size:.7rem;color:var(--bark);text-decoration:none;transition:color .2s}
-.ft-link:hover{color:var(--clay)}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .5s,transform .5s}
+.ft-link{font-family:var(--f-mono);font-size:.62rem;color:var(--text3);text-decoration:none;transition:color .2s;letter-spacing:.05em;text-transform:uppercase}
+.ft-link:hover{color:var(--accent)}
+
+/* REVEAL */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
 .reveal.vis{opacity:1;transform:none}
+
 @media(max-width:900px){
-  #hero{grid-template-columns:1fr;padding-top:90px}
-  .hero-right{display:none}
-  nav{padding:0 1.2rem}
-  .nav-links{display:none}
-  .m-body{padding:1.2rem}
-  .q-opts,.iq-opts,.two-col{grid-template-columns:1fr}
-  .lesson-scene{grid-template-columns:1fr}
+  #hero{grid-template-columns:1fr;padding-top:80px}.hero-right{display:none}
+  nav{padding:0 1rem}.nav-links{display:none}
+  .m-body{padding:1rem}.q-opts,.two-col{grid-template-columns:1fr}
+  .lesson-scene{grid-template-columns:1fr}.prog-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -268,117 +281,102 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
 <div id="prog" style="width:0%"></div>
 
 <nav>
-  <div class="nav-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">SV·<span>Learn</span></div>
+  <div class="nav-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span class="dot"></span>SV·Learn</div>
   <div class="nav-links">
     <a class="nav-a" href="#topics">Topics</a>
-    <a class="nav-a" href="#teachers">Teachers</a>
     <a class="nav-a" href="#examples">Examples</a>
+    <a class="nav-a" href="#progress-section">Progress</a>
     <a class="nav-a" href="#bench">Testbench</a>
+    <a class="nav-a" href="#challenge">Challenge</a>
     <a class="nav-a" href="#quiz">Quiz</a>
   </div>
-  <a class="nav-cta" href="#examples">Start Learning</a>
+  <a class="nav-cta" href="#examples">Start Learning →</a>
 </nav>
 
 <section id="hero" style="padding-top:80px">
   <div class="hero-left">
-    <div class="hero-badge"><span class="badge-dot"></span>Design Verification · Complete Course</div>
+    <div class="hero-eyebrow">🎓 Design Verification · Complete Reference</div>
     <h1 class="hero-h1">
-      <span class="w1">Master</span>
-      <span class="w2">SystemVerilog</span>
-      <span class="w3">Seven experts · 200+ line-by-line examples · Quiz ready</span>
+      <span class="line1">Master</span>
+      <span class="line2">SystemVerilog</span>
+      <span class="line3">Seven experts · 200+ annotated examples · Quiz engine · APB Testbench</span>
     </h1>
-    <p class="hero-desc">Every concept from Khaja's notes — displayed line-by-line with syntax highlighting, expected output, and animated character lessons. The most complete SV reference for DV interviews.</p>
+    <p class="hero-desc">Every concept from Khaja's notes — displayed with syntax highlighting, expected output, interactive lessons, and a full APB testbench. The most complete SV reference for DV interviews.</p>
     <div class="hero-btns">
-      <a class="btn-dark" href="#examples">📚 Browse All Examples</a>
-      <a class="btn-outline" href="#bench">View Testbench</a>
+      <a class="btn-primary" href="#examples">📚 Browse All Examples</a>
+      <a class="btn-ghost" href="#bench">View APB Testbench</a>
     </div>
     <div class="hero-stats">
       <div><div class="stat-n">7</div><div class="stat-l">Domains</div></div>
-      <div><div class="stat-n">50+</div><div class="stat-l">Examples</div></div>
-      <div><div class="stat-n">10</div><div class="stat-l">Quiz Qs</div></div>
+      <div><div class="stat-n">80+</div><div class="stat-l">Examples</div></div>
+      <div><div class="stat-n">15</div><div class="stat-l">Quiz Qs</div></div>
       <div><div class="stat-n">7</div><div class="stat-l">Teachers</div></div>
     </div>
   </div>
   <div class="hero-right">
-    <div class="char-stack">
-      <div class="char-card" onclick="openLesson('types')"><div class="char-avatar">👨‍🔬</div><div class="char-tag">data types</div><div class="char-name">Dr. Byte</div></div>
-      <div class="char-card" onclick="openLesson('oop')"><div class="char-avatar">🧑‍💻</div><div class="char-tag">oop & classes</div><div class="char-name">OOP Omar</div></div>
-      <div class="char-card" onclick="openLesson('crv')"><div class="char-avatar">🎲</div><div class="char-tag">crv & sva</div><div class="char-name">Rex Randon</div></div>
-      <div class="float-badge">🧠 Two-state = 2× faster</div>
-      <div class="float-badge">✅ APB Testbench</div>
-      <div class="float-badge">🎯 100% coverage</div>
+    <div class="terminal">
+      <div class="term-header">
+        <div class="term-dots"><span class="term-dot td-r"></span><span class="term-dot td-y"></span><span class="term-dot td-g"></span></div>
+        <div class="term-title">sv_learn.sv — live preview</div>
+      </div>
+      <div class="term-body" id="hero-code"></div>
     </div>
   </div>
 </section>
 
+<!-- TOPICS -->
 <section id="topics">
   <div class="sec-wrap">
     <span class="sec-label">// 01 · curriculum</span>
     <h2 class="sec-h">Seven Core <em>Domains</em></h2>
     <div class="sec-rule"></div>
     <div class="topics-grid">
-      <div class="tcard reveal" data-a="blush" onclick="openLesson('types')">
-        <div class="tc-header"><div class="tc-avatar">👨‍🔬</div><div><div class="tc-num">// 01</div><div class="tc-name">Enhanced Data Types</div><div class="tc-who">Dr. Byte · Performance Scientist</div></div></div>
-        <div class="tc-body"><div class="tc-desc">bit, byte, int, logic, string, struct, enum, union — two-state types make simulation 2× faster.</div><div class="tc-tags"><span class="tag">bit/int</span><span class="tag">string</span><span class="tag">struct</span><span class="tag">enum</span><span class="tag">union</span></div></div>
+      <div class="tcard reveal" onclick="openLesson('types')">
+        <div class="tc-top"><div class="tc-icon">👨‍🔬</div><div><div class="tc-num">// 01</div><div class="tc-name">Enhanced Data Types</div><div class="tc-who">Dr. Byte · Performance Scientist</div></div></div>
+        <div class="tc-body"><div class="tc-desc">bit, byte, int, logic, string, struct, enum, union — two-state types make simulation 2× faster. Includes all conversion methods.</div><div class="tc-tags"><span class="tag">bit/int</span><span class="tag">string</span><span class="tag">struct</span><span class="tag">enum</span><span class="tag">union</span></div></div>
         <div class="tc-footer"><div class="tc-meta2">4 steps · 15+ examples</div><div class="tc-arrow">→</div></div>
       </div>
-      <div class="tcard reveal" data-a="sage" onclick="openLesson('arrays')">
-        <div class="tc-header"><div class="tc-avatar">📦</div><div><div class="tc-num">// 02</div><div class="tc-name">Advanced Arrays</div><div class="tc-who">Array Anna · Memory Architect</div></div></div>
-        <div class="tc-body"><div class="tc-desc">Fixed, dynamic, packed, unpacked, associative, queue — plus all built-in locator and ordering methods.</div><div class="tc-tags"><span class="tag">dynamic[]</span><span class="tag">assoc[K]</span><span class="tag">queue[$]</span><span class="tag">locator</span></div></div>
+      <div class="tcard reveal" onclick="openLesson('arrays')">
+        <div class="tc-top"><div class="tc-icon">📦</div><div><div class="tc-num">// 02</div><div class="tc-name">Advanced Arrays</div><div class="tc-who">Array Anna · Memory Architect</div></div></div>
+        <div class="tc-body"><div class="tc-desc">Fixed, dynamic, packed, unpacked, associative, queue — plus all built-in locator, reduction and ordering methods.</div><div class="tc-tags"><span class="tag">dynamic[]</span><span class="tag">assoc[K]</span><span class="tag">queue[$]</span><span class="tag">locator</span></div></div>
         <div class="tc-footer"><div class="tc-meta2">4 steps · 20+ examples</div><div class="tc-arrow">→</div></div>
       </div>
-      <div class="tcard reveal" data-a="sky" onclick="openLesson('oop')">
-        <div class="tc-header"><div class="tc-avatar">🧑‍💻</div><div><div class="tc-num">// 03</div><div class="tc-name">OOP & Classes</div><div class="tc-who">OOP Omar · Class Designer</div></div></div>
-        <div class="tc-body"><div class="tc-desc">Classes, handles, inheritance, multilevel, polymorphism, virtual, super, this, scope resolution.</div><div class="tc-tags"><span class="tag">class</span><span class="tag">extends</span><span class="tag">virtual</span><span class="tag">super/this</span></div></div>
+      <div class="tcard reveal" onclick="openLesson('oop')">
+        <div class="tc-top"><div class="tc-icon">🧑‍💻</div><div><div class="tc-num">// 03</div><div class="tc-name">OOP & Classes</div><div class="tc-who">OOP Omar · Class Designer</div></div></div>
+        <div class="tc-body"><div class="tc-desc">Classes, handles, inheritance, multilevel, polymorphism, virtual, pure virtual, super, this, scope resolution, extern.</div><div class="tc-tags"><span class="tag">class</span><span class="tag">extends</span><span class="tag">virtual</span><span class="tag">super/this</span></div></div>
         <div class="tc-footer"><div class="tc-meta2">4 steps · 25+ examples</div><div class="tc-arrow">→</div></div>
       </div>
-      <div class="tcard reveal" data-a="lavender" onclick="openLesson('crv')">
-        <div class="tc-header"><div class="tc-avatar">🎲</div><div><div class="tc-num">// 04</div><div class="tc-name">CRV & Assertions</div><div class="tc-who">Rex Randon · CRV Specialist</div></div></div>
-        <div class="tc-body"><div class="tc-desc">rand/randc, inside, dist, implication, unique, solve-before, rand_mode, covergroups, SVA.</div><div class="tc-tags"><span class="tag">rand/randc</span><span class="tag">constraint</span><span class="tag">covergroup</span><span class="tag">SVA</span></div></div>
+      <div class="tcard reveal" onclick="openLesson('crv')">
+        <div class="tc-top"><div class="tc-icon">🎲</div><div><div class="tc-num">// 04</div><div class="tc-name">CRV & Assertions</div><div class="tc-who">Rex Randon · CRV Specialist</div></div></div>
+        <div class="tc-body"><div class="tc-desc">rand/randc, inside, dist, implication, unique, solve-before, rand_mode, covergroups, SVA, transition bins, illegal/ignore bins.</div><div class="tc-tags"><span class="tag">rand/randc</span><span class="tag">constraint</span><span class="tag">covergroup</span><span class="tag">SVA</span></div></div>
+        <div class="tc-footer"><div class="tc-meta2">4 steps · 25+ examples</div><div class="tc-arrow">→</div></div>
+      </div>
+      <div class="tcard reveal" onclick="openLesson('concurrency')">
+        <div class="tc-top"><div class="tc-icon">⚡</div><div><div class="tc-num">// 05</div><div class="tc-name">Concurrency & IPC</div><div class="tc-who">Forky Fiona · Thread Maestro</div></div></div>
+        <div class="tc-body"><div class="tc-desc">fork-join all variants, mimic patterns, disable fork, semaphore, mailbox (generic/typed/peek/try), events blocking & non-blocking.</div><div class="tc-tags"><span class="tag">fork/join</span><span class="tag">semaphore</span><span class="tag">mailbox</span><span class="tag">event</span></div></div>
         <div class="tc-footer"><div class="tc-meta2">4 steps · 20+ examples</div><div class="tc-arrow">→</div></div>
       </div>
-      <div class="tcard reveal" data-a="peach" onclick="openLesson('concurrency')">
-        <div class="tc-header"><div class="tc-avatar">⚡</div><div><div class="tc-num">// 05</div><div class="tc-name">Concurrency & IPC</div><div class="tc-who">Forky Fiona · Thread Maestro</div></div></div>
-        <div class="tc-body"><div class="tc-desc">fork-join all variants, mimic patterns, semaphore, mailbox (generic/typed/peek), events.</div><div class="tc-tags"><span class="tag">fork/join</span><span class="tag">semaphore</span><span class="tag">mailbox</span><span class="tag">event</span></div></div>
-        <div class="tc-footer"><div class="tc-meta2">4 steps · 20+ examples</div><div class="tc-arrow">→</div></div>
+      <div class="tcard reveal" onclick="openLesson('interface')">
+        <div class="tc-top"><div class="tc-icon">🔌</div><div><div class="tc-num">// 06</div><div class="tc-name">Interfaces & Clocking</div><div class="tc-who">Interface Iris · Bus Engineer</div></div></div>
+        <div class="tc-body"><div class="tc-desc">Interfaces, modports, clocking blocks, virtual interfaces, program blocks — race-free, elegant signal management.</div><div class="tc-tags"><span class="tag">interface</span><span class="tag">clocking</span><span class="tag">modport</span><span class="tag">virtual if</span></div></div>
+        <div class="tc-footer"><div class="tc-meta2">4 steps · 12+ examples</div><div class="tc-arrow">→</div></div>
       </div>
-      <div class="tcard reveal" data-a="mint" onclick="openLesson('interface')">
-        <div class="tc-header"><div class="tc-avatar">🔌</div><div><div class="tc-num">// 06</div><div class="tc-name">Interfaces & Clocking</div><div class="tc-who">Interface Iris · Bus Engineer</div></div></div>
-        <div class="tc-body"><div class="tc-desc">Interfaces, modports, clocking blocks, virtual interfaces — race-free, elegant signal management.</div><div class="tc-tags"><span class="tag">interface</span><span class="tag">clocking</span><span class="tag">modport</span><span class="tag">virtual if</span></div></div>
-        <div class="tc-footer"><div class="tc-meta2">4 steps · 10+ examples</div><div class="tc-arrow">→</div></div>
-      </div>
-      <div class="tcard reveal" data-a="butter" onclick="openLesson('functions')">
-        <div class="tc-header"><div class="tc-avatar">⚙️</div><div><div class="tc-num">// 07</div><div class="tc-name">Functions & Tasks</div><div class="tc-who">Func Farhan · Subroutine Master</div></div></div>
-        <div class="tc-body"><div class="tc-desc">Function vs task, static/automatic, pass-by-value/ref/name, default args, swap patterns, break/continue.</div><div class="tc-tags"><span class="tag">function</span><span class="tag">task</span><span class="tag">automatic</span><span class="tag">ref</span></div></div>
+      <div class="tcard reveal" onclick="openLesson('functions')">
+        <div class="tc-top"><div class="tc-icon">⚙️</div><div><div class="tc-num">// 07</div><div class="tc-name">Functions & Tasks</div><div class="tc-who">Func Farhan · Subroutine Master</div></div></div>
+        <div class="tc-body"><div class="tc-desc">Function vs task, static/automatic, pass-by-value/ref/name, default args, swap patterns, break/continue, void functions.</div><div class="tc-tags"><span class="tag">function</span><span class="tag">task</span><span class="tag">automatic</span><span class="tag">ref</span></div></div>
         <div class="tc-footer"><div class="tc-meta2">4 steps · 15+ examples</div><div class="tc-arrow">→</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="teachers">
-  <div class="sec-wrap">
-    <span class="sec-label">// 02 · your teachers</span>
-    <h2 class="sec-h">Meet the <em>Characters</em></h2>
-    <div class="sec-rule"></div>
-    <div class="teachers-grid">
-      <div class="teacher-card reveal" data-c="rose" onclick="openLesson('types')"><div class="t-av-wrap">👨‍🔬</div><div class="t-name-big">Dr. Byte</div><div class="t-spec">data_types_expert</div><div class="t-bio">Performance scientist obsessed with two-state types and simulation speed.</div></div>
-      <div class="teacher-card reveal" data-c="sage" onclick="openLesson('arrays')"><div class="t-av-wrap">📦</div><div class="t-name-big">Array Anna</div><div class="t-spec">memory_architect</div><div class="t-bio">Warehouse manager who knows which container fits every data problem.</div></div>
-      <div class="teacher-card reveal" data-c="sky" onclick="openLesson('oop')"><div class="t-av-wrap">🧑‍💻</div><div class="t-name-big">OOP Omar</div><div class="t-spec">class_designer</div><div class="t-bio">Architect who brought OOP discipline into hardware verification.</div></div>
-      <div class="teacher-card reveal" data-c="violet" onclick="openLesson('crv')"><div class="t-av-wrap">🎲</div><div class="t-name-big">Rex Randon</div><div class="t-spec">crv_specialist</div><div class="t-bio">Professional gambler turned DV engineer. Constraints beat directed tests.</div></div>
-      <div class="teacher-card reveal" data-c="amber" onclick="openLesson('concurrency')"><div class="t-av-wrap">⚡</div><div class="t-name-big">Forky Fiona</div><div class="t-spec">thread_maestro</div><div class="t-bio">Traffic controller who has seen every deadlock and prevents them all.</div></div>
-      <div class="teacher-card reveal" data-c="blush" onclick="openLesson('interface')"><div class="t-av-wrap">🔌</div><div class="t-name-big">Interface Iris</div><div class="t-spec">bus_engineer</div><div class="t-bio">Switchboard operator who bundles every wire into elegant interfaces.</div></div>
-      <div class="teacher-card reveal" data-c="butter" onclick="openLesson('functions')"><div class="t-av-wrap">⚙️</div><div class="t-name-big">Func Farhan</div><div class="t-spec">subroutine_master</div><div class="t-bio">Code organizer who knows when to use a function and when to use a task.</div></div>
-    </div>
-  </div>
-</section>
-
+<!-- EXAMPLES -->
 <section id="examples">
   <div class="sec-wrap">
-    <span class="sec-label">// 03 · khaja's complete code vault</span>
+    <span class="sec-label">// 02 · khaja's complete code vault</span>
     <h2 class="sec-h">All Code <em>Examples</em></h2>
     <div class="sec-rule"></div>
-    <p style="font-size:.9rem;color:var(--bark);margin-bottom:2rem;max-width:650px;line-height:1.75">Every example from Khaja's notes — organized by concept, displayed line-by-line with syntax highlighting and expected output.</p>
+    <p class="sec-sub">Every example from Khaja's notes — organized by concept, with syntax highlighting, line numbers, and expected output.</p>
     <div class="filter-bar">
       <button class="filter-btn on" onclick="filterEx('all',this)">All</button>
       <button class="filter-btn" onclick="filterEx('classes',this)">Classes & OOP</button>
@@ -394,18 +392,51 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
   </div>
 </section>
 
+<!-- PROGRESS TRACKER -->
+<section id="progress-section">
+  <div class="sec-wrap">
+    <span class="sec-label">// 03 · your journey</span>
+    <h2 class="sec-h">Learning <em>Progress</em></h2>
+    <div class="sec-rule"></div>
+    <div class="prog-grid">
+      <div class="prog-card reveal">
+        <div class="prog-title">📈 Progress Tracker</div>
+        <div class="prog-item"><div class="prog-label"><span class="prog-lname">SV Basics &amp; Data Types</span><span class="prog-lpct" id="pct1">80%</span></div><div class="prog-bar"><div class="prog-fill" id="pf1" style="width:80%"></div></div></div>
+        <div class="prog-item"><div class="prog-label"><span class="prog-lname">OOP &amp; Classes</span><span class="prog-lpct" id="pct2">60%</span></div><div class="prog-bar"><div class="prog-fill" id="pf2" style="width:60%"></div></div></div>
+        <div class="prog-item"><div class="prog-label"><span class="prog-lname">CRV &amp; Constraints</span><span class="prog-lpct" id="pct3">40%</span></div><div class="prog-bar"><div class="prog-fill" id="pf3" style="width:40%"></div></div></div>
+        <div class="prog-item"><div class="prog-label"><span class="prog-lname">Concurrency &amp; IPC</span><span class="prog-lpct" id="pct4">55%</span></div><div class="prog-bar"><div class="prog-fill" id="pf4" style="width:55%"></div></div></div>
+        <div class="prog-item"><div class="prog-label"><span class="prog-lname">Interfaces &amp; Clocking</span><span class="prog-lpct" id="pct5">35%</span></div><div class="prog-bar"><div class="prog-fill" id="pf5" style="width:35%"></div></div></div>
+        <div class="prog-item"><div class="prog-label"><span class="prog-lname">Functional Coverage</span><span class="prog-lpct" id="pct6">20%</span></div><div class="prog-bar"><div class="prog-fill" id="pf6" style="width:20%"></div></div></div>
+      </div>
+      <div class="prog-card reveal">
+        <div class="prog-title">🏆 Mission Board</div>
+        <ul class="mission-list">
+          <li class="mission-item"><div class="m-check done">✓</div><span class="m-name done">Arrays Master — All array methods</span></li>
+          <li class="mission-item"><div class="m-check done">✓</div><span class="m-name done">Queue Warrior — Queue operations</span></li>
+          <li class="mission-item"><div class="m-check done">✓</div><span class="m-name done">String Guru — All string methods</span></li>
+          <li class="mission-item"><div class="m-check todo">□</div><span class="m-name">Constraint Ninja — All constraint types</span></li>
+          <li class="mission-item"><div class="m-check todo">□</div><span class="m-name">Fork Master — All fork variants</span></li>
+          <li class="mission-item"><div class="m-check todo">□</div><span class="m-name">Coverage Champion — 100% cov</span></li>
+          <li class="mission-item"><div class="m-check todo">□</div><span class="m-name">UVM Architect — APB Testbench</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTBENCH -->
 <section id="bench">
   <div class="sec-wrap">
     <span class="sec-label">// 04 · pure sv testbench · no uvm</span>
-    <h2 class="sec-h" style="color:#faf5ef">Complete <em style="color:var(--amber)">APB Testbench</em></h2>
-    <div class="sec-rule" style="background:var(--clay)"></div>
+    <h2 class="sec-h">Complete <em>APB Testbench</em></h2>
+    <div class="sec-rule"></div>
     <div class="bench-note"><strong>🧑‍💻 OOP Omar:</strong> "A complete, self-contained SystemVerilog testbench for an APB slave — no UVM, no frameworks. Pure SV classes, interfaces, constraints, assertions, and covergroups."</div>
     <div class="tb-flow">
-      <div class="tb-node"><span class="tb-node-ico">🎲</span><div class="tb-node-n">Generator</div><div class="tb-node-s">stimulus</div></div><div class="tb-arr">→</div>
-      <div class="tb-node"><span class="tb-node-ico">⚔️</span><div class="tb-node-n">Driver</div><div class="tb-node-s">pin wiggle</div></div><div class="tb-arr">→</div>
-      <div class="tb-node"><span class="tb-node-ico">🔲</span><div class="tb-node-n">DUT</div><div class="tb-node-s">apb_slave</div></div><div class="tb-arr">→</div>
-      <div class="tb-node"><span class="tb-node-ico">👁</span><div class="tb-node-n">Monitor</div><div class="tb-node-s">observe</div></div><div class="tb-arr">→</div>
-      <div class="tb-node"><span class="tb-node-ico">⚖️</span><div class="tb-node-n">Scoreboard</div><div class="tb-node-s">check</div></div>
+      <div class="tb-node"><span class="tb-ico">🎲</span><div class="tb-nn">Generator</div><div class="tb-ns">stimulus</div></div><div class="tb-arr">→</div>
+      <div class="tb-node"><span class="tb-ico">⚔️</span><div class="tb-nn">Driver</div><div class="tb-ns">pin wiggle</div></div><div class="tb-arr">→</div>
+      <div class="tb-node"><span class="tb-ico">🔲</span><div class="tb-nn">DUT</div><div class="tb-ns">apb_slave</div></div><div class="tb-arr">→</div>
+      <div class="tb-node"><span class="tb-ico">👁</span><div class="tb-nn">Monitor</div><div class="tb-ns">observe</div></div><div class="tb-arr">→</div>
+      <div class="tb-node"><span class="tb-ico">⚖️</span><div class="tb-nn">Scoreboard</div><div class="tb-ns">check</div></div>
     </div>
     <div class="bench-tabs">
       <button class="bench-tab on" onclick="tbSwitch('tb-if',this)">Interface</button>
@@ -416,30 +447,61 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
       <button class="bench-tab" onclick="tbSwitch('tb-cov',this)">Coverage</button>
       <button class="bench-tab" onclick="tbSwitch('tb-top',this)">Top Level</button>
     </div>
-    <div class="bench-panel on" id="tb-if"><div class="bench-cblock"><div class="bench-cblock-head"><div class="c-filename">apb_if.sv — Interface + clocking blocks</div><div class="c-dots"><span class="c-dot cr"></span><span class="c-dot cy"></span><span class="c-dot cg"></span></div></div><div class="ccode" id="tb-if-code"></div></div></div>
-    <div class="bench-panel" id="tb-tx"><div class="bench-cblock"><div class="bench-cblock-head"><div class="c-filename">apb_transaction.sv — Data class with constraints</div><div class="c-dots"><span class="c-dot cr"></span><span class="c-dot cy"></span><span class="c-dot cg"></span></div></div><div class="ccode" id="tb-tx-code"></div></div></div>
-    <div class="bench-panel" id="tb-drv"><div class="bench-cblock"><div class="bench-cblock-head"><div class="c-filename">apb_driver.sv — Protocol driver via clocking block</div><div class="c-dots"><span class="c-dot cr"></span><span class="c-dot cy"></span><span class="c-dot cg"></span></div></div><div class="ccode" id="tb-drv-code"></div></div></div>
-    <div class="bench-panel" id="tb-mon"><div class="bench-cblock"><div class="bench-cblock-head"><div class="c-filename">apb_monitor.sv — Silent observer</div><div class="c-dots"><span class="c-dot cr"></span><span class="c-dot cy"></span><span class="c-dot cg"></span></div></div><div class="ccode" id="tb-mon-code"></div></div></div>
-    <div class="bench-panel" id="tb-sb"><div class="bench-cblock"><div class="bench-cblock-head"><div class="c-filename">apb_scoreboard.sv — Reference model + checker</div><div class="c-dots"><span class="c-dot cr"></span><span class="c-dot cy"></span><span class="c-dot cg"></span></div></div><div class="ccode" id="tb-sb-code"></div></div></div>
-    <div class="bench-panel" id="tb-cov"><div class="bench-cblock"><div class="bench-cblock-head"><div class="c-filename">apb_coverage.sv — Functional coverage</div><div class="c-dots"><span class="c-dot cr"></span><span class="c-dot cy"></span><span class="c-dot cg"></span></div></div><div class="ccode" id="tb-cov-code"></div></div></div>
-    <div class="bench-panel" id="tb-top"><div class="bench-cblock"><div class="bench-cblock-head"><div class="c-filename">tb_top.sv — Top-level module</div><div class="c-dots"><span class="c-dot cr"></span><span class="c-dot cy"></span><span class="c-dot cg"></span></div></div><div class="ccode" id="tb-top-code"></div></div></div>
+    <div class="bench-panel on" id="tb-if"><div class="bench-cb"><div class="bench-cb-head"><div class="c-fname">apb_if.sv — Interface + clocking blocks</div><div class="c-dots2"><span class="c-dot2 td-r"></span><span class="c-dot2 td-y"></span><span class="c-dot2 td-g"></span></div></div><div class="bench-ccode" id="tb-if-code"></div></div></div>
+    <div class="bench-panel" id="tb-tx"><div class="bench-cb"><div class="bench-cb-head"><div class="c-fname">apb_transaction.sv — Data class with constraints</div><div class="c-dots2"><span class="c-dot2 td-r"></span><span class="c-dot2 td-y"></span><span class="c-dot2 td-g"></span></div></div><div class="bench-ccode" id="tb-tx-code"></div></div></div>
+    <div class="bench-panel" id="tb-drv"><div class="bench-cb"><div class="bench-cb-head"><div class="c-fname">apb_driver.sv — Protocol driver via clocking block</div><div class="c-dots2"><span class="c-dot2 td-r"></span><span class="c-dot2 td-y"></span><span class="c-dot2 td-g"></span></div></div><div class="bench-ccode" id="tb-drv-code"></div></div></div>
+    <div class="bench-panel" id="tb-mon"><div class="bench-cb"><div class="bench-cb-head"><div class="c-fname">apb_monitor.sv — Silent observer</div><div class="c-dots2"><span class="c-dot2 td-r"></span><span class="c-dot2 td-y"></span><span class="c-dot2 td-g"></span></div></div><div class="bench-ccode" id="tb-mon-code"></div></div></div>
+    <div class="bench-panel" id="tb-sb"><div class="bench-cb"><div class="bench-cb-head"><div class="c-fname">apb_scoreboard.sv — Reference model + checker</div><div class="c-dots2"><span class="c-dot2 td-r"></span><span class="c-dot2 td-y"></span><span class="c-dot2 td-g"></span></div></div><div class="bench-ccode" id="tb-sb-code"></div></div></div>
+    <div class="bench-panel" id="tb-cov"><div class="bench-cb"><div class="bench-cb-head"><div class="c-fname">apb_coverage.sv — Functional coverage</div><div class="c-dots2"><span class="c-dot2 td-r"></span><span class="c-dot2 td-y"></span><span class="c-dot2 td-g"></span></div></div><div class="bench-ccode" id="tb-cov-code"></div></div></div>
+    <div class="bench-panel" id="tb-top"><div class="bench-cb"><div class="bench-cb-head"><div class="c-fname">tb_top.sv — Top-level module</div><div class="c-dots2"><span class="c-dot2 td-r"></span><span class="c-dot2 td-y"></span><span class="c-dot2 td-g"></span></div></div><div class="bench-ccode" id="tb-top-code"></div></div></div>
   </div>
 </section>
 
+<!-- DAILY CHALLENGE -->
+<section id="challenge">
+  <div class="sec-wrap">
+    <span class="sec-label">// 05 · daily challenge</span>
+    <h2 class="sec-h">Find the <em>Bug</em></h2>
+    <div class="sec-rule"></div>
+    <p class="sec-sub">A new debugging challenge every day. Read the code, identify the bug, then reveal the answer.</p>
+    <div class="challenge-card reveal" id="challenge-card">
+      <div class="challenge-badge">🐛 Daily Bug Hunt</div>
+      <div class="challenge-q" id="challenge-q">Loading challenge...</div>
+      <div class="m-cblock">
+        <div class="m-cblock-head"><div class="c-fname" id="ch-fname">bug.sv</div></div>
+        <div class="m-ccode" id="ch-code"></div>
+      </div>
+      <div style="display:flex;gap:.8rem;margin-top:1.2rem;align-items:center">
+        <button class="challenge-reveal-btn" onclick="revealChallenge()">Reveal Answer ↓</button>
+        <button class="btn-ghost" style="font-size:.78rem;padding:8px 16px" onclick="nextChallenge()">Next Challenge →</button>
+      </div>
+      <div class="challenge-answer" id="challenge-answer">
+        <div class="info-box rose" style="margin:.9rem 0 .7rem"><strong id="ch-bug-title">Bug:</strong> <span id="ch-bug"></span></div>
+        <div class="info-box teal"><strong>Fix:</strong> <span id="ch-fix"></span></div>
+        <div class="m-cblock">
+          <div class="m-cblock-head"><div class="c-fname">fixed.sv</div></div>
+          <div class="m-ccode" id="ch-fixed-code"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
 <section id="quiz">
   <div class="sec-wrap">
-    <span class="sec-label">// 05 · test yourself</span>
-    <h2 class="sec-h">Quick <em>Quiz</em></h2>
+    <span class="sec-label">// 06 · test yourself</span>
+    <h2 class="sec-h">DV Interview <em>Quiz</em></h2>
     <div class="sec-rule"></div>
     <div class="quiz-wrap">
       <div class="quiz-teacher">
         <div class="qt-av">🎲</div>
-        <div><div class="qt-name">Rex Randon</div><div class="qt-role">crv_specialist · quiz_master</div><div class="qt-quote">"Ten questions across all seven domains. No second guesses — just like a real DV interview. Let's find out what you actually know."</div></div>
+        <div><div class="qt-name">Rex Randon</div><div class="qt-role">crv_specialist · quiz_master</div><div class="qt-quote">"Fifteen questions across all seven domains. No second guesses — just like a real DV interview. Let's find out what you actually know."</div></div>
       </div>
       <div class="quiz-card">
-        <div class="q-bar"><div id="q-prog" class="q-prog">Question 1 of 10</div><div id="q-score" class="q-prog">Score: 0 / 0</div></div>
-        <div class="q-track"><div class="q-fill" id="q-fill" style="width:10%"></div></div>
-        <div class="q-q" id="q-text">Loading…</div>
+        <div class="q-bar"><div id="q-prog" class="q-prog">Question 1 of 15</div><div id="q-score" class="q-prog">Score: 0 / 0</div></div>
+        <div class="q-track"><div class="q-fill" id="q-fill" style="width:6.67%"></div></div>
+        <div class="q-q" id="q-text">Loading...</div>
         <div class="q-opts" id="q-opts"></div>
         <div class="q-fb" id="q-fb"></div>
         <div style="display:flex;justify-content:flex-end"><button class="q-next-btn" id="q-next" onclick="nextQ()">Next →</button></div>
@@ -448,6 +510,7 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
   </div>
 </section>
 
+<!-- LESSON OVERLAY -->
 <div id="overlay" onclick="overlayClose(event)">
   <div id="mbox">
     <div class="m-header"><div class="m-title" id="m-title">Lesson</div><button class="m-close" onclick="closeLesson()">✕</button></div>
@@ -457,36 +520,84 @@ footer{background:var(--ink2);padding:3rem 2.5rem;text-align:center}
 
 <footer>
   <div class="ft-brand">SV·<span>Learn</span></div>
-  <div class="ft-sub">// Shaik Khaja Mohiddeen · DV Hub · Pure SystemVerilog · Enhanced Edition</div>
+  <div class="ft-sub">// Shaik Khaja Mohiddeen · DV Hub · Pure SystemVerilog · Complete Edition</div>
   <div class="ft-links">
     <a class="ft-link" href="#topics">Topics</a>
-    <a class="ft-link" href="#teachers">Teachers</a>
     <a class="ft-link" href="#examples">Examples</a>
+    <a class="ft-link" href="#progress-section">Progress</a>
     <a class="ft-link" href="#bench">Testbench</a>
+    <a class="ft-link" href="#challenge">Challenge</a>
     <a class="ft-link" href="#quiz">Quiz</a>
   </div>
 </footer>
 
 <script>
-// ── SYNTAX HIGHLIGHTER ──────────────────────────────────────────────────
+// ── SYNTAX HIGHLIGHTER ──────────────────────────────────
 function hl(raw){
   let s=raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   s=s.replace(/(\/\/[^\n]*)/g,'<span class="cm">$1</span>');
   s=s.replace(/("(?:[^"\\]|\\.)*")/g,'<span class="st">$1</span>');
-  s=s.replace(/\b(module|endmodule|class|endclass|interface|endinterface|program|endprogram|function|endfunction|task|endtask|begin|end|initial|always|forever|fork|join|join_any|join_none|if|else|for|foreach|while|repeat|return|new|extends|virtual|pure|local|protected|static|automatic|typedef|struct|union|packed|enum|rand|randc|constraint|covergroup|endgroup|coverpoint|cross|bins|illegal_bins|ignore_bins|wildcard|property|endproperty|sequence|import|export|disable|wait|posedge|negedge|assign|wire|logic|reg|bit|byte|int|longint|shortint|integer|real|string|void|chandle|input|output|inout|ref|default|inside|dist|unique|solve|before|modport|clocking|endclocking|assert|cover|super|this|null|with|iff|case|casez|endcase)\b/g,'<span class="kw">$1</span>');
+  s=s.replace(/\b(module|endmodule|class|endclass|interface|endinterface|program|endprogram|function|endfunction|task|endtask|begin|end|initial|always|forever|fork|join|join_any|join_none|if|else|for|foreach|while|repeat|return|new|extends|virtual|pure|local|protected|static|automatic|typedef|struct|union|packed|enum|rand|randc|constraint|covergroup|endgroup|coverpoint|cross|bins|illegal_bins|ignore_bins|wildcard|property|endproperty|sequence|import|export|disable|wait|posedge|negedge|assign|wire|logic|reg|bit|byte|int|longint|shortint|integer|real|string|void|chandle|input|output|inout|ref|default|inside|dist|unique|solve|before|modport|clocking|endclocking|assert|cover|super|this|null|with|iff|case|casez|endcase|package|endpackage|parameter)\b/g,'<span class="kw">$1</span>');
   s=s.replace(/\b(\d+[''][bhdo]\w*|\d+\.\d+|\b\d+\b)/g,'<span class="nm">$1</span>');
   s=s.replace(/(\$\w+)/g,'<span class="at">$1</span>');
   return s;
 }
 function mkLines(lines,pad){
-  pad=pad||'1.6rem';
-  return lines.map((l,i)=>`<div class="code-line" style="padding:1px ${pad}"><span class="ln">${i+1}</span><span class="lc">${hl(l)}</span></div>`).join('');
+  pad=pad||'1.2rem';
+  return lines.map((l,i)=>`<div class="code-ln" style="padding:0 ${pad}"><span class="lno">${i+1}</span><span class="lc">${hl(l)}</span></div>`).join('');
 }
 function inlineBlock(lines,fname){
-  return `<div class="m-cblock"><div class="m-cblock-head"><div class="c-filename">${fname}</div><div class="c-dots"><span class="c-dot cr"></span><span class="c-dot cy"></span><span class="c-dot cg"></span></div></div><div class="m-ccode">${mkLines(lines,'1.2rem')}</div></div>`;
+  return `<div class="m-cblock"><div class="m-cblock-head"><div class="c-fname">${fname}</div><div class="c-dots2"><span class="c-dot2 td-r"></span><span class="c-dot2 td-y"></span><span class="c-dot2 td-g"></span></div></div><div class="m-ccode">${mkLines(lines,'1rem')}</div></div>`;
 }
 
-// ── ALL EXAMPLES ──────────────────────────────────────────────────────
+// ── HERO TERMINAL ANIMATION ──────────────────────────────
+const heroLines=[
+'// SV·Learn — SystemVerilog by Khaja',
+'',
+'class apb_transaction;',
+'  rand bit [11:0] addr;',
+'  rand bit [31:0] data;',
+'  rand bit        write;',
+'  rand bit [3:0]  strb;',
+'',
+'  constraint c_addr_align {',
+'    addr[1:0] == 2\'b00;',
+'  }',
+'  constraint c_write_bias {',
+'    write dist { 1:=70, 0:=30 };',
+'  }',
+'endclass',
+'',
+'// Polymorphism in action',
+'class parent;',
+'  virtual function void show();',
+'    $display("Base");',
+'  endfunction',
+'endclass',
+'class child extends parent;',
+'  function void show();',
+'    $display("Child dispatch!");',
+'  endfunction',
+'endclass',
+];
+const heroEl=document.getElementById('hero-code');
+let hIdx=0,hChar=0,hText='';
+function typeHero(){
+  if(hIdx>=heroLines.length)return;
+  const line=heroLines[hIdx];
+  if(hChar<=line.length){
+    hText+=(hChar===0&&hIdx>0?'\n':'')+line[hChar]||'';
+    hChar++;
+    heroEl.innerHTML=heroLines.slice(0,hIdx).map((l,i)=>`<div class="tl"><span class="ln">${i+1}</span><span>${hl(l)}</span></div>`).join('')+`<div class="tl"><span class="ln">${hIdx+1}</span><span>${hl(line.substring(0,hChar))}</span><span style="opacity:.7;animation:pulse .8s infinite">▌</span></div>`;
+    setTimeout(typeHero,hChar===1?30:20);
+  } else {
+    hIdx++;hChar=0;
+    setTimeout(typeHero,hIdx===heroLines.length?0:60);
+  }
+}
+setTimeout(typeHero,800);
+
+// ── ALL EXAMPLES ─────────────────────────────────────────
 const EX=[
 // CLASSES
 {id:'cls1',cat:'classes',icon:'🧑‍💻',title:'Class & Object Creation',sub:'class · new() · null check',
@@ -529,6 +640,10 @@ output:'sub: data=5 id=1'},
 code:['class scope;','  int a;','  function display(int a);','    $display("display: A=%0d", a);','  endfunction','  extern function void print();','endclass','','function void scope::print();','  $display("extern print: A=%0d", a);','endfunction','','package pkg;','  int c = 30;','endpackage','','module tb;','  int c = 10;','  initial begin','    scope p = new();','    p.a = c;','    p.display(p.a);','    p.print;','    p.a = pkg::c;','    $display("pkg::c=%0d", pkg::c);','  end','endmodule'],
 output:'display: A=10\nextern print: A=10\npkg::c=30'},
 
+{id:'cls11',cat:'classes',icon:'🚗',title:'Abstract Class — Vehicle Example',sub:'pure virtual change_gear() · car · truck · scooter',
+code:['virtual class vehicle;','  int no_of_seat, no_of_gears, no_of_wheels;','  string brand_name, model_name;','  pure virtual function void change_gear();','endclass','class car extends vehicle;','  int gear_no;','  function new();','    no_of_gears=5; no_of_seat=4; no_of_wheels=4;','  endfunction','  virtual function void change_gear();','    if(gear_no<no_of_gears) begin','      gear_no++;','      $display("Car gear changed to %0d", gear_no);','    end else $display("Max gear reached!");','  endfunction','endclass','class scooter extends vehicle;','  function new();','    no_of_gears=0; no_of_seat=2; no_of_wheels=2;','  endfunction','  function void change_gear();','    $display("No gear — it is a scooter!");','  endfunction','endclass','module abstract_class;','  initial begin','    car verna = new();','    scooter activa = new();','    verna.brand_name="Hyundai"; verna.model_name="Verna";','    activa.brand_name="Honda"; activa.model_name="Activa";','    verna.change_gear();','    activa.change_gear();','  end','endmodule'],
+output:'Car gear changed to 1\nNo gear — it is a scooter!'},
+
 // ARRAYS
 {id:'arr1',cat:'arrays',icon:'📐',title:'Fixed Single-Dimensional Array',sub:'int array[N] · compile-time size · foreach',
 code:['module fixed_single_example;','  int array[5] = {100, 200, 300, 400, 500};','  initial begin','    $display("array[4] = %0d", array[4]);','    foreach (array[i])','      $display("array[%0d] = %0d", i, array[i]);','  end','endmodule'],
@@ -545,6 +660,10 @@ output:'array[2][3..0]=0101\narray[1][3..0]=0110\narray[0][3..0]=0111'},
 {id:'arr4',cat:'arrays',icon:'🔄',title:'Dynamic Array',sub:'new[N] · resize with copy · delete · .size()',
 code:['module dynamic_array_example;','  int array [];','  initial begin','    array = new[5];','    array = \'{5, 10, 15, 20, 25};','    foreach(array[i]) $display("array[%0d]=%0d",i,array[i]);','    $display("size = %0d", array.size());','    array = new[8](array);  // resize + copy','    $display("after resize size=%0d", array.size());','    array = new[6];         // fresh alloc','    $display("after override size=%0d", array.size());','    array.delete();','    $display("after delete size=%0d", array.size());','  end','endmodule'],
 output:'array[0]=5 ... array[4]=25\nsize=5\nafter resize size=8\nafter override size=6\nafter delete size=0'},
+
+{id:'arr4b',cat:'arrays',icon:'🔲',title:'Unpacked Multi-Dimensional Array',sub:'int array[R][C] · stored like memory · foreach[i,j]',
+code:['module unpacked_array_example;','  int array [3][4] = \'{\'{ 1, 2, 3, 4},','                      \'{ 5, 6, 7, 8},','                      \'{9,10,11,12}','                      };','  initial begin','    foreach (array[i,j]) begin','      $display("array[%0d][%0d] = %0d", i, j, array[i][j]);','    end','  end','endmodule'],
+output:'array[0][0]=1  array[0][1]=2\narray[0][2]=3  array[0][3]=4\narray[1][0]=5  ...\narray[2][3]=12'},
 
 {id:'arr5',cat:'arrays',icon:'🗂️',title:'Associative Array — All Methods',sub:'exists · first · last · prev · next · delete',
 code:['module associative_array_example;','  bit [7:0] array[int];','  int index;','  initial begin','    array[5]=2; array[10]=4; array[7]=6;','    array[9]=8; array[20]=10; array[13]=12;','    foreach(array[i])','      $display("array[%0d]=%0d",i,array[i]);','    if (array.exists(7))  $display("exists at 7");','    if (!array.exists(8)) $display("no element at 8");','    array.first(index); $display("First=%0d",index);','    array.last(index);  $display("Last=%0d",index);','    index=9;  array.prev(index);','    $display("Prev of 9 = %0d", index);','    index=10; array.next(index);','    $display("Next of 10 = %0d", index);','    array.delete(7);','    array.delete();','    $display("Final size=%0d",array.size());','  end','endmodule'],
@@ -567,8 +686,8 @@ code:['module array_reduction_methods;','  int array[8] = \'{2,1,7,3,1,8,9,6};',
 output:'sum=37\nproduct=18144\nand=0\nor=15\nxor=1'},
 
 {id:'arr10',cat:'arrays',icon:'🔢',title:'Array Ordering Methods',sub:'sort · rsort · shuffle · reverse',
-code:['module array_ordering_methods;','  int array[8] = \'{2,1,7,3,1,8,9,6};','  initial begin','    $display("before: %0p", array);','    array.sort();','    $display("after sort: %0p", array);','    array.shuffle();','    $display("after shuffle: %0p", array);','    array.rsort();','    $display("after rsort: %0p", array);','    array.reverse();','    $display("after reverse: %0p", array);','  end','endmodule'],
-output:"before: '{2,1,7,3,1,8,9,6}\nafter sort: '{1,1,2,3,6,7,8,9}\nafter rsort: '{9,8,7,6,3,2,1,1}\nafter reverse: '{1,1,2,3,6,7,8,9}"},
+code:['module array_ordering_methods;','  int array[8] = \'{2,1,7,3,1,8,9,6};','  initial begin','    $display("before: %0p", array);','    array.sort();    $display("sort: %0p", array);','    array.shuffle(); $display("shuffle: %0p", array);','    array.rsort();   $display("rsort: %0p", array);','    array.reverse(); $display("reverse: %0p", array);','  end','endmodule'],
+output:"before: '{2,1,7,3,1,8,9,6}\nsort: '{1,1,2,3,6,7,8,9}\nrsort: '{9,8,7,6,3,2,1,1}\nreverse: '{1,1,2,3,6,7,8,9}"},
 
 // STRINGS & STRUCT
 {id:'str1',cat:'strings',icon:'📝',title:'String Basics & Concat',sub:'string vs reg · {} concat · replication',
@@ -593,7 +712,7 @@ output:'e1: 5 5\ne2: salary=00000009 id=9'},
 
 // ENUMS
 {id:'en1',cat:'enums',icon:'🏷️',title:'Enum Ranges & Patterns',sub:'implicit increment · named ranges · typed enum',
-code:['module enum_type_ranges;','  typedef enum {a,b,c,d} alpha1;','  typedef enum {e=5,f,g=8,h} alpha2;','  typedef enum bit[3:0]{i=3,j,k=9,l} alpha3;','  typedef enum logic[1:0]{e2[4]} alpha4;','  typedef enum {b2[4]=5} alpha5;','  typedef enum {c2[3:6]} alpha6;','  alpha1 a1=3; alpha2 a2=g; alpha3 a3=j;','  initial begin','    $display("a1=%0d name=%0s", a1, a1.name);','    $display("a2=%0d name=%0s", a2, a2.name);','    $display("a3=%0d name=%0s", a3, a3.name);','  end','endmodule'],
+code:['module enum_type_ranges;','  typedef enum {a,b,c,d} alpha1;','  typedef enum {e=5,f,g=8,h} alpha2;','  typedef enum bit[3:0]{i=3,j,k=9,l} alpha3;','  typedef enum logic[1:0]{e2[4]} alpha4;','  typedef enum {b2[4]=5} alpha5;','  typedef enum {c2[3:6]} alpha6;','  typedef enum {d2[2:5]=3} alpha7;','  alpha1 a1=3; alpha2 a2=g; alpha3 a3=j;','  initial begin','    $display("a1=%0d name=%0s", a1, a1.name);','    $display("a2=%0d name=%0s", a2, a2.name);','    $display("a3=%0d name=%0s", a3, a3.name);','  end','endmodule'],
 output:'a1=3 name=d\na2=8 name=g\na3=4 name=j'},
 
 {id:'en2',cat:'enums',icon:'⚙️',title:'Enum Methods',sub:'first · last · prev · next · name · num',
@@ -622,7 +741,7 @@ code:['module default_name;','  function int sum(int x=5, y=10, z=15);','    x=x
 output:'40\n36\n20\nx=20.230000 y=Welcome to SV'},
 
 {id:'fn6',cat:'functions',icon:'↔️',title:'Swap Patterns',sub:'non-blocking swap · blocking+temp · arithmetic',
-code:['// Non-blocking swap (no temp needed!)','module swap_nb;','  int a=10, b=20;','  initial begin','    a <= b; b <= a;','    $display("NB swap: %0d %0d", a, b);','  end','endmodule','','// Blocking swap with temp','module swap_blk;','  int a=10, b=20, temp;','  initial begin','    temp=a; a=b; b=temp;','    $display("BLK swap: %0d %0d", a, b);','  end','endmodule','','// Arithmetic swap (no temp)','module swap_arith;','  int a=10, b=20;','  initial begin','    a=a+b; b=a-b; a=a-b;','    $display("ARITH swap: %0d %0d", a, b);','  end','endmodule'],
+code:['// Non-blocking swap (no temp needed!)','module swap_nb;','  int a=10, b=20;','  initial begin','    a <= b; b <= a;','    $display("NB swap: %0d %0d", a, b);','  end','endmodule','','// Blocking swap with temp','// temp=a; a=b; b=temp;','// Output: BLK swap: 20 10','','// Arithmetic swap (no temp)','// a=a+b; b=a-b; a=a-b;','// Output: ARITH swap: 20 10'],
 output:'NB swap: 20 10\nBLK swap: 20 10\nARITH swap: 20 10'},
 
 {id:'fn7',cat:'functions',icon:'🔁',title:'break and continue',sub:'break stops loop · continue skips to next iteration',
@@ -674,6 +793,10 @@ output:'try_put OK: 40\ntry_put OK: 49\ntry_put OK: 20\nFAIL: box full (num=3)\n
 code:['class transaction;','  rand bit [3:0] id;','  rand bit [7:0] addr;','  function void display(string tag);','    $display("[%s] ID=%0d ADDR=%0h",tag,id,addr);','  endfunction','endclass','class generator;','  mailbox #(transaction) gen2drv;','  int num_tx = 5;','  function new(mailbox #(transaction) m);','    this.gen2drv = m; endfunction','  task run();','    transaction tx;','    repeat(num_tx) begin','      tx = new(); assert(tx.randomize());','      tx.display("GEN"); gen2drv.put(tx); #10;','    end','  endtask','endclass','class driver;','  mailbox #(transaction) gen2drv;','  function new(mailbox #(transaction) m);','    this.gen2drv = m; endfunction','  task run();','    transaction tx;','    forever begin gen2drv.get(tx); tx.display("DRV"); #10; end','  endtask','endclass','module top;','  mailbox #(transaction) mbx;','  generator gen; driver drv;','  initial begin','    mbx=new(); gen=new(mbx); drv=new(mbx);','    fork gen.run(); drv.run(); join_any','    #100 $finish;','  end','endmodule'],
 output:'[GEN] ID=8 ADDR=a9\n[DRV] ID=8 ADDR=a9\n[GEN] ID=15 ADDR=b8\n[DRV] ID=15 ADDR=b8 ...'},
 
+{id:'con12',cat:'concurrency',icon:'⏸️',title:'disable fork — Named Fork Block',sub:'disable f2 kills only named fork group',
+code:['task process_a();','  while ($time < 30) begin','    #1; $display("process_a(): at time %0t",$time);','  end','endtask','task process_b();','  #5; $display("process_b() finished at time %0t",$time);','endtask','task process_c();','  #10; $display("process_c() finished %0t",$time);','endtask','task run();','  fork:f1','    process_a();','  join_none','  fork:f2','    process_b();','    process_c();','  join_any','  $display("before disable fork: %0t", $time);','  disable f2;','  #10;','endtask:run','module top;','  initial begin run(); end','endmodule'],
+output:'process_a runs, process_b finishes @5\nbefore disable fork: 5\nprocess_c cancelled!\nprocess_a continues until t=30'},
+
 // CRV
 {id:'crv1',cat:'crv',icon:'🎯',title:'Constraint — inside',sub:'[lo:hi] · set of values · inverted range',
 code:['class seq_item;','  rand bit [7:0] v1, v2, v3, v4;','  constraint v1_c { v1 inside {[10:20]}; }','  constraint v2_c { v2 inside {40, 70, 80}; }','  constraint v3_c { v3 inside {[10:20],21,23,[25:30],40};}','  constraint v4_c { !(v4 inside {[100:200]}); }','endclass','module constraint_example;','  seq_item item;','  initial begin','    item = new();','    repeat(5) begin','      item.randomize();','      $display("v1=%0d v2=%0d v3=%0d v4=%0d",','               item.v1,item.v2,item.v3,item.v4);','    end','  end','endmodule'],
@@ -696,12 +819,16 @@ code:['class seq_item;','  rand bit [3:0] array_s[5];','  rand bit [2:0] val1, v
 output:'val1=0 val2=7 val3=2 val4=6\narray_s: 5,8,12,3,6 (all different)'},
 
 {id:'crv6',cat:'crv',icon:'🎰',title:'solve before — Control Probability',sub:'without: x==1 has 6% · with: x==1 has 50%',
-code:['class seq_item;','  rand bit       x;','  rand bit [3:0] y;','  // Without solve before: prob(x==1)=1/17=6%','  // With solve before:    prob(x==1)=1/2=50%','  constraint bidir { x -> y == 0; }','  constraint sb    { solve x before y; }','endclass','module constraint_example;','  seq_item item;','  initial begin','    item = new();','    repeat(10) begin','      item.randomize();','      $display("x=%d y=%d",item.x,item.y);','    end','  end','endmodule'],
+code:['class seq_item;','  rand bit       x;','  rand bit [3:0] y;','  // Without solve before: prob(x==1)=1/(1+2^4) = 1/17 = 6%','  // With solve before:    prob(x==1)=1/2 = 50%','  constraint bidir { x -> y == 0; }','  constraint sb    { solve x before y; }','endclass','module constraint_example;','  seq_item item;','  initial begin','    item = new();','    repeat(10) begin','      item.randomize();','      $display("x=%d y=%d",item.x,item.y);','    end','  end','endmodule'],
 output:'x=1 y=0\nx=0 y=3\nx=1 y=0\nx=0 y=1 ...'},
 
 {id:'crv7',cat:'crv',icon:'🔑',title:'rand_mode & constraint_mode',sub:'enable/disable randomization and constraints',
 code:['class seq_item;','  rand bit [7:0] a, b;','  constraint a_c { a inside {[10:30]}; }','  static constraint b_c { b inside {40,70,80}; }','endclass','module enable_disable;','  seq_item item1, item2;','  initial begin','    item1=new(); item2=new();','    item1.randomize();','    $display("Before: a=%0d b=%0d",item1.a,item1.b);','    item1.constraint_mode(0);','    item1.randomize();','    $display("No constraints: a=%0d b=%0d",item1.a,item1.b);','    item1.constraint_mode(1);','    item1.b_c.constraint_mode(0);','    item1.randomize(); item2.randomize();','    $display("ITEM1: a=%0d b=%0d",item1.a,item1.b);','    $display("ITEM2: a=%0d b=%0d",item2.a,item2.b);','  end','endmodule'],
 output:'Before: a=14 b=70\nNo constraints: a=225 b=63\nITEM1: a=26 b=169\nITEM2: a=11 b=38'},
+
+{id:'crv8',cat:'crv',icon:'📦',title:'Inline Constraint — with clause',sub:'randomize with {expr} · override constraints',
+code:['class seq_item;','  rand bit [7:0] val;','  constraint val_c { val > 10; val < 60; val%5==0; }','endclass','module constraint_example;','  seq_item item;','  initial begin','    item = new();','    repeat(3) begin','      item.randomize();','      $display("Normal: val = %0d", item.val);','      item.randomize with {val inside {[20:30]};};','      $display("Inline: val = %0d", item.val);','    end','  end','endmodule'],
+output:'Normal: val = 45\nInline: val = 20\nNormal: val = 40\nInline: val = 25 ...'},
 
 // COVERAGE
 {id:'cov1',cat:'coverage',icon:'📈',title:'Covergroup — Implicit Bins (autobins)',sub:'<=6-bit: 2^width autobins · >6-bit: 64 autobins',
@@ -717,24 +844,20 @@ code:['module tb;','  bit [1:0] mode; bit [2:0] cfg; bit clk;','  always #20 clk
 output:'[40] mode=0 cfg=1\n[80] mode=1 cfg=3\n[120] mode=1 cfg=5 ...'},
 
 {id:'cov4',cat:'coverage',icon:'🔀',title:'Covergroup — Transition Bins',sub:'[*N] consecutive · [->N:M] goto · [=N:M] nonconsec',
-code:['module coverage;','  bit [2:0] data;','  covergroup c_g;','    option.per_instance = 1;','    coverpoint data {','      bins b1 = (5[*3]);','      bins b2 = (1=>3[->4:6]=>1);','      bins b3 = (1=>2[=3:6]=>5);','      bins b4 = (2[->3:5]);','    }','  endgroup','  initial begin','    c_g cg = new();','    // sequence: 1 4 3 2 3 3 2 2 3 2 3 1 5 5 5 5 5 5','    // Apply values and sample...','    #1 $finish;','  end','endmodule'],
+code:['module coverage;','  bit [2:0] data;','  covergroup c_g;','    option.per_instance = 1;','    coverpoint data {','      bins b1 = (5[*3]);           // 3 consec 5s','      bins b2 = (1=>3[->4:6]=>1); // goto seq','      bins b3 = (1=>2[=3:6]=>5);  // non-consec','      bins b4 = (2[->3:5]);        // goto','    }','  endgroup','  initial begin','    c_g cg = new();','    // Sequence: 1 4 3 2 3 3 2 2 3 2 3 1 5 5 5 5 5 5','    // Apply each value with #1 cg.sample();','    #1 $finish;','  end','endmodule'],
 output:'b1 hit on 5,5,5 sequence\nb4 hit on nonconsecutive 2s\nbins track temporal sequences'},
 
-{id:'cov5',cat:'coverage',icon:'🚫',title:'illegal_bins & ignore_bins & wildcard bins',sub:'illegal → error · ignore → excluded · wildcard 1x? pattern',
+{id:'cov5',cat:'coverage',icon:'🚫',title:'illegal_bins, ignore_bins & wildcard bins',sub:'illegal → error · ignore → excluded · wildcard 1x? pattern',
 code:['module func_coverage;','  logic [3:0] addr;','  covergroup c_group;','    option.per_instance = 1;','    cp1: coverpoint addr {','      ignore_bins  exclude  = {8, 10};','      illegal_bins invalid  = {13, 14};','      bins valid_1[4]       = {[0:3]};','      wildcard bins wc_valid = {4\'b1x?};','    }','  endgroup','  c_group cg = new();','  initial','    repeat(20) begin','      #1 addr = $random;','      cg.sample();','      $display("addr=%0d", addr);','    end','endmodule'],
-output:'addr=4\naddr=1\n...\naddr=13 → Error-[FCIBH] Illegal bin hit at time 5ns!'},
+output:'addr=4\naddr=1\n...\nError-[FCIBH] Illegal bin hit at time 5ns!'},
 ];
 
-// ── RENDER EXAMPLES ──────────────────────────────────────────────────
 function mkExCard(ex){
-  const lines=ex.code.map((l,i)=>`<div class="code-line"><span class="ln">${i+1}</span><span class="lc">${hl(l)}</span></div>`).join('');
+  const lines=ex.code.map((l,i)=>`<div class="code-ln"><span class="lno">${i+1}</span><span class="lc">${hl(l)}</span></div>`).join('');
   return `<div class="ex-card" data-cat="${ex.cat}">
-    <div class="ex-card-header">
-      <span class="ex-icon">${ex.icon}</span>
-      <div><div class="ex-title">${ex.title}</div><div class="ex-sub">${ex.sub}</div></div>
-    </div>
-    <div class="cblock"><div class="cblock-head"><div class="c-filename">${ex.id}.sv</div><div class="c-dots"><span class="c-dot cr"></span><span class="c-dot cy"></span><span class="c-dot cg"></span></div></div><div class="ccode">${lines}</div></div>
-    <div class="ex-output"><div class="out-label">// expected output</div><div class="out-code">${ex.output.replace(/</g,'&lt;')}</div></div>
+    <div class="ex-header"><span class="ex-icon">${ex.icon}</span><div><div class="ex-title">${ex.title}</div><div class="ex-sub">${ex.sub}</div></div></div>
+    <div class="cblock"><div class="cblock-head"><div class="c-fname">${ex.id}.sv</div><div class="c-dots2"><span class="c-dot2 td-r"></span><span class="c-dot2 td-y"></span><span class="c-dot2 td-g"></span></div></div><div class="ccode">${lines}</div></div>
+    <div class="ex-out"><div class="out-lbl">// expected output</div><div class="out-code">${ex.output.replace(/</g,'&lt;')}</div></div>
   </div>`;
 }
 
@@ -751,43 +874,92 @@ function filterEx(cat,btn){
   renderEx(cat);
 }
 
-// ── TESTBENCH CODE ────────────────────────────────────────────────────
+// ── TESTBENCH ─────────────────────────────────────────────
 const TB={
-'tb-if-code':['// APB Interface — Interface Iris','interface apb_if(input logic clk, rst_n);','  logic [11:0] paddr;','  logic [31:0] pwdata, prdata;','  logic        pwrite, psel, penable, pready, pslverr;','  logic [3:0]  pstrb;','','  // Clocking block for DRIVER — eliminates races!','  clocking drv_cb @(posedge clk);','    default input #1step output #1;','    output paddr, pwdata, pwrite, psel, penable, pstrb;','    input  pready, prdata, pslverr;','  endclocking','','  clocking mon_cb @(posedge clk);','    default input #1step;','    input paddr, pwdata, pwrite, psel, penable, pready, prdata;','  endclocking','','  modport drv_mp (clocking drv_cb, input rst_n);','  modport mon_mp (clocking mon_cb, input rst_n);','','  property p_sel_before_en;','    @(posedge clk) disable iff(!rst_n) penable |-> psel;','  endproperty','  assert property(p_sel_before_en) else','    $error("APB: penable without psel!");','endinterface'],
+'tb-if-code':['// APB Interface — Interface Iris','interface apb_if(input logic clk, rst_n);','  logic [11:0] paddr;','  logic [31:0] pwdata, prdata;','  logic        pwrite, psel, penable, pready, pslverr;','  logic [3:0]  pstrb;','','  // Clocking block for DRIVER — eliminates races!','  clocking drv_cb @(posedge clk);','    default input #1step output #1;','    output paddr, pwdata, pwrite, psel, penable, pstrb;','    input  pready, prdata, pslverr;','  endclocking','','  clocking mon_cb @(posedge clk);','    default input #1step;','    input paddr, pwdata, pwrite, psel, penable, pready, prdata;','  endclocking','','  modport drv_mp (clocking drv_cb, input rst_n);','  modport mon_mp (clocking mon_cb, input rst_n);','','  // SVA: penable must be preceded by psel','  property p_sel_before_en;','    @(posedge clk) disable iff(!rst_n) penable |-> psel;','  endproperty','  assert property(p_sel_before_en) else','    $error("APB: penable without psel!");','endinterface'],
 'tb-tx-code':['class apb_transaction;','  rand bit [11:0] addr;','  rand bit [31:0] data;','  rand bit        write;','  rand bit [3:0]  strb;','','  constraint c_addr_align { addr[1:0] == 2\'b00; }','  constraint c_strb_valid {','    write == 1 -> strb != 4\'h0;','    write == 0 -> strb == 4\'hF;','  }','  constraint c_write_bias {','    write dist { 1 := 70, 0 := 30 };','  }','','  function string sprint();','    return $sformatf("APB: addr=%3h data=%8h %s",','                      addr, data, write?"WR":"RD");','  endfunction','endclass'],
 'tb-drv-code':['class apb_driver;','  virtual apb_if vif;','  mailbox#(apb_transaction) gen2drv;','','  task drive_txn(apb_transaction tr);','    // SETUP phase','    @(vif.drv_cb);','    vif.drv_cb.paddr   <= tr.addr;','    vif.drv_cb.pwdata  <= tr.data;','    vif.drv_cb.pwrite  <= tr.write;','    vif.drv_cb.psel    <= 1;','    vif.drv_cb.penable <= 0;','    // ACCESS phase','    @(vif.drv_cb);','    vif.drv_cb.penable <= 1;','    @(vif.drv_cb iff vif.pready === 1);','    vif.drv_cb.psel    <= 0;','    vif.drv_cb.penable <= 0;','  endtask','endclass'],
 'tb-mon-code':['class apb_monitor;','  virtual apb_if vif;','  mailbox#(apb_transaction) mon2sb;','  mailbox#(apb_transaction) mon2cov;','','  task run();','    apb_transaction tr;','    forever begin','      @(vif.mon_cb iff','        (vif.mon_cb.psel && vif.mon_cb.penable && vif.pready));','      tr = new();','      tr.addr  = vif.mon_cb.paddr;','      tr.write = vif.mon_cb.pwrite;','      tr.data  = vif.mon_cb.pwrite ?','                 vif.mon_cb.pwdata : vif.prdata;','      mon2sb.put(tr);','      mon2cov.put(tr);','    end','  endtask','endclass'],
-'tb-sb-code':['class apb_scoreboard;','  bit [31:0] ref_model[bit[11:0]];','  int pass_cnt=0, fail_cnt=0;','','  task run();','    apb_transaction tr;','    forever begin','      mon2sb.get(tr);','      if (tr.write) begin','        ref_model[tr.addr] = tr.data;','      end else begin','        if (ref_model.exists(tr.addr)) begin','          if (tr.data === ref_model[tr.addr])','            pass_cnt++;','          else begin','            fail_cnt++;','            $error("[SB] FAIL addr=%3h exp=%h got=%h",','                   tr.addr, ref_model[tr.addr], tr.data);','          end','        end','      end','    end','  endtask','endclass'],
-'tb-cov-code':['class apb_coverage;','  apb_transaction curr_tr;','','  covergroup apb_cg;','    cp_addr: coverpoint curr_tr.addr {','      bins low_regs  = {[12\'h000:12\'h0FF]};','      bins mid_regs  = {[12\'h100:12\'h7FF]};','      bins high_regs = {[12\'h800:12\'hFFF]};','    }','    cp_rw: coverpoint curr_tr.write {','      bins read_op  = {1\'b0};','      bins write_op = {1\'b1};','    }','    cx_addr_rw: cross cp_addr, cp_rw;','  endgroup','','  task run();','    forever begin','      mon2cov.get(curr_tr);','      apb_cg.sample();','    end','  endtask','endclass'],
+'tb-sb-code':['class apb_scoreboard;','  bit [31:0] ref_model[bit[11:0]];','  int pass_cnt=0, fail_cnt=0;','  mailbox#(apb_transaction) mon2sb;','','  task run();','    apb_transaction tr;','    forever begin','      mon2sb.get(tr);','      if (tr.write) begin','        ref_model[tr.addr] = tr.data;','      end else begin','        if (ref_model.exists(tr.addr)) begin','          if (tr.data === ref_model[tr.addr])','            pass_cnt++;','          else begin','            fail_cnt++;','            $error("[SB] FAIL addr=%3h exp=%h got=%h",','                   tr.addr, ref_model[tr.addr], tr.data);','          end','        end','      end','    end','  endtask','endclass'],
+'tb-cov-code':['class apb_coverage;','  apb_transaction curr_tr;','  mailbox#(apb_transaction) mon2cov;','','  covergroup apb_cg;','    cp_addr: coverpoint curr_tr.addr {','      bins low_regs  = {[12\'h000:12\'h0FF]};','      bins mid_regs  = {[12\'h100:12\'h7FF]};','      bins high_regs = {[12\'h800:12\'hFFF]};','    }','    cp_rw: coverpoint curr_tr.write {','      bins read_op  = {1\'b0};','      bins write_op = {1\'b1};','    }','    cx_addr_rw: cross cp_addr, cp_rw;','  endgroup','','  task run();','    forever begin','      mon2cov.get(curr_tr);','      apb_cg.sample();','    end','  endtask','endclass'],
 'tb-top-code':['module tb_top;','  logic clk=0, rst_n=0;','  always #5 clk=~clk;  // 100 MHz','','  apb_if dut_if(.clk(clk),.rst_n(rst_n));','','  apb_slave_dut dut(','    .clk(clk), .rst_n(rst_n),','    .paddr(dut_if.paddr),','    .pwdata(dut_if.pwdata),','    .pwrite(dut_if.pwrite),','    .psel(dut_if.psel),','    .penable(dut_if.penable),','    .pready(dut_if.pready),','    .prdata(dut_if.prdata)','  );','','  apb_env env;','','  initial begin','    rst_n=0;','    repeat(5) @(posedge clk);','    rst_n=1;','    env=new(dut_if,50);  // 50 transactions','    env.run();','    env.report();','    $finish;','  end','endmodule'],
 };
 Object.entries(TB).forEach(([id,lines])=>{
   const el=document.getElementById(id);
-  if(el)el.innerHTML=lines.map((l,i)=>`<div class="code-line" style="padding:1px 1.6rem"><span class="ln">${i+1}</span><span class="lc">${hl(l)}</span></div>`).join('');
+  if(el)el.innerHTML=lines.map((l,i)=>`<div class="code-ln" style="padding:0 1.4rem"><span class="lno">${i+1}</span><span class="lc">${hl(l)}</span></div>`).join('');
 });
 
-// ── LESSON DATA ──────────────────────────────────────────────────────
+// ── DAILY CHALLENGES ─────────────────────────────────────
+const CHALLENGES=[
+  {
+    q:'What is the bug in this code? The swap does not work correctly with blocking assignments.',
+    fname:'swap_bug.sv',
+    code:['module swap_bug;','  int a=10, b=20;','  initial begin','    a = b;   // Bug is here','    b = a;','    $display("a=%0d b=%0d", a, b);','  end','endmodule'],
+    bug:'Both a and b become 20 because blocking assignments evaluate sequentially — b=a assigns 20 (already updated) to b.',
+    fix:'Use a temp variable: temp=a; a=b; b=temp; OR use non-blocking: a<=b; b<=a;',
+    fixed:['module swap_fixed;','  int a=10, b=20, temp;','  initial begin','    temp = a;   // save original a','    a = b;','    b = temp;','    $display("a=%0d b=%0d", a, b); // 20 10','  end','endmodule']
+  },
+  {
+    q:'What is wrong with this class — why does the semaphore not protect the shared resource?',
+    fname:'sem_bug.sv',
+    code:['module sem_bug;','  semaphore sem;','  int y;','  task automatic work(string s, int a, b);','    $display("%0s started",s);','    #5; y = a + b;','    $display("%0s: y=%0d",s,y);','  endtask','  initial begin','    sem = new(1);','    fork','      work("1st",10,20);','      work("2nd",20,30);','    join','  end','endmodule'],
+    bug:'sem.get() and sem.put() are never called inside the task! The semaphore is created but never used to gate access.',
+    fix:'Add sem.get(1) at the start of the task body and sem.put() after completing work.',
+    fixed:['task automatic work(string s, int a, b);','  sem.get(1);   // acquire key','  $display("%0s started",s);','  #5; y = a + b;','  $display("%0s: y=%0d",s,y);','  sem.put();    // release key','endtask']
+  },
+  {
+    q:'This code tries to use an abstract class directly. Find the error.',
+    fname:'abstract_bug.sv',
+    code:['virtual class base_trans;','  bit [31:0] data;','  pure virtual function void display();','endclass','','module tb;','  initial begin','    base_trans b = new();  // Bug!','    b.data = 5;','    b.display();','  end','endmodule'],
+    bug:'A virtual class (abstract class) cannot be instantiated with new(). Only concrete subclasses that implement all pure virtual methods can be instantiated.',
+    fix:'Create a concrete subclass that implements display(), then instantiate that class.',
+    fixed:['class concrete extends base_trans;','  function void display();','    $display("data=%0d", data);','  endfunction','endclass','// Now instantiate the CONCRETE class:','concrete c = new();','c.data = 5; c.display();']
+  },
+  {
+    q:'Why does this queue pop return unexpected values?',
+    fname:'queue_bug.sv',
+    code:['module q_bug;','  int q[$] = \'{1,2,3,4,5};','  initial begin','    q.push_back(6);','    q.pop_back();   // removes 6','    q.push_front(0);','    q.pop_back();   // removes ??','    $display("%p", q);','  end','endmodule'],
+    bug:'After push_back(6) then pop_back() removes 6. Then push_front(0) adds 0 at front. Then pop_back() removes 5 (the last element), NOT 6 which was already removed.',
+    fix:'Carefully track which end each operation affects. Queue is {0,1,2,3,4} after these operations.',
+    fixed:['// Step by step:','// Start:         {1,2,3,4,5}','// push_back(6):  {1,2,3,4,5,6}','// pop_back():    {1,2,3,4,5}  (removed 6)','// push_front(0): {0,1,2,3,4,5}','// pop_back():    {0,1,2,3,4}  (removed 5)','// Result: {0,1,2,3,4}']
+  },
+];
+let chIdx=0;
+function loadChallenge(){
+  const c=CHALLENGES[chIdx%CHALLENGES.length];
+  document.getElementById('challenge-q').textContent=c.q;
+  document.getElementById('ch-fname').textContent=c.fname;
+  document.getElementById('ch-code').innerHTML=mkLines(c.code,'1rem');
+  document.getElementById('ch-bug').textContent=c.bug;
+  document.getElementById('ch-fix').textContent=c.fix;
+  document.getElementById('ch-fixed-code').innerHTML=mkLines(c.fixed,'1rem');
+  document.getElementById('challenge-answer').classList.remove('show');
+}
+function revealChallenge(){
+  document.getElementById('challenge-answer').classList.add('show');
+}
+function nextChallenge(){
+  chIdx++;loadChallenge();
+}
+loadChallenge();
+
+// ── LESSON DATA ──────────────────────────────────────────
 const LESSONS={
   types:{
     title:'Enhanced Data Types',
     teacher:{emoji:'👨‍🔬',name:'Dr. Byte',role:'data_types_expert'},
     steps:[
-      {
-        label:'Two-State vs Four-State',
-        speech:'Two-state types (bit, byte, int) have only 0 and 1 — no X or Z. They simulate 2× faster than four-state (logic, reg). Use two-state in testbenches!',
-        content:`<div class="c-head">Two-State vs Four-State Types</div>
+      {label:'Two-State vs Four-State',speech:'Two-state types (bit, byte, int) have only 0 and 1 — no X or Z. They simulate 2× faster than four-state (logic, reg). Use two-state in testbenches!',
+       content:`<div class="c-head">Two-State vs Four-State Types</div>
 <div class="info-box"><strong>Two-state (bit, byte, int, shortint, longint):</strong> Values are 0 or 1 only. Simulation is ~2× faster. Perfect for testbench code.</div>
-<div class="info-box sage"><strong>Four-state (logic, wire, reg, integer):</strong> Values are 0, 1, X, Z. Required for RTL design to catch uninitialized signals.</div>
+<div class="info-box teal"><strong>Four-state (logic, wire, reg, integer):</strong> Values are 0, 1, X, Z. Required for RTL design to catch uninitialized signals.</div>
 <div class="two-col">
 <div class="box-card"><div class="box-h rose">❌ Four-State (RTL)</div><ul class="blist"><li>logic: 0,1,X,Z</li><li>wire/reg: 0,1,X,Z</li><li>integer: 32-bit, X/Z possible</li><li>Use in DUT / RTL code</li></ul></div>
-<div class="box-card"><div class="box-h sage">✅ Two-State (TB)</div><ul class="blist"><li>bit: 0 or 1 only</li><li>byte: 8-bit signed</li><li>int: 32-bit signed</li><li>Use in testbench code</li></ul></div>
+<div class="box-card"><div class="box-h teal">✅ Two-State (TB)</div><ul class="blist"><li>bit: 0 or 1 only</li><li>byte: 8-bit signed</li><li>int: 32-bit signed</li><li>Use in testbench code</li></ul></div>
 </div>
-${inlineBlock(['bit [7:0]  b = 8\'hFF;   // two-state, 0 or 1 only','byte       c = -1;       // 8-bit signed = 255','int        i = 100;      // 32-bit signed','longint    l = 64\'h0;    // 64-bit two-state','logic [7:0] x = 8\'hXX;  // four-state, can be X/Z'],'data_types.sv')}`
-      },
-      {
-        label:'Strings',
-        speech:'Strings are dynamic-length — no need to declare a size! They have built-in methods for comparison, conversion, and manipulation.',
-        content:`<div class="c-head">String Type & Methods</div>
+${inlineBlock(['bit [7:0]  b = 8\'hFF;   // two-state, 0 or 1 only','byte       c = -1;       // 8-bit signed = 255','int        i = 100;      // 32-bit signed','longint    l = 64\'h0;    // 64-bit two-state','logic [7:0] x = 8\'hXX;  // four-state, can be X/Z'],'data_types.sv')}`},
+      {label:'Strings',speech:'Strings are dynamic-length — no need to declare a size! They have built-in methods for comparison, conversion, and manipulation.',
+       content:`<div class="c-head">String Type & Methods</div>
 <div class="info-box amber"><strong>Key difference:</strong> string is a dynamic type in SV — it grows and shrinks automatically. Unlike Verilog reg arrays, no manual sizing needed!</div>
 <table class="sv-table"><tr><th>Method</th><th>Description</th><th>Example</th></tr>
 <tr><td>len()</td><td>Length of string</td><td>s.len() → 5</td></tr>
@@ -796,25 +968,20 @@ ${inlineBlock(['bit [7:0]  b = 8\'hFF;   // two-state, 0 or 1 only','byte       
 <tr><td>toupper()</td><td>Uppercase copy</td><td>"hello".toupper() → "HELLO"</td></tr>
 <tr><td>tolower()</td><td>Lowercase copy</td><td>"HI".tolower() → "hi"</td></tr>
 <tr><td>compare(s2)</td><td>Case-sensitive compare</td><td>0=equal, neg=less, pos=greater</td></tr>
+<tr><td>icompare(s2)</td><td>Case-insensitive compare</td><td>"ABC".icompare("abc") → 0</td></tr>
 <tr><td>substr(i,j)</td><td>Substring i to j</td><td>"hello".substr(1,3) → "ell"</td></tr>
 <tr><td>atoi()</td><td>String → integer</td><td>"123".atoi() → 123</td></tr>
 <tr><td>itoa(i)</td><td>Integer → string</td><td>s.itoa(255)</td></tr>
-</table>`
-      },
-      {
-        label:'struct vs union',
-        speech:'struct gives each field its own memory — no data loss. union packs all fields into the SAME memory — last write wins!',
-        content:`<div class="c-head">struct vs union</div>
+</table>`},
+      {label:'struct vs union',speech:'struct gives each field its own memory — no data loss. union packs all fields into the SAME memory — last write wins!',
+       content:`<div class="c-head">struct vs union</div>
 <div class="two-col">
-<div class="box-card"><div class="box-h sage">struct — Own Memory</div><ul class="blist"><li>Each field has independent storage</li><li>All fields retain their values</li><li>Use for records with multiple fields</li><li>Total size = sum of all fields</li></ul></div>
+<div class="box-card"><div class="box-h teal">struct — Own Memory</div><ul class="blist"><li>Each field has independent storage</li><li>All fields retain their values</li><li>Use for records with multiple fields</li><li>Total size = sum of all fields</li></ul></div>
 <div class="box-card"><div class="box-h rose">union — Shared Memory</div><ul class="blist"><li>All fields share ONE memory location</li><li>Last write overwrites others</li><li>Size = largest field only</li><li>Use for type-punning / reinterpret</li></ul></div>
 </div>
-${inlineBlock(['typedef struct { string name; bit[31:0] salary; int id; } emp_s;','typedef union packed { bit[31:0] salary; integer id; } emp_u;','','emp_s s1; emp_u u1;','s1.name="KHAJA"; s1.salary=100; s1.id=5;','// s1: name="KHAJA" salary=100 id=5 (all kept)','','u1.salary = \'h1030;','u1.id = 5;  // OVERWRITES salary!','// u1: salary=5 id=5 (same memory!)'],'struct_union.sv')}`
-      },
-      {
-        label:'enum',
-        speech:'Enums give meaningful names to constants. They have built-in methods like first, last, prev, next, name, and num for easy traversal!',
-        content:`<div class="c-head">Enum Type</div>
+${inlineBlock(['typedef struct { string name; bit[31:0] salary; int id; } emp_s;','typedef union packed { bit[31:0] salary; integer id; } emp_u;','','emp_s s1; emp_u u1;','s1.name="KHAJA"; s1.salary=100; s1.id=5;','// s1: name="KHAJA" salary=100 id=5 (all kept)','','u1.salary = \'h1030;','u1.id = 5;  // OVERWRITES salary!','// u1: salary=5 id=5 (same memory!)'],'struct_union.sv')}`},
+      {label:'enum',speech:'Enums give meaningful names to constants. They have built-in methods like first, last, prev, next, name, and num for easy traversal!',
+       content:`<div class="c-head">Enum Type & Patterns</div>
 <div class="info-box"><strong>Minimum width:</strong> 2 bits. The underlying type can be specified: typedef enum bit[1:0] {...}.</div>
 <table class="sv-table"><tr><th>Pattern</th><th>Values</th></tr>
 <tr><td>enum {a,b,c,d}</td><td>a=0, b=1, c=2, d=3</td></tr>
@@ -823,36 +990,30 @@ ${inlineBlock(['typedef struct { string name; bit[31:0] salary; int id; } emp_s;
 <tr><td>enum {b[4]=5}</td><td>b0=5, b1=6, b2=7, b3=8</td></tr>
 <tr><td>enum {c[3:6]}</td><td>c3=0, c4=1, c5=2, c6=3</td></tr>
 </table>
-<div class="c-head">Enum Methods</div>
+<div class="c-head" style="margin-top:1.2rem">Enum Methods</div>
 <div class="mgrid2">
-<div class="mcard2"><span class="mc2-i">1️⃣</span><div class="mc2-n">.first</div><div class="mc2-t">First value</div></div>
-<div class="mcard2"><span class="mc2-i">🔚</span><div class="mc2-n">.last</div><div class="mc2-t">Last value</div></div>
-<div class="mcard2"><span class="mc2-i">⬅️</span><div class="mc2-n">.prev</div><div class="mc2-t">Previous value</div></div>
-<div class="mcard2"><span class="mc2-i">➡️</span><div class="mc2-n">.next</div><div class="mc2-t">Next value</div></div>
-<div class="mcard2"><span class="mc2-i">📛</span><div class="mc2-n">.name</div><div class="mc2-t">String name</div></div>
-<div class="mcard2"><span class="mc2-i">🔢</span><div class="mc2-n">.num</div><div class="mc2-t">Count of values</div></div>
-</div>`
-      }
+<div class="mcard2"><span class="mc2-i">1️⃣</span><div class="mc2-n">.first</div><div class="mc2-t">first value</div></div>
+<div class="mcard2"><span class="mc2-i">🔚</span><div class="mc2-n">.last</div><div class="mc2-t">last value</div></div>
+<div class="mcard2"><span class="mc2-i">⬅️</span><div class="mc2-n">.prev</div><div class="mc2-t">previous</div></div>
+<div class="mcard2"><span class="mc2-i">➡️</span><div class="mc2-n">.next</div><div class="mc2-t">next value</div></div>
+<div class="mcard2"><span class="mc2-i">📛</span><div class="mc2-n">.name</div><div class="mc2-t">string name</div></div>
+<div class="mcard2"><span class="mc2-i">🔢</span><div class="mc2-n">.num</div><div class="mc2-t">count of vals</div></div>
+</div>`}
     ]
   },
   arrays:{
     title:'Advanced Arrays',
     teacher:{emoji:'📦',name:'Array Anna',role:'memory_architect'},
     steps:[
-      {
-        label:'Fixed Arrays',
-        speech:'Fixed arrays have compile-time size. Single and multi-dimensional. Perfect when you know the size upfront — fastest access, lowest overhead.',
-        content:`<div class="c-head">Fixed Size Arrays</div>
+      {label:'Fixed Arrays',speech:'Fixed arrays have compile-time size. Single and multi-dimensional. Perfect when you know the size upfront — fastest access, lowest overhead.',
+       content:`<div class="c-head">Fixed Size Arrays</div>
 <div class="two-col">
-<div class="box-card"><div class="box-h sky">Single Dimensional</div>${inlineBlock(['int array[5] = {10,20,30,40,50};','// Access: array[i]','// Iterate: foreach(array[i])','// Size known at compile time'],'fixed_1d.sv')}</div>
-<div class="box-card"><div class="box-h sage">Multi Dimensional</div>${inlineBlock(['int array[3][4]; // 3 rows, 4 cols','// array[row][col]','foreach(array[i,j])','  $display(array[i][j]);'],'fixed_2d.sv')}</div>
+<div class="box-card"><div class="box-h accent">Single Dimensional</div>${inlineBlock(['int array[5] = {10,20,30,40,50};','// Access: array[i]','// Iterate: foreach(array[i])','// Size known at compile time'],'fixed_1d.sv')}</div>
+<div class="box-card"><div class="box-h teal">Multi Dimensional</div>${inlineBlock(['int array[3][4]; // 3 rows, 4 cols','// array[row][col]','foreach(array[i,j])','  $display(array[i][j]);'],'fixed_2d.sv')}</div>
 </div>
-<div class="info-box sky"><strong>Packed vs Unpacked:</strong> Packed dimensions [N:0] go BEFORE variable name — stored as contiguous bits, supports bit-slicing. Unpacked dimensions [N] go AFTER — stored as separate elements like memory.</div>`
-      },
-      {
-        label:'Dynamic Arrays',
-        speech:'Dynamic arrays allocate memory at runtime. Use new[N] to create, resize with new[M](old), delete() to free. Essential for testbench scalability!',
-        content:`<div class="c-head">Dynamic Array Methods</div>
+<div class="info-box"><strong>Packed vs Unpacked:</strong> Packed dimensions [N:0] go BEFORE variable name — stored as contiguous bits, supports bit-slicing. Unpacked dimensions [N] go AFTER — stored as separate elements like memory.</div>`},
+      {label:'Dynamic Arrays',speech:'Dynamic arrays allocate memory at runtime. Use new[N] to create, resize with new[M](old), delete() to free. Essential for testbench scalability!',
+       content:`<div class="c-head">Dynamic Array Methods</div>
 <table class="sv-table"><tr><th>Operation</th><th>Syntax</th><th>Effect</th></tr>
 <tr><td>Allocate</td><td>arr = new[5]</td><td>Creates 5 elements (all 0)</td></tr>
 <tr><td>Resize+Copy</td><td>arr = new[8](arr)</td><td>Grows to 8, copies old data</td></tr>
@@ -860,22 +1021,15 @@ ${inlineBlock(['typedef struct { string name; bit[31:0] salary; int id; } emp_s;
 <tr><td>Get size</td><td>arr.size()</td><td>Returns current count</td></tr>
 <tr><td>Delete all</td><td>arr.delete()</td><td>Frees memory, size=0</td></tr>
 </table>
-${inlineBlock(['int arr[];','arr = new[5];              // allocate','arr = \'{5,10,15,20,25};    // assign','arr = new[8](arr);         // resize+copy','// arr = {5,10,15,20,25,0,0,0}','arr.delete();              // free'],'dynamic.sv')}`
-      },
-      {
-        label:'Associative & Queue',
-        speech:'Associative arrays are sparse — only allocate what you use. Queues are ordered, growable lists with push/pop. Both essential in testbenches!',
-        content:`<div class="c-head">Associative Array</div>
+${inlineBlock(['int arr[];','arr = new[5];              // allocate','arr = \'{5,10,15,20,25};    // assign','arr = new[8](arr);         // resize+copy','// arr = {5,10,15,20,25,0,0,0}','arr.delete();              // free'],'dynamic.sv')}`},
+      {label:'Associative & Queue',speech:'Associative arrays are sparse — only allocate what you use. Queues are ordered, growable lists with push/pop. Both essential in testbenches!',
+       content:`<div class="c-head">Associative Array</div>
 <div class="info-box"><strong>When to use:</strong> Unknown size, sparse data (memory maps, scoreboards). Key can be any type: int, string, or even a class.</div>
 ${inlineBlock(['bit[7:0] mem[int]; // key=int, val=byte','mem[0x100] = 8\'hFF;','if(mem.exists(0x100)) ...','mem.first(idx);  // smallest key','mem.last(idx);   // largest key','mem.delete(0x100); // remove one','mem.delete();    // remove all'],'assoc.sv')}
-<div class="c-head" style="margin-top:1.5rem">Queue</div>
-<div class="info-box sage"><strong>Queue = dynamic ordered list</strong> with O(1) push/pop at both ends. Ideal for FIFO between generator and driver.</div>
-${inlineBlock(['int q[$] = \'{1,2,3};  // queue literal','q.push_back(4);        // append','q.push_front(0);       // prepend','q.pop_front();         // remove first','q.pop_back();          // remove last','$display(q.size());    // count'],'queue.sv')}`
-      },
-      {
-        label:'Locator & Sort Methods',
-        speech:'These methods work on unpacked arrays and queues. find, min, max, unique return queues. sort, rsort, shuffle, reverse modify in place.',
-        content:`<div class="c-head">Element Locator Methods</div>
+<div class="c-head" style="margin-top:1.2rem">Queue</div>
+${inlineBlock(['int q[$] = \'{1,2,3};  // queue literal','q.push_back(4);        // append','q.push_front(0);       // prepend','q.pop_front();         // remove first','q.pop_back();          // remove last','$display(q.size());    // count'],'queue.sv')}`},
+      {label:'Locator & Sort Methods',speech:'These methods work on unpacked arrays and queues. find, min, max, unique return queues. sort, rsort, shuffle, reverse modify in place.',
+       content:`<div class="c-head">Element Locator Methods</div>
 <table class="sv-table"><tr><th>Method</th><th>Returns</th><th>Description</th></tr>
 <tr><td>find(x) with(expr)</td><td>queue[$]</td><td>Elements matching condition</td></tr>
 <tr><td>find_first with(expr)</td><td>queue[$]</td><td>First matching element</td></tr>
@@ -885,73 +1039,53 @@ ${inlineBlock(['int q[$] = \'{1,2,3};  // queue literal','q.push_back(4);       
 <tr><td>max()</td><td>queue[$]</td><td>Maximum element(s)</td></tr>
 <tr><td>unique()</td><td>queue[$]</td><td>Deduplicated elements</td></tr>
 </table>
-<div class="c-head">Reduction & Ordering</div>
 <div class="two-col">
-<div class="box-card"><div class="box-h amber">Reduction</div><ul class="blist"><li>arr.sum → sum of all</li><li>arr.product → multiply all</li><li>arr.and → bitwise AND all</li><li>arr.or → bitwise OR all</li><li>arr.xor → bitwise XOR all</li></ul></div>
-<div class="box-card"><div class="box-h sky">Ordering</div><ul class="blist"><li>arr.sort() → ascending</li><li>arr.rsort() → descending</li><li>arr.shuffle() → random order</li><li>arr.reverse() → reverse</li></ul></div>
-</div>`
-      }
+<div class="box-card"><div class="box-h amber">Reduction Methods</div><ul class="blist"><li>arr.sum → sum of all elements</li><li>arr.product → multiply all</li><li>arr.and → bitwise AND all</li><li>arr.or → bitwise OR all</li><li>arr.xor → bitwise XOR all</li></ul></div>
+<div class="box-card"><div class="box-h accent">Ordering Methods</div><ul class="blist"><li>arr.sort() → ascending order</li><li>arr.rsort() → descending</li><li>arr.shuffle() → random order</li><li>arr.reverse() → reverse in place</li></ul></div>
+</div>`}
     ]
   },
   oop:{
     title:'OOP & Classes',
     teacher:{emoji:'🧑‍💻',name:'OOP Omar',role:'class_designer'},
     steps:[
-      {
-        label:'Class Basics',
-        speech:'A class is a blueprint. new() creates instances called objects or handles. Always check for null before using a handle!',
-        content:`<div class="c-head">Class & Object Essentials</div>
+      {label:'Class Basics',speech:'A class is a blueprint. new() creates instances called objects or handles. Always check for null before using a handle!',
+       content:`<div class="c-head">Class & Object Essentials</div>
 <div class="info-box"><strong>Handle vs Object:</strong> A class variable is a HANDLE (pointer). new() creates the actual OBJECT in memory. Multiple handles can point to the same object!</div>
 ${inlineBlock(['class transaction;','  rand bit[31:0] data;','  rand bit[7:0]  addr;','  int id;','  function void display();','    $display("data=%h addr=%h",data,addr);','  endfunction','endclass','','// In a testbench:','transaction t1, t2;  // handles (null)','t1 = new();          // create object','t2 = t1;             // t2 points to SAME object!','t2 = new();          // t2 now has its own object'],'class_basics.sv')}
-<div class="info-box sage"><strong>Memory:</strong> Objects live on the heap. Handles are automatically garbage-collected when nothing points to them.</div>`
-      },
-      {
-        label:'Inheritance',
-        speech:'extends lets a child class inherit ALL properties and methods from parent. p = c is always legal (parent handle can hold child object). c = p is NOT legal!',
-        content:`<div class="c-head">Inheritance Rules</div>
+<div class="info-box teal"><strong>Memory:</strong> Objects live on the heap. Handles are automatically garbage-collected when nothing points to them.</div>`},
+      {label:'Inheritance',speech:'extends lets a child class inherit ALL properties and methods from parent. p = c is always legal (parent handle can hold child object). c = p is NOT legal!',
+       content:`<div class="c-head">Inheritance Rules</div>
 <div class="two-col">
-<div class="box-card"><div class="box-h sage">✅ Legal</div><ul class="blist"><li>parent_h = child_obj (upcast)</li><li>child can call parent methods</li><li>child inherits all parent fields</li><li>super.method() calls parent</li></ul></div>
-<div class="box-card"><div class="box-h rose">❌ Illegal</div><ul class="blist"><li>child_h = parent_obj (downcast — needs $cast)</li><li>Accessing child members via parent handle without virtual</li></ul></div>
+<div class="box-card"><div class="box-h teal">✅ Legal</div><ul class="blist"><li>parent_h = child_obj (upcast)</li><li>child can call parent methods</li><li>child inherits all parent fields</li><li>super.method() calls parent version</li></ul></div>
+<div class="box-card"><div class="box-h rose">❌ Illegal / Needs $cast</div><ul class="blist"><li>child_h = parent_obj (downcast — needs $cast)</li><li>Accessing child members via parent handle without virtual</li></ul></div>
 </div>
-${inlineBlock(['class base;','  bit[31:0] data;','  virtual function void show();','    $display("base: %0h",data); endfunction','endclass','','class derived extends base;','  int extra;','  function void show(); // override','    $display("derived: %0h extra=%0d",data,extra);','  endfunction','endclass','','base b; derived d = new();','b = d;           // legal: upcast','b.show();        // calls derived.show() — polymorphism!'],'inherit.sv')}`
-      },
-      {
-        label:'super & this',
-        speech:'super refers to the parent class from within the child. this refers to the current object instance — removes name ambiguity in constructors.',
-        content:`<div class="c-head">super keyword</div>
-<div class="info-box"><strong>super</strong> can only be used inside a child class. It accesses parent properties and methods even when overridden.</div>
+${inlineBlock(['class base;','  bit[31:0] data;','  virtual function void show();','    $display("base: %0h",data); endfunction','endclass','class derived extends base;','  int extra;','  function void show(); // override','    $display("derived: %0h extra=%0d",data,extra);','  endfunction','endclass','','base b; derived d = new();','b = d;           // legal: upcast','b.show();        // calls derived.show() — polymorphism!'],'inherit.sv')}`},
+      {label:'super & this',speech:'super refers to the parent class from within the child. this refers to the current object instance — removes name ambiguity in constructors.',
+       content:`<div class="c-head">super keyword</div>
 ${inlineBlock(['class child extends parent;','  function void show();','    super.data = 10;      // set parent data','    super.show();         // call parent method','    this.data = 20;       // set child\'s own data','  endfunction','  function new(int d);','    super.new(d);          // call parent constructor first!','    this.extra = d * 2;','  endfunction','endclass'],'super_this.sv')}
-<div class="c-head" style="margin-top:1.5rem">this keyword</div>
-<div class="info-box sky"><strong>this</strong> removes ambiguity when a method argument and a class property have the same name. this.x = x means "class property x = argument x".</div>`
-      },
-      {
-        label:'Virtual & Abstract',
-        speech:'virtual functions enable polymorphism — calling via a parent handle dispatches to the child implementation. Pure virtual forces child to implement!',
-        content:`<div class="c-head">Polymorphism</div>
-<div class="info-box"><strong>Virtual method dispatch:</strong> When a method is declared virtual in the parent, calling it through a parent handle will invoke the CHILD'S version at runtime.</div>
+<div class="c-head" style="margin-top:1.2rem">Scope Resolution (::)</div>
+<div class="info-box"><strong>::</strong> accesses static members and defines extern functions outside the class body. Cannot be used with automatic (non-static) members.</div>
+${inlineBlock(['class transaction;','  static int count;','  extern function void print();','endclass','function void transaction::print();','  $display("count=%0d",count);','endfunction','// Access static via scope:','transaction::count = 5;','transaction::print();'],'scope.sv')}`},
+      {label:'Virtual & Abstract',speech:'virtual functions enable polymorphism — calling via a parent handle dispatches to the child implementation. Pure virtual forces child to implement!',
+       content:`<div class="c-head">Polymorphism with virtual</div>
 ${inlineBlock(['class shape;','  virtual function real area(); return 0; endfunction','endclass','class circle extends shape;','  real r;','  function real area(); return 3.14 * r * r; endfunction','endclass','class rect extends shape;','  real w, h;','  function real area(); return w * h; endfunction','endclass','','shape s;','circle c = new(); c.r = 5;','rect r = new(); r.w = 4; r.h = 3;','s = c; $display(s.area()); // 78.5 — circle!','s = r; $display(s.area()); // 12 — rect!'],'polymorphism.sv')}
-<div class="info-box sage"><strong>virtual class (abstract):</strong> Cannot be instantiated. Contains <code>pure virtual</code> methods that MUST be implemented by any non-abstract subclass.</div>`
-      }
+<div class="info-box amber"><strong>virtual class (abstract):</strong> Cannot be instantiated. Contains pure virtual methods that MUST be implemented by any non-abstract subclass. Compiler enforces this!</div>`}
     ]
   },
   crv:{
     title:'CRV & Assertions',
     teacher:{emoji:'🎲',name:'Rex Randon',role:'crv_specialist'},
     steps:[
-      {
-        label:'rand & randc',
-        speech:'rand generates any valid value each call — may repeat. randc is CYCLIC — cycles through all values before repeating. Use randc for coverage-driven testing!',
-        content:`<div class="c-head">rand vs randc</div>
+      {label:'rand & randc',speech:'rand generates any valid value each call — may repeat. randc is CYCLIC — cycles through all values before repeating. Use randc for coverage-driven testing!',
+       content:`<div class="c-head">rand vs randc</div>
 <div class="two-col">
-<div class="box-card"><div class="box-h rose">rand — May Repeat</div><ul class="blist"><li>Random each call</li><li>Can generate same value repeatedly</li><li>Good for general randomization</li><li>Works with all constraint types</li></ul></div>
-<div class="box-card"><div class="box-h sage">randc — Cyclic</div><ul class="blist"><li>Cycles through ALL values first</li><li>No repeat until full cycle done</li><li>Great for coverage closure</li><li>Cannot use dist constraint</li></ul></div>
+<div class="box-card"><div class="box-h rose">rand — May Repeat</div><ul class="blist"><li>Random each call</li><li>Can generate same value repeatedly</li><li>Good for general randomization</li><li>Works with all constraint types including dist</li></ul></div>
+<div class="box-card"><div class="box-h teal">randc — Cyclic</div><ul class="blist"><li>Cycles through ALL values first</li><li>No repeat until full cycle done</li><li>Great for coverage closure</li><li>Cannot use dist constraint!</li></ul></div>
 </div>
-${inlineBlock(['class pkt;','  rand  bit[3:0] addr;  // may repeat','  randc bit[1:0] mode;  // cycles 0,1,2,3,0,1,2,3...','  rand  bit[7:0] data;','  constraint addr_c { addr inside {[1:10]}; }','endclass'],'rand_randc.sv')}`
-      },
-      {
-        label:'Constraints',
-        speech:'Constraints guide the solver. inside for ranges, dist for weighted probability, -> for implication, if/else for conditional. Bidirectional — solver finds all simultaneously!',
-        content:`<div class="c-head">Constraint Types</div>
+${inlineBlock(['class pkt;','  rand  bit[3:0] addr;  // may repeat','  randc bit[1:0] mode;  // cycles 0,1,2,3,0,1,2,3...','  rand  bit[7:0] data;','  constraint addr_c { addr inside {[1:10]}; }','  // ERROR: randc cannot use dist:','  // constraint mode_c { mode dist {0:/50, 1:/50}; }','endclass'],'rand_randc.sv')}`},
+      {label:'Constraints',speech:'Constraints guide the solver. inside for ranges, dist for weighted probability, -> for implication, if/else for conditional. Bidirectional — solver finds all simultaneously!',
+       content:`<div class="c-head">Constraint Types</div>
 <table class="sv-table"><tr><th>Type</th><th>Syntax</th><th>Meaning</th></tr>
 <tr><td>inside (range)</td><td>x inside {[10:20]}</td><td>x must be 10..20</td></tr>
 <tr><td>inside (set)</td><td>x inside {1,5,10}</td><td>x must be 1,5, or 10</td></tr>
@@ -961,76 +1095,57 @@ ${inlineBlock(['class pkt;','  rand  bit[3:0] addr;  // may repeat','  randc bit
 <tr><td>implication</td><td>(a==1) -> (b>5)</td><td>If a==1 then b>5</td></tr>
 <tr><td>if/else</td><td>if(a) b inside {...}</td><td>Conditional constraint</td></tr>
 <tr><td>unique</td><td>unique {a,b,c}</td><td>All values different</td></tr>
-<tr><td>solve before</td><td>solve a before b</td><td>Fix a first, then b</td></tr>
-</table>`
-      },
-      {
-        label:'rand_mode & Covergroups',
-        speech:'rand_mode and constraint_mode let you dynamically enable/disable randomization and constraints at runtime. Covergroups measure functional coverage!',
-        content:`<div class="c-head">rand_mode & constraint_mode</div>
-${inlineBlock(['item.rand_mode(0);         // disable ALL random vars','item.rand_mode(1);         // re-enable ALL','item.a.rand_mode(0);       // disable just variable a','','item.constraint_mode(0);   // disable ALL constraints','item.my_c.constraint_mode(0); // disable just my_c','item.constraint_mode(1);   // re-enable ALL'],'modes.sv')}
-<div class="c-head" style="margin-top:1.5rem">Covergroups</div>
-<div class="info-box sky"><strong>Coverpoint:</strong> Measures which values a variable takes. Automatically creates bins (up to 64 for &gt;6-bit vars). Use explicit bins for precision.</div>
-<div class="info-box sage"><strong>Cross coverage:</strong> Cartesian product of two coverpoints — ensures all combinations are exercised.</div>
-${inlineBlock(['covergroup cg @(posedge clk);','  cp_addr: coverpoint addr {','    bins lo = {[0:127]};','    bins hi = {[128:255]};','  }','  cp_rw: coverpoint rw;','  cx: cross cp_addr, cp_rw; // 4 cross bins','endgroup'],'covergroup.sv')}`
-      },
-      {
-        label:'SVA Assertions',
-        speech:'SystemVerilog Assertions check temporal properties. immediate assertions are like if-statements. concurrent assertions run every clock, checking sequences over time!',
-        content:`<div class="c-head">Assertion Types</div>
+<tr><td>solve before</td><td>solve a before b</td><td>Fix a first, then solve b</td></tr>
+</table>`},
+      {label:'rand_mode & Covergroups',speech:'rand_mode and constraint_mode let you dynamically enable/disable randomization and constraints at runtime. Covergroups measure functional coverage!',
+       content:`<div class="c-head">rand_mode & constraint_mode</div>
+${inlineBlock(['item.rand_mode(0);         // disable ALL random vars','item.rand_mode(1);         // re-enable ALL','item.a.rand_mode(0);       // disable just var a','','item.constraint_mode(0);   // disable ALL constraints','item.my_c.constraint_mode(0); // disable just my_c','item.constraint_mode(1);   // re-enable ALL'],'modes.sv')}
+<div class="c-head" style="margin-top:1.2rem">Covergroups</div>
+<div class="info-box"><strong>Coverpoint:</strong> Measures which values a variable takes. Automatically creates bins (up to 64 for >6-bit vars). Use explicit bins for precision.</div>
+${inlineBlock(['covergroup cg @(posedge clk);','  cp_addr: coverpoint addr {','    bins lo = {[0:127]};','    bins hi = {[128:255]};','  }','  cp_rw: coverpoint rw;','  cx: cross cp_addr, cp_rw; // 4 cross bins','endgroup'],'covergroup.sv')}`},
+      {label:'SVA Assertions',speech:'SystemVerilog Assertions check temporal properties. Immediate assertions are like if-statements. Concurrent assertions run every clock, checking sequences over time!',
+       content:`<div class="c-head">Assertion Types</div>
 <div class="two-col">
-<div class="box-card"><div class="box-h rose">Immediate (Procedural)</div><ul class="blist"><li>Evaluated at specific time</li><li>Inside initial/always blocks</li><li>assert(expr) else $error(...)</li><li>Like an if-statement check</li></ul></div>
-<div class="box-card"><div class="box-h sky">Concurrent (Temporal)</div><ul class="blist"><li>Evaluated each clock cycle</li><li>Can check sequences over time</li><li>|-> immediate (same clock)</li><li>|=> next cycle</li></ul></div>
+<div class="box-card"><div class="box-h rose">Immediate (Procedural)</div><ul class="blist"><li>Evaluated at specific simulation time</li><li>Inside initial/always blocks</li><li>assert(expr) else $error(...)</li><li>Like an if-statement check</li></ul></div>
+<div class="box-card"><div class="box-h accent">Concurrent (Temporal)</div><ul class="blist"><li>Evaluated each clock cycle</li><li>Can check sequences over time</li><li>|-> same clock (overlapping)</li><li>|=> next cycle (non-overlapping)</li></ul></div>
 </div>
-${inlineBlock(['// Concurrent assertion — APB protocol check','property p_penable_after_psel;','  @(posedge clk) disable iff(!rst_n)','  $rose(psel) |=> penable;  // penable next cycle','endproperty','assert property(p_penable_after_psel)','  else $error("penable not asserted after psel!");','','// Assertion with ## delay','property p_ack;','  @(posedge clk) req |-> ##[1:4] ack;','endproperty'],'assertions.sv')}`
-      }
+${inlineBlock(['// Concurrent assertion — APB protocol','property p_penable_after_psel;','  @(posedge clk) disable iff(!rst_n)','  $rose(psel) |=> penable;  // penable next cycle','endproperty','assert property(p_penable_after_psel)','  else $error("penable not asserted after psel!");','','// ## delay operator','property p_ack;','  @(posedge clk) req |-> ##[1:4] ack;','endproperty'],'assertions.sv')}`}
     ]
   },
   concurrency:{
     title:'Concurrency & IPC',
     teacher:{emoji:'⚡',name:'Forky Fiona',role:'thread_maestro'},
     steps:[
-      {
-        label:'fork-join Variants',
-        speech:'fork-join waits for ALL threads. fork-join_any unblocks when the FIRST finishes. fork-join_none launches and immediately continues — threads run in background!',
-        content:`<div class="c-head">fork-join Variants</div>
+      {label:'fork-join Variants',speech:'fork-join waits for ALL threads. fork-join_any unblocks when the FIRST finishes. fork-join_none launches and immediately continues — threads run in background!',
+       content:`<div class="c-head">fork-join Variants</div>
 <div class="mgrid2">
-<div class="mcard2"><span class="mc2-i">🔒</span><div class="mc2-n">fork…join</div><div class="mc2-t">Wait ALL</div><div class="mc2-d">Blocks until every thread completes</div></div>
-<div class="mcard2"><span class="mc2-i">🥇</span><div class="mc2-n">fork…join_any</div><div class="mc2-t">Wait FIRST</div><div class="mc2-d">Unblocks at first finish, rest continue</div></div>
-<div class="mcard2"><span class="mc2-i">🚀</span><div class="mc2-n">fork…join_none</div><div class="mc2-t">No Wait</div><div class="mc2-d">Launches threads, returns immediately</div></div>
+<div class="mcard2"><span class="mc2-i">🔒</span><div class="mc2-n">fork…join</div><div class="mc2-t">wait ALL</div><div class="mc2-d">Blocks until every thread completes</div></div>
+<div class="mcard2"><span class="mc2-i">🥇</span><div class="mc2-n">fork…join_any</div><div class="mc2-t">wait FIRST</div><div class="mc2-d">Unblocks at first finish, rest continue</div></div>
+<div class="mcard2"><span class="mc2-i">🚀</span><div class="mc2-n">fork…join_none</div><div class="mc2-t">no wait</div><div class="mc2-d">Launches threads, returns immediately</div></div>
 </div>
 <div class="c-head">Mimic Patterns</div>
 <table class="sv-table"><tr><th>Want</th><th>Use</th><th>Trick</th></tr>
 <tr><td>join_none behavior</td><td>join_any</td><td>Add empty begin end as instant thread</td></tr>
 <tr><td>join_any behavior</td><td>join_none</td><td>Use event, threads trigger -> e</td></tr>
-<tr><td>join behavior</td><td>join_any</td><td>Then add wait fork to wait remaining</td></tr>
-</table>`
-      },
-      {
-        label:'Events',
-        speech:'Events synchronize threads. -> is blocking — the waiting thread MUST be already waiting. ->> is non-blocking (reactive region) — can fire and wait in same block!',
-        content:`<div class="c-head">Event Synchronization</div>
+<tr><td>join behavior</td><td>join_any</td><td>Then add wait fork for remaining</td></tr>
+</table>`},
+      {label:'Events',speech:'Events synchronize threads. -> is blocking — the waiting thread MUST be already waiting. ->> is non-blocking (reactive region) — can fire and wait in same block!',
+       content:`<div class="c-head">Event Synchronization</div>
 <div class="two-col">
 <div class="box-card"><div class="box-h rose">-> Blocking Trigger</div><ul class="blist"><li>Fires in Active region</li><li>@(e) MUST be waiting first</li><li>Race condition if both start at t=0</li><li>Order matters!</li></ul></div>
-<div class="box-card"><div class="box-h sage">->> Non-blocking Trigger</div><ul class="blist"><li>Fires in Reactive region</li><li>@(e) can come AFTER ->> in same block</li><li>No race — always works</li><li>Preferred for intra-block sync</li></ul></div>
+<div class="box-card"><div class="box-h teal">->> Non-blocking Trigger</div><ul class="blist"><li>Fires in Reactive region</li><li>@(e) can come AFTER ->> in same block</li><li>No race — always works</li><li>Preferred for intra-block sync</li></ul></div>
 </div>
-${inlineBlock(['// Safe: use ->> to avoid race','event e;','initial begin','  ->> e;        // fire in reactive region','  @(e);         // OK! triggered already','  $display("done");','end'],'event_safe.sv')}`
-      },
-      {
-        label:'Semaphore',
-        speech:'Semaphore controls shared resource access. new(N) creates N keys. get() takes a key (blocks if none). put() returns a key. Prevents simultaneous access!',
-        content:`<div class="c-head">Semaphore Usage</div>
+${inlineBlock(['// Safe: use ->> to avoid race','event e;','initial begin','  ->> e;        // fire in reactive region','  @(e);         // OK! triggered already','  $display("done");','end'],'event_safe.sv')}`},
+      {label:'Semaphore',speech:'Semaphore controls shared resource access. new(N) creates N keys. get() takes a key (blocks if none). put() returns a key. Prevents simultaneous access!',
+       content:`<div class="c-head">Semaphore Usage</div>
 <div class="info-box"><strong>Semaphore = key management system.</strong> new(1) = mutex (only 1 can access at a time). new(N) = allows N concurrent accesses.</div>
 ${inlineBlock(['semaphore sem = new(1);  // 1 key = mutex','','task use_resource(string name);','  sem.get(1);          // wait for key','  // ... exclusive access ...','  #10;','  sem.put(1);          // return key','endtask','','// Multiple threads compete safely:','fork','  use_resource("READ");','  use_resource("WRITE");','join'],'semaphore.sv')}
-<div class="info-box sage"><strong>try_get():</strong> Non-blocking version — returns 1 if key available, 0 otherwise. Useful for non-blocking resource checks.</div>`
-      },
-      {
-        label:'Mailbox',
-        speech:'Mailbox is a thread-safe FIFO channel between processes. new() is unbounded, new(N) bounds it. Generic accepts any type; parameterized is type-safe!',
-        content:`<div class="c-head">Mailbox Types</div>
+<div class="info-box amber"><strong>try_get():</strong> Non-blocking version — returns 1 if key available, 0 otherwise. Useful for non-blocking resource checks.</div>`},
+      {label:'Mailbox',speech:'Mailbox is a thread-safe FIFO channel between processes. new() is unbounded, new(N) bounds it. Generic accepts any type; parameterized is type-safe!',
+       content:`<div class="c-head">Mailbox Types</div>
 <div class="two-col">
-<div class="box-card"><div class="box-h sky">Generic Mailbox</div><ul class="blist"><li>mailbox mb = new() → unbounded</li><li>mailbox mb = new(3) → max 3 items</li><li>Accepts any data type (mixed!)</li><li>put() blocks if full</li></ul></div>
-<div class="box-card"><div class="box-h sage">Parameterized Mailbox</div><ul class="blist"><li>mailbox #(T) mb = new()</li><li>Type-safe — only accepts T</li><li>Compile error on wrong type</li><li>Recommended for transactions</li></ul></div>
+<div class="box-card"><div class="box-h accent">Generic Mailbox</div><ul class="blist"><li>mailbox mb = new() → unbounded</li><li>mailbox mb = new(3) → max 3 items</li><li>Accepts any data type (mixed!)</li><li>put() blocks if bounded+full</li></ul></div>
+<div class="box-card"><div class="box-h teal">Parameterized Mailbox</div><ul class="blist"><li>mailbox #(T) mb = new()</li><li>Type-safe — only accepts T</li><li>Compile error on wrong type</li><li>Recommended for transactions</li></ul></div>
 </div>
 <div class="c-head">Mailbox Methods</div>
 <table class="sv-table"><tr><th>Method</th><th>Description</th></tr>
@@ -1041,108 +1156,82 @@ ${inlineBlock(['semaphore sem = new(1);  // 1 key = mutex','','task use_resource
 <tr><td>try_get(item)</td><td>Non-blocking get, returns 0 if empty</td></tr>
 <tr><td>try_peek(item)</td><td>Non-blocking peek</td></tr>
 <tr><td>num()</td><td>Current number of items</td></tr>
-</table>`
-      }
+</table>`}
     ]
   },
   interface:{
     title:'Interfaces & Clocking',
     teacher:{emoji:'🔌',name:'Interface Iris',role:'bus_engineer'},
     steps:[
-      {
-        label:'Interface Basics',
-        speech:'An interface bundles related signals into one reusable port. Instead of 20 individual wires, you pass one interface handle. Clean, maintainable DUT connections!',
-        content:`<div class="c-head">Why Interfaces?</div>
-<div class="info-box"><strong>Without interface:</strong> 20+ individual ports on every module. Change one signal → update every module. Nightmare to maintain.</div>
-<div class="info-box sage"><strong>With interface:</strong> One port, all signals bundled. Add a signal? Update only the interface definition.</div>
-${inlineBlock(['interface apb_if(input logic clk, rst_n);','  logic [11:0] paddr;','  logic [31:0] pwdata, prdata;','  logic        pwrite, psel, penable, pready;','endinterface','','// Connect to DUT:','apb_if bus(.clk(clk), .rst_n(rst_n));','apb_slave dut(bus);  // one port instead of many!','','// In testbench:','bus.psel = 1;  // drive signal directly'],'interface.sv')}`
-      },
-      {
-        label:'Modports',
-        speech:'Modports define the direction of signals as seen by a specific module. The DUT sees inputs/outputs. The testbench sees them inverted. Prevents accidental driving from wrong side!',
-        content:`<div class="c-head">Modport Directions</div>
-${inlineBlock(['interface apb_if;','  logic psel, penable;','  logic [31:0] pwdata, prdata;','','  // DUT sees psel/penable/pwdata as inputs','  modport dut_mp (','    input  psel, penable, pwdata,','    output prdata, pready','  );','','  // TB sees opposite directions','  modport tb_mp (','    output psel, penable, pwdata,','    input  prdata, pready','  );','endinterface','','// Usage in module ports:','module apb_slave(apb_if.dut_mp bus);','module tb_driver(apb_if.tb_mp bus);'],'modport.sv')}`
-      },
-      {
-        label:'Clocking Blocks',
-        speech:'Clocking blocks eliminate race conditions! input #1step samples JUST before clock edge. output #1 drives 1 time unit AFTER edge. Essential for race-free testbenches!',
-        content:`<div class="c-head">Clocking Block Timing</div>
-<div class="info-box"><strong>The race condition problem:</strong> At exactly the clock edge, the DUT and TB update simultaneously. Who wins? Clocking blocks solve this with defined skews.</div>
+      {label:'Interface Basics',speech:'An interface bundles related signals into one reusable port. Instead of 20 individual wires, you pass one interface handle. Clean, maintainable DUT connections!',
+       content:`<div class="c-head">Why Interfaces?</div>
+<div class="info-box rose"><strong>Without interface:</strong> 20+ individual ports on every module. Change one signal → update every module. Nightmare to maintain.</div>
+<div class="info-box teal"><strong>With interface:</strong> One port, all signals bundled. Add a signal? Update only the interface definition.</div>
+${inlineBlock(['interface apb_if(input logic clk, rst_n);','  logic [11:0] paddr;','  logic [31:0] pwdata, prdata;','  logic        pwrite, psel, penable, pready;','endinterface','','// Connect to DUT:','apb_if bus(.clk(clk), .rst_n(rst_n));','apb_slave dut(bus);  // one port instead of many!','','// In testbench:','bus.psel = 1;  // drive signal directly'],'interface.sv')}`},
+      {label:'Modports',speech:'Modports define the direction of signals as seen by a specific module. The DUT sees inputs/outputs. The testbench sees them inverted. Prevents accidental driving!',
+       content:`<div class="c-head">Modport Directions</div>
+${inlineBlock(['interface apb_if;','  logic psel, penable;','  logic [31:0] pwdata, prdata;','','  // DUT sees psel/penable/pwdata as inputs','  modport dut_mp (','    input  psel, penable, pwdata,','    output prdata, pready','  );','','  // TB sees opposite directions','  modport tb_mp (','    output psel, penable, pwdata,','    input  prdata, pready','  );','endinterface','','// Usage in module ports:','module apb_slave(apb_if.dut_mp bus);','module tb_driver(apb_if.tb_mp bus);'],'modport.sv')}`},
+      {label:'Clocking Blocks',speech:'Clocking blocks eliminate race conditions! input #1step samples JUST before clock edge. output #1 drives 1 time unit AFTER edge. Essential for race-free testbenches!',
+       content:`<div class="c-head">Clocking Block Timing</div>
+<div class="info-box rose"><strong>The race condition:</strong> At exactly the clock edge, DUT and TB update simultaneously. Who wins? Clocking blocks solve this with defined skews.</div>
 <div class="two-col">
-<div class="box-card"><div class="box-h sky">Input Skew</div><ul class="blist"><li>#1step → just before edge</li><li>Samples stable old value</li><li>No metastability risk</li><li>Default for testbench inputs</li></ul></div>
-<div class="box-card"><div class="box-h sage">Output Skew</div><ul class="blist"><li>#1 → 1 unit after edge</li><li>Drives cleanly after clock</li><li>DUT sees stable value</li><li>Default for TB outputs</li></ul></div>
+<div class="box-card"><div class="box-h accent">Input Skew</div><ul class="blist"><li>#1step → just before edge</li><li>Samples stable old value</li><li>No metastability risk</li><li>Default for testbench inputs</li></ul></div>
+<div class="box-card"><div class="box-h teal">Output Skew</div><ul class="blist"><li>#1 → 1 unit after edge</li><li>Drives cleanly after clock</li><li>DUT sees stable value</li><li>Default for TB outputs</li></ul></div>
 </div>
-${inlineBlock(['clocking drv_cb @(posedge clk);','  default input #1step output #1;','  output psel, penable, pwdata;','  input  pready, prdata;','endclocking','','// Drive via clocking block (race-free):','@(drv_cb);','drv_cb.psel <= 1;    // drives 1ns after posedge'],'clocking.sv')}`
-      },
-      {
-        label:'Virtual Interfaces',
-        speech:'Virtual interfaces are pointers to interface instances. They let class-based testbench components (generator, driver, monitor) connect to the actual DUT interface at runtime!',
-        content:`<div class="c-head">Virtual Interface</div>
-<div class="info-box"><strong>Why virtual?</strong> Classes cannot have interface ports directly. A virtual interface is a reference (handle) to an actual interface instance — passed as a constructor argument.</div>
-${inlineBlock(['class apb_driver;','  virtual apb_if vif;  // pointer to interface','','  function new(virtual apb_if v);','    this.vif = v;  // store reference','  endfunction','','  task run();','    forever begin','      @(vif.drv_cb);       // sync to clock','      vif.drv_cb.psel <= 1; // drive signal','    end','  endtask','endclass','','// In top module:','apb_if bus(.clk, .rst_n);','apb_driver drv = new(bus); // pass interface'],'virtual_if.sv')}`
-      }
+${inlineBlock(['clocking drv_cb @(posedge clk);','  default input #1step output #1;','  output psel, penable, pwdata;','  input  pready, prdata;','endclocking','','// Drive via clocking block (race-free):','@(drv_cb);','drv_cb.psel <= 1;    // drives 1ns after posedge'],'clocking.sv')}`},
+      {label:'Virtual Interfaces',speech:'Virtual interfaces are pointers to interface instances. They let class-based testbench components connect to the actual DUT interface at runtime!',
+       content:`<div class="c-head">Virtual Interface</div>
+<div class="info-box"><strong>Why virtual?</strong> Classes cannot have interface ports directly. A virtual interface is a reference (handle) to an actual interface instance.</div>
+${inlineBlock(['class apb_driver;','  virtual apb_if vif;  // pointer to interface','','  function new(virtual apb_if v);','    this.vif = v;  // store reference','  endfunction','','  task run();','    forever begin','      @(vif.drv_cb);       // sync to clock','      vif.drv_cb.psel <= 1; // drive signal','    end','  endtask','endclass','','// In top module:','apb_if bus(.clk, .rst_n);','apb_driver drv = new(bus); // pass interface'],'virtual_if.sv')}`}
     ]
   },
   functions:{
     title:'Functions & Tasks',
     teacher:{emoji:'⚙️',name:'Func Farhan',role:'subroutine_master'},
     steps:[
-      {
-        label:'Function vs Task',
-        speech:'Functions execute in zero simulation time — no delays, no timing. Tasks CAN consume time. Functions can call functions but NOT tasks. Tasks can call both!',
-        content:`<div class="c-head">Function vs Task</div>
+      {label:'Function vs Task',speech:'Functions execute in zero simulation time — no delays, no timing. Tasks CAN consume time. Functions can call functions but NOT tasks. Tasks can call both!',
+       content:`<div class="c-head">Function vs Task</div>
 <table class="sv-table"><tr><th>Feature</th><th>Function</th><th>Task</th></tr>
 <tr><td>Time</td><td>Zero sim time only</td><td>Can consume time (#, @)</td></tr>
 <tr><td>Return</td><td>Single value (or void)</td><td>Only via output ports</td></tr>
-<tr><td>Input default</td><td>input</td><td>input</td></tr>
 <tr><td>Call functions</td><td>✅</td><td>✅</td></tr>
 <tr><td>Call tasks</td><td>❌</td><td>✅</td></tr>
 <tr><td>Blocking stmts</td><td>❌</td><td>✅</td></tr>
 <tr><td>fork/join inside</td><td>❌</td><td>✅</td></tr>
 </table>
-${inlineBlock(['function int add(int a, b);  // zero-time','  return a + b;','endfunction','','task delay_print(string s);  // can use #','  #10;','  $display("at %0t: %s", $time, s);','endtask'],'fn_vs_task.sv')}`
-      },
-      {
-        label:'static vs automatic',
-        speech:'Static variables persist across calls — they have ONE copy for all invocations. Automatic variables are created fresh each call and destroyed on return.',
-        content:`<div class="c-head">Variable Lifetimes</div>
+${inlineBlock(['function int add(int a, b);  // zero-time','  return a + b;','endfunction','','task delay_print(string s);  // can use #','  #10;','  $display("at %0t: %s", $time, s);','endtask','','// void: discard return value','void\'(sum(10,5));'],'fn_vs_task.sv')}`},
+      {label:'static vs automatic',speech:'Static variables persist across calls — they have ONE copy for all invocations. Automatic variables are created fresh each call and destroyed on return.',
+       content:`<div class="c-head">Variable Lifetimes</div>
 <div class="two-col">
 <div class="box-card"><div class="box-h rose">static — Persistent</div><ul class="blist"><li>Allocated once, lives forever</li><li>Retains value across calls</li><li>Default in static functions/modules</li><li>Accessible via scope resolution ::</li></ul></div>
-<div class="box-card"><div class="box-h sage">automatic — Per-call</div><ul class="blist"><li>Created on each call</li><li>Destroyed on return</li><li>Default in automatic functions</li><li>NOT accessible via :: (no hierarchy)</li></ul></div>
+<div class="box-card"><div class="box-h teal">automatic — Per-call</div><ul class="blist"><li>Created on each call</li><li>Destroyed on return</li><li>Default in automatic functions</li><li>NOT accessible via ::</li></ul></div>
 </div>
-${inlineBlock(['function automatic int counter();','  static    int call_count = 0; // persists!','  automatic int local_var  = 0; // resets each call','  call_count++;','  local_var++;','  $display("calls=%0d local=%0d",call_count,local_var);','endfunction','','// Calling 3 times prints:','// calls=1 local=1','// calls=2 local=1  ← local always 1!','// calls=3 local=1'],'static_auto.sv')}`
-      },
-      {
-        label:'Argument Passing',
-        speech:'Pass by value copies the data — safe but no feedback. Pass by ref gives direct access to the caller variable — fast but modifies the original. Pass by name allows any order!',
-        content:`<div class="c-head">Argument Modes</div>
+${inlineBlock(['function automatic int counter();','  static    int call_count = 0; // persists!','  automatic int local_var  = 0; // resets each call','  call_count++;','  local_var++;','  $display("calls=%0d local=%0d",call_count,local_var);','endfunction','','// Calling 3 times prints:','// calls=1 local=1','// calls=2 local=1  ← local always 1!','// calls=3 local=1'],'static_auto.sv')}`},
+      {label:'Argument Passing',speech:'Pass by value copies the data — safe but no feedback. Pass by ref gives direct access to the caller variable — fast but modifies the original.',
+       content:`<div class="c-head">Argument Modes</div>
 <div class="mgrid2">
-<div class="mcard2"><span class="mc2-i">📋</span><div class="mc2-n">By Value</div><div class="mc2-t">Safe copy</div><div class="mc2-d">Changes don't affect caller</div></div>
-<div class="mcard2"><span class="mc2-i">🔗</span><div class="mc2-n">By ref</div><div class="mc2-t">Direct access</div><div class="mc2-d">Changes DO affect caller</div></div>
-<div class="mcard2"><span class="mc2-i">🔒</span><div class="mc2-n">const ref</div><div class="mc2-t">Read-only ref</div><div class="mc2-d">Fast, no copy, immutable</div></div>
+<div class="mcard2"><span class="mc2-i">📋</span><div class="mc2-n">By Value</div><div class="mc2-t">safe copy</div><div class="mc2-d">Changes don't affect caller</div></div>
+<div class="mcard2"><span class="mc2-i">🔗</span><div class="mc2-n">By ref</div><div class="mc2-t">direct access</div><div class="mc2-d">Changes DO affect caller</div></div>
+<div class="mcard2"><span class="mc2-i">🔒</span><div class="mc2-n">const ref</div><div class="mc2-t">read-only ref</div><div class="mc2-d">Fast, no copy, immutable</div></div>
 <div class="mcard2"><span class="mc2-i">🏷️</span><div class="mc2-n">By name</div><div class="mc2-t">.arg(val)</div><div class="mc2-d">Any order, skip defaults</div></div>
 </div>
-${inlineBlock(['// Default arguments','function void show(int x=10, string s="hi");','  $display("x=%0d s=%s",x,s);','endfunction','','show();              // x=10 s=hi','show(5);             // x=5 s=hi','show(.s("bye"));     // x=10 s=bye (by name!)','show(.s("hey"),.x(3)); // any order!'],'args.sv')}`
-      },
-      {
-        label:'break & continue',
-        speech:'break immediately exits the innermost loop. continue skips the rest of the current iteration and jumps to the next one. Both work in for, while, foreach, repeat!',
-        content:`<div class="c-head">Loop Control</div>
+${inlineBlock(['// Default arguments','function void show(int x=10, string s="hi");','  $display("x=%0d s=%s",x,s);','endfunction','','show();              // x=10 s=hi','show(5);             // x=5 s=hi','show(.s("bye"));     // x=10 s=bye (by name!)','show(.s("hey"),.x(3)); // any order!'],'args.sv')}`},
+      {label:'break & continue',speech:'break immediately exits the innermost loop. continue skips the rest of the current iteration and jumps to the next one.',
+       content:`<div class="c-head">Loop Control</div>
 <div class="two-col">
 <div class="box-card"><div class="box-h rose">break — Exit Loop</div>${inlineBlock(['for(int i=0; i<10; i++) begin','  if(i==6) break; // stop here','  $display(i);     // 0,1,2,3,4,5','end'],'break.sv')}</div>
-<div class="box-card"><div class="box-h sage">continue — Skip Iteration</div>${inlineBlock(['for(int i=0; i<10; i++) begin','  if(i==6) continue; // skip i=6','  $display(i);  // 0..5, 7,8,9','end'],'continue.sv')}</div>
+<div class="box-card"><div class="box-h teal">continue — Skip Iteration</div>${inlineBlock(['for(int i=0; i<10; i++) begin','  if(i==6) continue; // skip i=6','  $display(i);  // 0..5, 7,8,9','end'],'continue.sv')}</div>
 </div>
-<div class="info-box sky"><strong>Nested loops:</strong> break/continue only affect the INNERMOST enclosing loop. To break out of multiple levels, use labeled blocks: break label_name.</div>`
-      }
+<div class="info-box"><strong>Nested loops:</strong> break/continue only affect the INNERMOST enclosing loop. To break out of multiple levels, use labeled blocks: <code>break label_name</code>.</div>`}
     ]
   }
 };
 
-let curLesson=null, curStep=0;
+let curLesson=null,curStep=0;
 function openLesson(key){
   const L=LESSONS[key];
   if(!L)return;
-  curLesson=key; curStep=0;
+  curLesson=key;curStep=0;
   document.getElementById('m-title').textContent=L.title;
   renderLesson();
   const ov=document.getElementById('overlay');
@@ -1161,42 +1250,42 @@ function renderLesson(){
     <div>
       <div class="l-domain">${L.title.toUpperCase()}</div>
       <div class="l-ttl">${step.label}</div>
-      <div style="margin-top:1.5rem">${step.content}</div>
+      <div style="margin-top:1.4rem">${step.content}</div>
     </div>
     <div class="t-pod">
-      <div class="t-pod-av t-breathing">${t.emoji}</div>
+      <div class="t-pod-av">${t.emoji}</div>
       <div class="t-pod-name">${t.name}</div>
       <div class="t-pod-role">${t.role}</div>
       <div class="speech-bubble">${step.speech}</div>
     </div>
   </div>`;
 }
-function goStep(i){
-  curStep=i;
-  renderLesson();
-}
+function goStep(i){curStep=i;renderLesson();}
 function closeLesson(){
   const ov=document.getElementById('overlay');
   ov.classList.remove('show');
   setTimeout(()=>{ov.style.display='none';},300);
   document.body.style.overflow='';
 }
-function overlayClose(e){
-  if(e.target===document.getElementById('overlay')) closeLesson();
-}
+function overlayClose(e){if(e.target===document.getElementById('overlay'))closeLesson();}
 
-// ── QUIZ ────────────────────────────────────────────────────────────
+// ── QUIZ ────────────────────────────────────────────────
 const QUIZ=[
-  {q:'What is the key difference between rand and randc in SystemVerilog?',opts:['rand is faster; randc uses less memory','rand may repeat values; randc cycles through all values before repeating','rand needs constraints; randc does not','randc is only for bit types'],ans:1,fb:'randc (cyclic random) ensures all possible values are generated exactly once per cycle before repeating — perfect for coverage-driven testing.'},
-  {q:'Which fork variant does NOT wait for any thread to complete before continuing?',opts:['fork...join','fork...join_any','fork...join_none','fork...wait fork'],ans:2,fb:'fork...join_none launches threads and immediately continues without waiting. The spawned threads run in the background concurrently.'},
-  {q:'What is wrong with the following? child_class c; parent_class p = new(); c = p;',opts:['Nothing — it is perfectly legal','Illegal: a parent handle cannot be assigned to a child handle without $cast','Illegal: parent cannot be instantiated','Legal only with virtual keyword'],ans:1,fb:'Downcasting (parent → child) is illegal without $cast. Only upcasting (child → parent) is directly legal. Use $cast(c, p) and check the return value.'},
-  {q:'In a covergroup, what does cross coverage measure?',opts:['The clock cycles between events','The Cartesian product of two or more coverpoints','Only the first value in a range','The time between transactions'],ans:1,fb:'Cross coverage generates bins for every combination of values from the crossed coverpoints. Two 4-bit coverpoints crossed = up to 256 cross bins.'},
-  {q:'What does "this" keyword do in a SystemVerilog class?',opts:['Refers to the parent class','Refers to the current object instance','Creates a new object','Calls the constructor'],ans:1,fb:'"this" refers to the current object instance, disambiguating between a class property and a method/constructor argument with the same name.'},
-  {q:'How many autobins does a covergroup create for a 4-bit logic variable?',opts:['4','8','16','64'],ans:2,fb:'For variables ≤ 6 bits, autobins = 2^width. So a 4-bit variable creates 2^4 = 16 autobins. For >6 bits, the default is 64 autobins.'},
-  {q:'What is the purpose of a clocking block in an interface?',opts:['To define modport directions','To eliminate race conditions by specifying input/output sampling skews','To create a clock generator','To parameterize the interface'],ans:1,fb:'Clocking blocks define when signals are sampled (input #1step = just before clock) and driven (output #1 = 1ns after clock), eliminating race conditions between DUT and testbench.'},
-  {q:'What happens when you call array.delete() on a dynamic array?',opts:['Resets all elements to zero','Removes the last element','Frees all memory and sets size to 0','Copies the array to a queue'],ans:2,fb:'array.delete() deallocates all memory and sets size() to 0. The array becomes empty — you must call new[N] again to reallocate.'},
-  {q:'In a solve-before constraint, what is the effect on probability?',opts:['It has no effect on probability','It ensures the first variable is solved in isolation, changing the probability distribution','It forces deterministic values','It disables randomization for the first variable'],ans:1,fb:'Without solve-before, the solver considers all variables jointly. With solve-before, it fixes the first variable independently first (equal probability), then solves the rest given that value — dramatically changing distribution.'},
-  {q:'Which SystemVerilog assertion operator checks that penable is asserted in the NEXT clock cycle after psel?',opts:['psel |-> penable','psel |=> penable','psel ##1 penable','psel -> penable'],ans:1,fb:'|=> is the "non-overlapping implication" operator — it means "if antecedent is true now, then consequent must be true in the NEXT clock cycle". |-> checks the same cycle.'},
+  {q:'What is the key difference between rand and randc in SystemVerilog?',opts:['rand is faster; randc uses less memory','rand may repeat values; randc cycles through all before repeating','rand needs constraints; randc does not','randc is only for bit types'],ans:1,fb:'randc (cyclic random) ensures all possible values are generated exactly once per cycle before repeating — perfect for coverage-driven testing.'},
+  {q:'Which fork variant does NOT wait for any thread to complete before continuing?',opts:['fork...join','fork...join_any','fork...join_none','fork...wait fork'],ans:2,fb:'fork...join_none launches threads and immediately continues. The spawned threads run in the background concurrently.'},
+  {q:'What is wrong? — child_class c; parent_class p = new(); c = p;',opts:['Nothing — perfectly legal','Illegal: parent→child needs $cast','Illegal: parent cannot be instantiated','Legal only with virtual keyword'],ans:1,fb:'Downcasting (parent → child) is illegal without $cast. Only upcasting (child → parent) is directly legal.'},
+  {q:'In a covergroup, what does cross coverage measure?',opts:['The clock cycles between events','The Cartesian product of two or more coverpoints','Only the first value in a range','The time between transactions'],ans:1,fb:'Cross coverage generates bins for every combination of values from the crossed coverpoints.'},
+  {q:'What does "this" keyword do in a SystemVerilog class?',opts:['Refers to the parent class','Refers to the current object instance','Creates a new object','Calls the constructor'],ans:1,fb:'"this" refers to the current object instance, disambiguating between class property and constructor argument with the same name.'},
+  {q:'How many autobins does a covergroup create for a 4-bit logic variable?',opts:['4','8','16','64'],ans:2,fb:'For variables ≤ 6 bits, autobins = 2^width. A 4-bit variable creates 2^4 = 16 autobins.'},
+  {q:'What is the purpose of a clocking block in an interface?',opts:['To define modport directions','To eliminate race conditions by specifying input/output sampling skews','To create a clock generator','To parameterize the interface'],ans:1,fb:'Clocking blocks define when signals are sampled (input #1step) and driven (output #1), eliminating race conditions.'},
+  {q:'What happens when you call array.delete() on a dynamic array?',opts:['Resets all elements to zero','Removes the last element','Frees all memory and sets size to 0','Copies the array to a queue'],ans:2,fb:'array.delete() deallocates all memory and sets size() to 0. Must call new[N] again to reallocate.'},
+  {q:'In a solve-before constraint, what is the key effect?',opts:['No effect on probability','Fixes first variable independently, changing the probability distribution','Forces deterministic values','Disables randomization for first variable'],ans:1,fb:'With solve-before, the solver fixes variable A independently first (equal probability), then solves B given A — dramatically changing distribution.'},
+  {q:'Which assertion operator checks penable is asserted in the NEXT clock cycle after psel?',opts:['psel |-> penable','psel |=> penable','psel ##1 penable','psel -> penable'],ans:1,fb:'|=> is non-overlapping implication — antecedent true now means consequent must be true in the NEXT clock cycle.'},
+  {q:'What is the difference between :/ and := in dist constraints?',opts:['No difference','/:  divides weight across the range; := gives same weight to EACH value','/:  gives same weight; := divides weight','/:  is for arrays; := is for scalars'],ans:1,fb:'{3:/4, [5:8]:/7} splits 7 weight among 4 values (1.75 each). {3:=4, [5:8]:=7} gives each of 5,6,7,8 a weight of 7.'},
+  {q:'Which keyword makes a class function accessible to child class dispatch via parent handle?',opts:['static','automatic','virtual','extern'],ans:2,fb:'virtual on a method enables polymorphic dispatch — calling through a parent handle invokes the child\'s overridden version.'},
+  {q:'What is the legal range check for a 4-bit variable using inside?',opts:['x inside [0:15]','x inside {0:15}','x inside {[0:15]}','inside(x, 0, 15)'],ans:2,fb:'inside uses {} for the set and [] for ranges: x inside {[0:15]} checks if x is between 0 and 15 inclusive.'},
+  {q:'What is the difference between illegal_bins and ignore_bins in covergroups?',opts:['No difference','illegal_bins causes a simulation error when hit; ignore_bins silently excludes values from coverage','illegal_bins excludes values; ignore_bins causes errors','illegal_bins is only for numbers; ignore_bins for strings'],ans:1,fb:'illegal_bins reports an error-level violation (FCIBH) if the value occurs. ignore_bins simply excludes those values from coverage counting — no error.'},
+  {q:'In SystemVerilog, can a virtual class be instantiated directly?',opts:['Yes, using new()','No — only concrete subclasses can be instantiated','Yes, but only if it has no pure virtual methods','Yes, using static methods'],ans:1,fb:'A virtual class (abstract class) cannot be instantiated. It serves as a blueprint. Only concrete subclasses that implement all pure virtual methods can use new().'},
 ];
 let qIdx=0,qScore=0,qAnswered=0;
 function loadQ(){
@@ -1206,7 +1295,6 @@ function loadQ(){
   document.getElementById('q-fill').style.width=`${(qIdx+1)/QUIZ.length*100}%`;
   document.getElementById('q-text').textContent=q.q;
   document.getElementById('q-fb').className='q-fb';
-  document.getElementById('q-fb').textContent='';
   document.getElementById('q-next').style.display='none';
   document.getElementById('q-opts').innerHTML=q.opts.map((o,i)=>`<button class="q-opt" onclick="answerQ(${i})">${o}</button>`).join('');
 }
@@ -1230,18 +1318,18 @@ function nextQ(){
     document.getElementById('q-opts').innerHTML='';
     document.getElementById('q-fb').className='q-fb';
     document.getElementById('q-next').style.display='none';
-    const msg=qScore>=8?'🏆 Excellent! Ready for DV interviews!':qScore>=6?'👍 Good job! Review weaker areas.':'📚 Keep studying — you\'ll get there!';
+    const msg=qScore>=12?'🏆 Outstanding! Ready for DV interviews!':qScore>=9?'👍 Great job! Review weaker areas.':qScore>=6?'📚 Keep studying — you\'ll get there!':'🔄 Review all topics and try again!';
     document.getElementById('q-fb').textContent=msg;
     document.getElementById('q-fb').className='q-fb show';
-    // Add restart button
-    document.getElementById('q-next').textContent='Restart Quiz';
-    document.getElementById('q-next').style.display='block';
-    document.getElementById('q-next').onclick=()=>{qIdx=0;qScore=0;qAnswered=0;document.getElementById('q-next').textContent='Next →';document.getElementById('q-next').onclick=nextQ;loadQ();};
+    const btn=document.getElementById('q-next');
+    btn.textContent='Restart Quiz';
+    btn.style.display='block';
+    btn.onclick=()=>{qIdx=0;qScore=0;qAnswered=0;btn.textContent='Next →';btn.onclick=nextQ;loadQ();};
   }
 }
 loadQ();
 
-// ── TESTBENCH TAB SWITCHING ──────────────────────────────────────────
+// ── TESTBENCH TABS ──────────────────────────────────────
 function tbSwitch(id,btn){
   document.querySelectorAll('.bench-panel').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.bench-tab').forEach(b=>b.classList.remove('on'));
@@ -1249,24 +1337,24 @@ function tbSwitch(id,btn){
   btn.classList.add('on');
 }
 
-// ── SCROLL PROGRESS ──────────────────────────────────────────────────
+// ── SCROLL PROGRESS ─────────────────────────────────────
 window.addEventListener('scroll',()=>{
   const p=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
   document.getElementById('prog').style.width=p+'%';
 });
 
-// ── INTERSECTION OBSERVER ────────────────────────────────────────────
+// ── INTERSECTION OBSERVER ────────────────────────────────
 const ro=new IntersectionObserver(es=>{
-  es.forEach((e,i)=>{
+  es.forEach((e,idx)=>{
     if(e.isIntersecting){
-      setTimeout(()=>e.target.classList.add('vis'),i*70);
+      setTimeout(()=>e.target.classList.add('vis'),idx*60);
       ro.unobserve(e.target);
     }
   });
-},{threshold:.1});
+},{threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-// ── NAV ACTIVE LINK ──────────────────────────────────────────────────
+// ── NAV ACTIVE ───────────────────────────────────────────
 const navLinks=document.querySelectorAll('.nav-a');
 document.querySelectorAll('section[id]').forEach(s=>{
   new IntersectionObserver(es=>{
@@ -1275,12 +1363,12 @@ document.querySelectorAll('section[id]').forEach(s=>{
       const a=document.querySelector(`.nav-a[href="#${s.id}"]`);
       if(a)a.classList.add('on');
     }
-  },{threshold:.3}).observe(s);
+  },{threshold:.25}).observe(s);
 });
 
-// ── KEYBOARD CLOSE ───────────────────────────────────────────────────
+// ── KEYBOARD ─────────────────────────────────────────────
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') closeLesson();
+  if(e.key==='Escape')closeLesson();
   if(e.key==='ArrowRight'&&curLesson){const L=LESSONS[curLesson];if(curStep<L.steps.length-1)goStep(curStep+1);}
   if(e.key==='ArrowLeft'&&curLesson){if(curStep>0)goStep(curStep-1);}
 });
